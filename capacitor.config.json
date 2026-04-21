@@ -1,0 +1,9 @@
+{
+  "appId": "app.lovable.447ae7e07fa049d4a4b5523186b4f45c",
+  "appName": "annva",
+  "webDir": "dist",
+  "server": {
+    "url": "https://447ae7e0-7fa0-49d4-a4b5-523186b4f45c.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  }
+}
