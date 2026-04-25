@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../core/theme/annva_colors.dart';
+
+/// "अन्न Annva" wordmark — the app's logotype.
+///
+/// Visual spec (Section 6.11):
+/// - Always show the Devanagari "अन्न" first, then the Latin "Annva"
+/// - Noto Serif Devanagari for "अन्न", Instrument Serif for "Annva"
+/// - Deep indigo, side by side
+/// - Never show just "Annva" without the Devanagari prefix
+class AnnvaLogo extends StatelessWidget {
+  /// Font size for the Devanagari part.
+  final double fontSize;
+
+  /// Color override. Defaults to AnnvaColors.primary.
+  final Color? color;
+
+  const AnnvaLogo({
+    super.key,
+    this.fontSize = 24,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = color ?? AnnvaColors.primary;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        // Devanagari: अन्न
+        Text(
+          'अन्न',
+          style: GoogleFonts.notoSerifDevanagari(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w400,
+            color: textColor,
+          ),
+        ),
+        SizedBox(width: fontSize * 0.25),
+        // Latin: Annva
+        Text(
+          'Annva',
+          style: GoogleFonts.instrumentSerif(
+            fontSize: fontSize * 0.9,
+            fontWeight: FontWeight.w400,
+            color: textColor,
+          ),
+        ),
+      ],
+    );
+  }
+}

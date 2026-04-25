@@ -1,0 +1,24 @@
+# Paste this into .gitignore before committing anything
+echo "# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.g.dart
+*.freezed.dart
+
+# Firebase — NEVER commit these
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db" > .gitignore

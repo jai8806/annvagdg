@@ -1,0 +1,73 @@
+name: annva
+description: "Annva (अन्नवा) — India's AI-powered food rescue platform. Surplus to savings, waste to worth."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management — Riverpod 2 with code generation
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  
+  # Navigation
+  go_router: ^14.8.1
+  
+  # Typography
+  google_fonts: ^6.2.1
+  
+  # Animations
+  flutter_animate: ^4.5.2
+  
+  # Responsive
+  flutter_screenutil: ^5.9.3
+  
+  # Maps
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  flutter_map_tile_caching: ^9.1.0
+  
+  # Firebase
+  firebase_core: any
+  cloud_firestore: any
+  firebase_database: any
+  firebase_messaging: any
+  
+  # Freezed & JSON
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+  
+  # Cupertino icons (default)
+  cupertino_icons: ^1.0.8
+  
+  # Pickers
+  image_picker: ^1.1.2
+  
+  # Local Storage
+  shared_preferences: any
+  
+  # Navigation & URL
+  url_launcher: any
+  
+  # Charts
+  fl_chart: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  # Code generation
+  build_runner: ^2.4.14
+  riverpod_generator: ^2.6.3
+  freezed: any
+  json_serializable: any
+  
+  # Linting
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
