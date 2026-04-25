@@ -86,7 +86,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                                 onPressed: () async {
                                   await FirestoreSeeder.seedListings();
                                   ref.invalidate(activeListingsProvider);
-                                  if (!mounted) return;
+                                  if (!context.mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Firestore seeded!')),
                                   );

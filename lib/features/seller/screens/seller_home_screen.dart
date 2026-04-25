@@ -533,7 +533,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         const SizedBox(width: 8),
         Switch(
           value: _isRefrigerated,
-          activeColor: AnnvaColors.ochre,
+          activeThumbColor: AnnvaColors.ochre,
+          activeTrackColor: AnnvaColors.ochre.withValues(alpha: 0.4),
           onChanged: (val) => setState(() => _isRefrigerated = val),
         ),
         if (_isRefrigerated)

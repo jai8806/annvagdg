@@ -1,5 +1,4 @@
-# Paste this into .gitignore before committing anything
-echo "# Flutter
+# Flutter
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -21,4 +20,4 @@ firebase_options.dart
 
 # OS
 .DS_Store
-Thumbs.db" > .gitignore
+Thumbs.db

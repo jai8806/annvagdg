@@ -7,7 +7,6 @@ import 'package:latlong2/latlong.dart';
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
 import '../../../core/theme/annva_text_styles.dart';
-import '../../../shared/models/cascade_stage.dart';
 import '../../../shared/providers/listings_provider.dart';
 import '../../../shared/widgets/annva_logo.dart';
 

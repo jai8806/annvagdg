@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap');
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+
+/* Annva — Heritage Indigo design system. Cream + Indigo + Ochre. All HSL. */
+
+@layer base {
+  :root {
+    /* Cream paper base */
+    --background: 39 38% 93%;
+    --foreground: 215 52% 11%;
+
+    --card: 40 35% 96%;
+    --card-foreground: 215 52% 11%;
+
+    --popover: 40 35% 96%;
+    --popover-foreground: 215 52% 11%;
+
+    /* Deep indigo */
+    --primary: 213 52% 24%;
+    --primary-foreground: 39 38% 95%;
+
+    /* Soft cream secondary */
+    --secondary: 38 30% 88%;
+    --secondary-foreground: 215 52% 11%;
+
+    --muted: 38 25% 86%;
+    --muted-foreground: 215 20% 35%;
+
+    /* Ochre accent */
+    --accent: 36 78% 57%;
+    --accent-foreground: 215 52% 11%;
+
+    /* Urgency red */
+    --destructive: 8 72% 50%;
+    --destructive-foreground: 39 38% 95%;
+
+    /* Cascade stages */
+    --cascade-fresh: 142 45% 38%;
+    --cascade-mid: 36 78% 57%;
+    --cascade-urgent: 8 72% 50%;
+
+    --ink: 215 70% 8%;
+    --ochre: 36 78% 57%;
+    --ochre-deep: 30 65% 42%;
+    --indigo-deep: 215 70% 18%;
+    --cream: 39 38% 93%;
+    --cream-light: 40 35% 96%;
+
+    --border: 38 22% 78%;
+    --input: 38 22% 82%;
+    --ring: 213 52% 24%;
+
+    --radius: 0.375rem;
+
+    --sidebar-background: 40 35% 96%;
+    --sidebar-foreground: 215 52% 11%;
+    --sidebar-primary: 213 52% 24%;
+    --sidebar-primary-foreground: 39 38% 95%;
+    --sidebar-accent: 38 30% 88%;
+    --sidebar-accent-foreground: 215 52% 11%;
+    --sidebar-border: 38 22% 78%;
+    --sidebar-ring: 36 78% 57%;
+  }
+
+  .dark {
+    --background: 215 70% 8%;
+    --foreground: 39 38% 93%;
+    --card: 215 50% 12%;
+    --card-foreground: 39 38% 93%;
+    --popover: 215 50% 12%;
+    --popover-foreground: 39 38% 93%;
+    --primary: 39 38% 93%;
+    --primary-foreground: 215 52% 11%;
+    --secondary: 215 40% 18%;
+    --secondary-foreground: 39 38% 93%;
+    --muted: 215 40% 18%;
+    --muted-foreground: 38 20% 70%;
+    --accent: 36 78% 57%;
+    --accent-foreground: 215 52% 11%;
+    --destructive: 8 72% 50%;
+    --destructive-foreground: 39 38% 95%;
+    --border: 215 40% 22%;
+    --input: 215 40% 22%;
+    --ring: 36 78% 57%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Work Sans', system-ui, sans-serif;
+    background-image:
+      radial-gradient(circle at 20% 10%, hsl(36 78% 57% / 0.04) 0px, transparent 40%),
+      radial-gradient(circle at 80% 80%, hsl(213 52% 24% / 0.04) 0px, transparent 40%);
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .font-devanagari {
+    font-family: 'Noto Serif Devanagari', serif;
+  }
+}
+
+@layer components {
+  .paper-texture {
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .grain-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--ochre) / 0.4), hsl(var(--primary) / 0.3), hsl(var(--ochre) / 0.4), transparent);
+  }
+
+  .urgency-pulse {
+    box-shadow: 0 0 0 0 hsl(var(--destructive) / 0.5);
+    animation: urgency-pulse 2s infinite;
+  }
+
+  .ochre-pulse {
+    animation: ochre-glow 2.4s ease-in-out infinite;
+  }
+
+  .devanagari-watermark {
+    font-family: 'Noto Serif Devanagari', serif;
+    color: hsl(var(--primary) / 0.06);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .editorial-link {
+    @apply relative inline-block;
+  }
+  .editorial-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300;
+  }
+  .editorial-link:hover::after {
+    @apply origin-left scale-x-100;
+  }
+}
+
+@keyframes urgency-pulse {
+  0% { box-shadow: 0 0 0 0 hsl(var(--destructive) / 0.5); }
+  70% { box-shadow: 0 0 0 12px hsl(var(--destructive) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--destructive) / 0); }
+}
+
+@keyframes ochre-glow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--ochre) / 0.4); }
+  50% { box-shadow: 0 0 0 8px hsl(var(--ochre) / 0); }
+}
+
+@keyframes ticker-tick {
+  0% { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Leaflet pin overrides */
+.leaflet-container {
+  background: hsl(var(--cream)) !important;
+  font-family: 'Work Sans', sans-serif;
+}
+.annva-pin {
+  border-radius: 9999px;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px hsl(var(--ink) / 0.3);
+}

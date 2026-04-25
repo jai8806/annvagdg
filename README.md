@@ -1,17 +1,29 @@
-# annva
+# Annva (अन्नवा) — Food That Moves.
 
-A new Flutter project.
+Annva is India's AI-powered food rescue platform. We bridge the gap between surplus inventory and hunger, ensuring that good food never goes to waste.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- **Live Cascade Pricing**: Real-time discount engine that drops prices as cook-time elapses.
+- **Price Lock**: Freeze the current cascade price for 20 minutes with a small deposit.
+- **Prasad Protocol**: Rescuing sacred surplus from Temples, Gurudwaras, and Mosques.
+- **NGO Rescue Fund**: Forfeited deposits are repurposed for logistical support of our NGO partners.
+- **Impact Ticker**: Live tracking of KG rescued and meals delivered across India.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠 Tech Stack
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- **Framework**: Flutter
+- **State Management**: Riverpod 2 (Notifier style)
+- **Navigation**: GoRouter
+- **Backend**: Firebase (Firestore, Realtime DB, Auth)
+- **Design System**: Heritage Indigo & Ochre (Custom Implementation)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Getting Started
+
+1. Clone the repository.
+2. Run `flutter pub get`.
+3. Launch on Android/iOS/Web using `flutter run`.
+
+## 📜 License
+
+Proprietary — Annva GDG Project.
