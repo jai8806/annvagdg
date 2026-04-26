@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
@@ -18,14 +17,17 @@ class RoleSelectScreen extends ConsumerWidget {
       backgroundColor: AnnvaColors.background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnnvaSpacing.containerPadding,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: AnnvaSpacing.xl),
               Text(
                 'I am a...',
-                style: GoogleFonts.instrumentSerif(
+                style: TextStyle(
+                  fontFamily: 'InstrumentSerif',
                   fontSize: 40,
                   fontWeight: FontWeight.w400,
                   color: AnnvaColors.primary,
@@ -46,28 +48,36 @@ class RoleSelectScreen extends ConsumerWidget {
                       title: 'Consumer',
                       description: '🛒 I want to rescue food deals',
                       isSelected: selectedRole == 'consumer',
-                      onTap: () => ref.read(authNotifierProvider.notifier).setPendingRole('consumer'),
+                      onTap: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .setPendingRole('consumer'),
                     ),
                     _RoleCard(
                       role: 'seller',
                       title: 'Seller',
                       description: '🍽 I have surplus food to list',
                       isSelected: selectedRole == 'seller',
-                      onTap: () => ref.read(authNotifierProvider.notifier).setPendingRole('seller'),
+                      onTap: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .setPendingRole('seller'),
                     ),
                     _RoleCard(
                       role: 'volunteer',
                       title: 'Volunteer',
                       description: '🤝 I want to deliver rescues',
                       isSelected: selectedRole == 'volunteer',
-                      onTap: () => ref.read(authNotifierProvider.notifier).setPendingRole('volunteer'),
+                      onTap: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .setPendingRole('volunteer'),
                     ),
                     _RoleCard(
                       role: 'ngo',
                       title: 'NGO',
                       description: '🏠 We receive food donations',
                       isSelected: selectedRole == 'ngo',
-                      onTap: () => ref.read(authNotifierProvider.notifier).setPendingRole('ngo'),
+                      onTap: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .setPendingRole('ngo'),
                     ),
                   ],
                 ),
@@ -82,7 +92,9 @@ class RoleSelectScreen extends ConsumerWidget {
                       ? null
                       : () async {
                           // Trigger async signIn, the router will auto-redirect
-                          await ref.read(authNotifierProvider.notifier).signIn(selectedRole);
+                          await ref
+                              .read(authNotifierProvider.notifier)
+                              .signIn(selectedRole);
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AnnvaColors.primary,
@@ -98,7 +110,8 @@ class RoleSelectScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'Continue',
-                        style: GoogleFonts.workSans(
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -140,7 +153,9 @@ class _RoleCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
-        transform: isSelected ? Matrix4.diagonal3Values(1.02, 1.02, 1.0) : Matrix4.identity(),
+        transform: isSelected
+            ? Matrix4.diagonal3Values(1.02, 1.02, 1.0)
+            : Matrix4.identity(),
         decoration: BoxDecoration(
           color: isSelected ? AnnvaColors.primary : AnnvaColors.backgroundCard,
           border: Border.all(
@@ -156,19 +171,25 @@ class _RoleCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: GoogleFonts.workSans(
+              style: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: isSelected ? AnnvaColors.primaryForeground : AnnvaColors.primary,
+                color: isSelected
+                    ? AnnvaColors.primaryForeground
+                    : AnnvaColors.primary,
               ),
             ),
             const SizedBox(height: AnnvaSpacing.sm),
             Text(
               description,
-              style: GoogleFonts.workSans(
+              style: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 13,
                 height: 1.4,
-                color: isSelected ? AnnvaColors.primaryForeground.withValues(alpha: 0.8) : AnnvaColors.muted,
+                color: isSelected
+                    ? AnnvaColors.primaryForeground.withValues(alpha: 0.8)
+                    : AnnvaColors.muted,
               ),
             ),
           ],

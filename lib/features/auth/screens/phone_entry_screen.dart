@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
@@ -42,17 +41,20 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
             right: -40,
             child: Text(
               'अन्न',
-              style: GoogleFonts.notoSerifDevanagari(
+              style: TextStyle(
+                fontFamily: 'NotoSerifDevanagari',
                 fontSize: 180,
                 fontWeight: FontWeight.w700,
                 color: AnnvaColors.primary.withValues(alpha: 0.04),
               ),
             ),
           ),
-          
+
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AnnvaSpacing.containerPadding,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,7 +64,8 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
 
                   Text(
                     'Welcome to Annva',
-                    style: GoogleFonts.instrumentSerif(
+                    style: TextStyle(
+                      fontFamily: 'InstrumentSerif',
                       fontSize: 40,
                       fontWeight: FontWeight.w400,
                       color: AnnvaColors.primary,
@@ -72,7 +75,8 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                   const SizedBox(height: AnnvaSpacing.sm),
                   Text(
                     "India's food rescue network",
-                    style: GoogleFonts.workSans(
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
                       fontSize: 16,
                       color: AnnvaColors.muted,
                     ),
@@ -86,26 +90,35 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                       borderRadius: BorderRadius.circular(AnnvaRadius.full),
                       color: AnnvaColors.backgroundCard,
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.lg, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AnnvaSpacing.lg,
+                      vertical: 4,
+                    ),
                     child: Row(
                       children: [
                         Text(
                           '+91',
-                          style: GoogleFonts.workSans(
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             color: AnnvaColors.primary,
                           ),
                         ),
                         const SizedBox(width: AnnvaSpacing.sm),
-                        Container(width: 1, height: 24, color: AnnvaColors.border),
+                        Container(
+                          width: 1,
+                          height: 24,
+                          color: AnnvaColors.border,
+                        ),
                         const SizedBox(width: AnnvaSpacing.sm),
                         Expanded(
                           child: TextField(
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
                             maxLength: 10,
-                            style: GoogleFonts.workSans(
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: AnnvaColors.primary,
@@ -121,7 +134,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: AnnvaSpacing.xl),
 
                   // Primary CTA button
@@ -143,7 +156,8 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                         children: [
                           Text(
                             'Send OTP',
-                            style: GoogleFonts.workSans(
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -154,14 +168,15 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                       ),
                     ),
                   ),
-                  
+
                   const Spacer(flex: 3),
-                  
+
                   // Bottom text
                   Center(
                     child: Text(
                       'By continuing you agree to our terms',
-                      style: GoogleFonts.workSans(
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
                         fontSize: 10,
                         color: AnnvaColors.muted,
                       ),

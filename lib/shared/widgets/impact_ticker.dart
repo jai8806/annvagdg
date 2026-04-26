@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 
@@ -100,37 +99,27 @@ class _ImpactTickerState extends State<ImpactTicker> {
             transitionBuilder: (child, animation) {
               // Incoming child (0→1): key matches current value
               // Outgoing child (1→0): key is the previous value
-              final isIncoming =
-                  child.key == ValueKey<int>(_currentValue);
+              final isIncoming = child.key == ValueKey<int>(_currentValue);
 
               final slideTween = isIncoming
                   // Incoming: start below (Y=1), end in place (Y=0)
-                  ? Tween<Offset>(
-                      begin: const Offset(0, 1),
-                      end: Offset.zero,
-                    )
+                  ? Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
                   // Outgoing: at value=1 → Y=0 (in place),
                   //           at value=0 → Y=-1 (slid up out)
-                  : Tween<Offset>(
-                      begin: const Offset(0, -1),
-                      end: Offset.zero,
-                    );
+                  : Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
 
               return SlideTransition(
-                position: slideTween.animate(CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeOut,
-                )),
-                child: FadeTransition(
-                  opacity: animation,
-                  child: child,
+                position: slideTween.animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
                 ),
+                child: FadeTransition(opacity: animation, child: child),
               );
             },
             child: Text(
               _formatIndian(_currentValue),
               key: ValueKey<int>(_currentValue),
-              style: GoogleFonts.instrumentSerif(
+              style: TextStyle(
+                fontFamily: 'InstrumentSerif',
                 fontSize: widget.fontSize,
                 fontWeight: FontWeight.w400,
                 letterSpacing: -0.5,
@@ -143,7 +132,8 @@ class _ImpactTickerState extends State<ImpactTicker> {
         // Label below the number
         Text(
           widget.label,
-          style: GoogleFonts.workSans(
+          style: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 13,
             fontWeight: FontWeight.w400,
             color: AnnvaColors.muted,

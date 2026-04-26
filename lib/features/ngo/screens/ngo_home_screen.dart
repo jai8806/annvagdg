@@ -4,7 +4,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
@@ -24,7 +23,11 @@ class NgoHomeScreen extends ConsumerWidget {
         elevation: 0,
         leading: context.canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AnnvaColors.primary, size: 18),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AnnvaColors.primary,
+                  size: 18,
+                ),
                 onPressed: () => context.pop(),
               )
             : null,
@@ -42,21 +45,44 @@ class NgoHomeScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('NGO', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+                  Text(
+                    'NGO',
+                    style: AnnvaTextStyles.label.copyWith(
+                      color: AnnvaColors.ochre,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Text('Akshaya Patra', style: AnnvaTextStyles.h1),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      Text('Bengaluru chapter · Verified partner', style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.muted)),
+                      Text(
+                        'Bengaluru chapter · Verified partner',
+                        style: AnnvaTextStyles.bodySmall.copyWith(
+                          color: AnnvaColors.muted,
+                        ),
+                      ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
-                          color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
+                          color: AnnvaColors.cascadeFresh.withValues(
+                            alpha: 0.1,
+                          ),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text('✓ Verified', style: GoogleFonts.workSans(color: AnnvaColors.cascadeFresh, fontSize: 10, fontWeight: FontWeight.bold)),
+                        child: Text(
+                          '✓ Verified',
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            color: AnnvaColors.cascadeFresh,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -71,11 +97,21 @@ class NgoHomeScreen extends ConsumerWidget {
               height: 160,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AnnvaSpacing.containerPadding,
+                ),
                 children: [
-                  _buildStatCard('MEALS THIS MONTH', '14,280', '+340 this week'),
+                  _buildStatCard(
+                    'MEALS THIS MONTH',
+                    '14,280',
+                    '+340 this week',
+                  ),
                   const SizedBox(width: AnnvaSpacing.sm),
-                  _buildStatCard('KG RECEIVED', '3,842', 'from 48 rescue events'),
+                  _buildStatCard(
+                    'KG RECEIVED',
+                    '3,842',
+                    'from 48 rescue events',
+                  ),
                   const SizedBox(width: AnnvaSpacing.sm),
                   _buildStatCard('VOLUNTEERS', '23 active', 'across Bengaluru'),
                 ],
@@ -95,7 +131,12 @@ class NgoHomeScreen extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('INCOMING RESCUES', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+                  Text(
+                    'INCOMING RESCUES',
+                    style: AnnvaTextStyles.label.copyWith(
+                      color: AnnvaColors.ochre,
+                    ),
+                  ),
                   Row(
                     children: [
                       Container(
@@ -107,7 +148,15 @@ class NgoHomeScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
-                      Text('3 urgent', style: GoogleFonts.workSans(color: AnnvaColors.cascadeUrgent, fontSize: 11, fontWeight: FontWeight.bold)),
+                      Text(
+                        '3 urgent',
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
+                          color: AnnvaColors.cascadeUrgent,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -125,19 +174,42 @@ class NgoHomeScreen extends ConsumerWidget {
                 AnnvaSpacing.containerPadding,
                 AnnvaSpacing.sm,
               ),
-              child: Text('RECENT RECEIVALS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+              child: Text(
+                'RECENT RECEIVALS',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AnnvaSpacing.containerPadding,
+              ),
               child: Column(
                 children: [
-                  _buildReceivalTile('🍲', 'Bisi bele bath', '8kg', 'Apr 18', 'Karthik'),
+                  _buildReceivalTile(
+                    '🍲',
+                    'Bisi bele bath',
+                    '8kg',
+                    'Apr 18',
+                    'Karthik',
+                  ),
                   const SizedBox(height: 8),
-                  _buildReceivalTile('🥐', 'Croissants', '3kg', 'Apr 15', 'Priya'),
+                  _buildReceivalTile(
+                    '🥐',
+                    'Croissants',
+                    '3kg',
+                    'Apr 15',
+                    'Priya',
+                  ),
                   const SizedBox(height: 8),
-                  _buildReceivalTile('🍛', 'Wedding biryani', '40kg', 'Apr 12', 'Raju'),
+                  _buildReceivalTile(
+                    '🍛',
+                    'Wedding biryani',
+                    '40kg',
+                    'Apr 12',
+                    'Raju',
+                  ),
                 ],
               ),
             ),
@@ -152,16 +224,21 @@ class NgoHomeScreen extends ConsumerWidget {
                 AnnvaSpacing.containerPadding,
                 AnnvaSpacing.sm,
               ),
-              child: Text('VOLUNTEER POSITIONS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+              child: Text(
+                'VOLUNTEER POSITIONS',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AnnvaSpacing.containerPadding,
+              ),
               child: _buildMap(),
             ),
           ),
-          
+
           const SliverToBoxAdapter(child: SizedBox(height: AnnvaSpacing.xxl)),
         ],
       ),
@@ -180,10 +257,26 @@ class NgoHomeScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+          Text(
+            label,
+            style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+          ),
           const Spacer(),
-          Text(value, style: AnnvaTextStyles.h1.copyWith(color: AnnvaColors.primary, fontSize: 40)),
-          Text(subtext, style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+          Text(
+            value,
+            style: AnnvaTextStyles.h1.copyWith(
+              color: AnnvaColors.primary,
+              fontSize: 40,
+            ),
+          ),
+          Text(
+            subtext,
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              color: AnnvaColors.muted,
+              fontSize: 12,
+            ),
+          ),
         ],
       ),
     );
@@ -198,7 +291,9 @@ class NgoHomeScreen extends ConsumerWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+          return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
 
         final docs = snapshot.data?.docs ?? [];
@@ -207,23 +302,30 @@ class NgoHomeScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(AnnvaSpacing.xl),
               child: Center(
-                child: Text('No urgent rescues incoming.', style: GoogleFonts.workSans(color: AnnvaColors.muted)),
+                child: Text(
+                  'No urgent rescues incoming.',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.muted,
+                  ),
+                ),
               ),
             ),
           );
         }
 
-        final listings = docs.map((doc) => FoodListing.fromFirestore(doc)).toList();
+        final listings = docs
+            .map((doc) => FoodListing.fromFirestore(doc))
+            .toList();
 
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnnvaSpacing.containerPadding,
+          ),
           sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return _buildAlertTile(context, listings[index]);
-              },
-              childCount: listings.length,
-            ),
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return _buildAlertTile(context, listings[index]);
+            }, childCount: listings.length),
           ),
         );
       },
@@ -241,7 +343,9 @@ class NgoHomeScreen extends ConsumerWidget {
       clipBehavior: Clip.hardEdge,
       child: Container(
         decoration: const BoxDecoration(
-          border: Border(left: BorderSide(color: AnnvaColors.cascadeUrgent, width: 3)),
+          border: Border(
+            left: BorderSide(color: AnnvaColors.cascadeUrgent, width: 3),
+          ),
         ),
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -249,21 +353,55 @@ class NgoHomeScreen extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Text('[URGENT]', style: GoogleFonts.workSans(color: AnnvaColors.cascadeUrgent, fontWeight: FontWeight.bold, fontSize: 13)),
+                Text(
+                  '[URGENT]',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.cascadeUrgent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text('${listing.name} · ${listing.sellerName}', style: GoogleFonts.workSans(fontWeight: FontWeight.w600, fontSize: 14)),
+                  child: Text(
+                    '${listing.name} · ${listing.sellerName}',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 4),
-            Text('${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg · ${listing.servings} servings · Volunteer: Karthik', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13)),
+            Text(
+              '${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg · ${listing.servings} servings · Volunteer: Karthik',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.muted,
+                fontSize: 13,
+              ),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.timer_outlined, size: 14, color: AnnvaColors.cascadeUrgent),
+                const Icon(
+                  Icons.timer_outlined,
+                  size: 14,
+                  color: AnnvaColors.cascadeUrgent,
+                ),
                 const SizedBox(width: 4),
-                Text('${listing.expiresAt.difference(DateTime.now()).inMinutes}m remaining', style: GoogleFonts.workSans(color: AnnvaColors.cascadeUrgent, fontSize: 12, fontWeight: FontWeight.w500)),
+                Text(
+                  '${listing.expiresAt.difference(DateTime.now()).inMinutes}m remaining',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.cascadeUrgent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -272,22 +410,41 @@ class NgoHomeScreen extends ConsumerWidget {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text('Decline', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontWeight: FontWeight.w600)),
+                  child: Text(
+                    'Decline',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Rescue accepted. Karthik is on the way.')),
+                      const SnackBar(
+                        content: Text(
+                          'Rescue accepted. Karthik is on the way.',
+                        ),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AnnvaColors.primary,
                     foregroundColor: AnnvaColors.primaryForeground,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                    ),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  child: Text('Accept batch →', style: GoogleFonts.workSans(fontWeight: FontWeight.bold)),
+                  child: Text(
+                    'Accept batch →',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -297,7 +454,13 @@ class NgoHomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildReceivalTile(String emoji, String name, String qty, String date, String volunteer) {
+  Widget _buildReceivalTile(
+    String emoji,
+    String name,
+    String qty,
+    String date,
+    String volunteer,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
@@ -322,8 +485,22 @@ class NgoHomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('$name · $qty', style: GoogleFonts.workSans(fontWeight: FontWeight.w600, fontSize: 14)),
-                Text('$date · Volunteer: $volunteer', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+                Text(
+                  '$name · $qty',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  '$date · Volunteer: $volunteer',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.muted,
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
           ),
@@ -333,7 +510,15 @@ class NgoHomeScreen extends ConsumerWidget {
               color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Text('✓ RECEIVED', style: GoogleFonts.workSans(color: AnnvaColors.cascadeFresh, fontSize: 10, fontWeight: FontWeight.bold)),
+            child: Text(
+              '✓ RECEIVED',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.cascadeFresh,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -348,11 +533,12 @@ class NgoHomeScreen extends ConsumerWidget {
         borderRadius: BorderRadius.circular(AnnvaRadius.xl),
         child: FlutterMap(
           options: const MapOptions(
-            initialCenter: LatLng(12.9550, 77.6200), // Center roughly covering all markers
+            initialCenter: LatLng(
+              12.9550,
+              77.6200,
+            ), // Center roughly covering all markers
             initialZoom: 11.5,
-            interactionOptions: InteractionOptions(
-              flags: InteractiveFlag.none,
-            ),
+            interactionOptions: InteractionOptions(flags: InteractiveFlag.none),
             backgroundColor: AnnvaColors.background,
           ),
           children: [
@@ -360,9 +546,7 @@ class NgoHomeScreen extends ConsumerWidget {
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               userAgentPackageName: 'in.annva.annva',
               tileProvider: NetworkTileProvider(
-                headers: {
-                  'User-Agent': 'AnnvaApp/1.0 (contact@annva.in)',
-                },
+                headers: {'User-Agent': 'AnnvaApp/1.0 (contact@annva.in)'},
               ),
               maxZoom: 19,
               minZoom: 3,

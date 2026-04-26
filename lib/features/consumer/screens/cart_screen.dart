@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
@@ -23,11 +22,18 @@ class CartScreen extends ConsumerWidget {
         elevation: 0,
         leading: context.canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AnnvaColors.primary, size: 18),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AnnvaColors.primary,
+                  size: 18,
+                ),
                 onPressed: () => context.pop(),
               )
             : null,
-        title: Text('Your Rescue Cart', style: AnnvaTextStyles.h1.copyWith(fontSize: 24)),
+        title: Text(
+          'Your Rescue Cart',
+          style: AnnvaTextStyles.h1.copyWith(fontSize: 24),
+        ),
       ),
       body: cartItems.isEmpty
           ? _buildEmptyState(context)
@@ -49,7 +55,10 @@ class CartScreen extends ConsumerWidget {
             Text(
               'Browse the live cascade to rescue food near you',
               textAlign: TextAlign.center,
-              style: GoogleFonts.workSans(color: AnnvaColors.muted),
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.muted,
+              ),
             ),
             const SizedBox(height: AnnvaSpacing.xl),
             ElevatedButton(
@@ -57,10 +66,21 @@ class CartScreen extends ConsumerWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AnnvaColors.primary,
                 foregroundColor: AnnvaColors.primaryForeground,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                ),
               ),
-              child: Text('Browse listings →', style: GoogleFonts.workSans(fontWeight: FontWeight.bold)),
+              child: Text(
+                'Browse listings →',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -116,20 +136,41 @@ class CartScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(AnnvaRadius.md),
                         ),
                         alignment: Alignment.center,
-                        child: Text(item.listing.imageUrl, style: const TextStyle(fontSize: 32)),
+                        child: Text(
+                          item.listing.imageUrl,
+                          style: const TextStyle(fontSize: 32),
+                        ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.listing.name, style: GoogleFonts.workSans(fontWeight: FontWeight.bold)),
+                            Text(
+                              item.listing.name,
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(height: 4),
-                            Text(item.listing.sellerName, style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+                            Text(
+                              item.listing.sellerName,
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                color: AnnvaColors.muted,
+                                fontSize: 12,
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             Text(
                               '${item.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg',
-                              style: GoogleFonts.workSans(color: AnnvaColors.primary, fontSize: 12, fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                color: AnnvaColors.primary,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ],
                         ),
@@ -137,10 +178,18 @@ class CartScreen extends ConsumerWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('₹${item.totalPrice.toStringAsFixed(0)}', style: AnnvaTextStyles.price),
+                          Text(
+                            '₹${item.totalPrice.toStringAsFixed(0)}',
+                            style: AnnvaTextStyles.price,
+                          ),
                           IconButton(
-                            icon: const Icon(Icons.close, size: 20, color: AnnvaColors.muted),
-                            onPressed: () => cartNotifier.removeItem(item.listingId),
+                            icon: const Icon(
+                              Icons.close,
+                              size: 20,
+                              color: AnnvaColors.muted,
+                            ),
+                            onPressed: () =>
+                                cartNotifier.removeItem(item.listingId),
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                           ),
@@ -176,7 +225,10 @@ class CartScreen extends ConsumerWidget {
                   children: [
                     Text('ORDER SUMMARY', style: AnnvaTextStyles.label),
                     const SizedBox(height: 16),
-                    _buildSummaryRow('Subtotal', '₹${cartNotifier.subtotal.toStringAsFixed(0)}'),
+                    _buildSummaryRow(
+                      'Subtotal',
+                      '₹${cartNotifier.subtotal.toStringAsFixed(0)}',
+                    ),
                     const SizedBox(height: 8),
                     _buildSummaryRow(
                       'Rescue discount',
@@ -192,17 +244,34 @@ class CartScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Total', style: GoogleFonts.workSans(fontWeight: FontWeight.bold, fontSize: 16)),
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
                         Text(
                           '₹${cartNotifier.subtotal.toStringAsFixed(0)}',
-                          style: GoogleFonts.workSans(fontWeight: FontWeight.bold, fontSize: 18, color: AnnvaColors.primary),
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: AnnvaColors.primary,
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'You\'re saving ₹${cartNotifier.totalSavings.toStringAsFixed(0)} and rescuing ${cartNotifier.totalKg.toStringAsFixed(1).replaceAll('.0', '')}kg from waste 🌱',
-                      style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12, fontStyle: FontStyle.italic),
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: AnnvaColors.muted,
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ],
                 ),
@@ -213,7 +282,11 @@ class CartScreen extends ConsumerWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Payment coming soon — Razorpay integration in next build')),
+                      const SnackBar(
+                        content: Text(
+                          'Payment coming soon — Razorpay integration in next build',
+                        ),
+                      ),
                     );
                     // context.go('/consumer/checkout');
                   },
@@ -221,11 +294,17 @@ class CartScreen extends ConsumerWidget {
                     backgroundColor: AnnvaColors.primary,
                     foregroundColor: AnnvaColors.primaryForeground,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                    ),
                   ),
                   child: Text(
                     'Proceed to Pay →',
-                    style: GoogleFonts.workSans(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
@@ -241,12 +320,18 @@ class CartScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: GoogleFonts.workSans(color: AnnvaColors.muted)),
+        Text(
+          label,
+          style: TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
+        ),
         Text(
           value,
-          style: GoogleFonts.workSans(
+          style: TextStyle(
+            fontFamily: 'WorkSans',
             color: valueColor ?? AnnvaColors.primary,
-            fontWeight: valueColor != null ? FontWeight.bold : FontWeight.normal,
+            fontWeight: valueColor != null
+                ? FontWeight.bold
+                : FontWeight.normal,
           ),
         ),
       ],

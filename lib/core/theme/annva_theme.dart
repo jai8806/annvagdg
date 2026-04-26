@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'annva_colors.dart';
 import 'annva_spacing.dart';
@@ -35,7 +34,8 @@ class AnnvaTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.instrumentSerif(
+        titleTextStyle: TextStyle(
+          fontFamily: 'InstrumentSerif',
           fontSize: 22,
           fontWeight: FontWeight.w400,
           color: AnnvaColors.primary,
@@ -57,10 +57,7 @@ class AnnvaTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AnnvaRadius.lg),
-          side: const BorderSide(
-            color: AnnvaColors.border,
-            width: 0.5,
-          ),
+          side: const BorderSide(color: AnnvaColors.border, width: 0.5),
         ),
         margin: EdgeInsets.zero,
       ),
@@ -76,7 +73,8 @@ class AnnvaTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
           ),
-          textStyle: GoogleFonts.workSans(
+          textStyle: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -94,11 +92,9 @@ class AnnvaTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
           ),
-          side: const BorderSide(
-            color: AnnvaColors.border,
-            width: 0.5,
-          ),
-          textStyle: GoogleFonts.workSans(
+          side: const BorderSide(color: AnnvaColors.border, width: 0.5),
+          textStyle: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -109,7 +105,8 @@ class AnnvaTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AnnvaColors.primary,
-          textStyle: GoogleFonts.workSans(
+          textStyle: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -140,16 +137,15 @@ class AnnvaTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AnnvaRadius.md),
-          borderSide: const BorderSide(
-            color: AnnvaColors.primary,
-            width: 1.5,
-          ),
+          borderSide: const BorderSide(color: AnnvaColors.primary, width: 1.5),
         ),
-        hintStyle: GoogleFonts.workSans(
+        hintStyle: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 14,
           color: AnnvaColors.mutedForeground,
         ),
-        labelStyle: GoogleFonts.workSans(
+        labelStyle: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 14,
           color: AnnvaColors.muted,
         ),
@@ -159,16 +155,14 @@ class AnnvaTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AnnvaColors.backgroundCard,
         selectedColor: AnnvaColors.primary,
-        labelStyle: GoogleFonts.workSans(
+        labelStyle: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AnnvaRadius.full),
-          side: const BorderSide(
-            color: AnnvaColors.border,
-            width: 0.5,
-          ),
+          side: const BorderSide(color: AnnvaColors.border, width: 0.5),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       ),
@@ -182,52 +176,61 @@ class AnnvaTheme {
 
       // ─── TEXT THEME — fallback base text styles ───
       textTheme: TextTheme(
-        displayLarge: GoogleFonts.instrumentSerif(
+        displayLarge: TextStyle(
+          fontFamily: 'InstrumentSerif',
           fontSize: 56,
           fontWeight: FontWeight.w400,
           letterSpacing: -0.5,
           color: AnnvaColors.primary,
         ),
-        headlineLarge: GoogleFonts.instrumentSerif(
+        headlineLarge: TextStyle(
+          fontFamily: 'InstrumentSerif',
           fontSize: 32,
           fontWeight: FontWeight.w400,
           letterSpacing: -0.3,
           color: AnnvaColors.primary,
         ),
-        headlineMedium: GoogleFonts.instrumentSerif(
+        headlineMedium: TextStyle(
+          fontFamily: 'InstrumentSerif',
           fontSize: 24,
           fontWeight: FontWeight.w400,
           color: AnnvaColors.primary,
         ),
-        headlineSmall: GoogleFonts.instrumentSerif(
+        headlineSmall: TextStyle(
+          fontFamily: 'InstrumentSerif',
           fontSize: 20,
           fontWeight: FontWeight.w400,
           color: AnnvaColors.primary,
         ),
-        bodyLarge: GoogleFonts.workSans(
+        bodyLarge: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 15,
           fontWeight: FontWeight.w400,
           height: 1.6,
           color: AnnvaColors.foreground,
         ),
-        bodyMedium: GoogleFonts.workSans(
+        bodyMedium: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 14,
           fontWeight: FontWeight.w400,
           height: 1.5,
           color: AnnvaColors.foreground,
         ),
-        bodySmall: GoogleFonts.workSans(
+        bodySmall: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 13,
           fontWeight: FontWeight.w400,
           height: 1.5,
           color: AnnvaColors.muted,
         ),
-        labelLarge: GoogleFonts.workSans(
+        labelLarge: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 14,
           fontWeight: FontWeight.w500,
           color: AnnvaColors.primaryForeground,
         ),
-        labelSmall: GoogleFonts.workSans(
+        labelSmall: TextStyle(
+          fontFamily: 'WorkSans',
           fontSize: 10,
           fontWeight: FontWeight.w500,
           letterSpacing: 1.2,

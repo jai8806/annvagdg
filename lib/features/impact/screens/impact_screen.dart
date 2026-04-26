@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../core/theme/annva_colors.dart';
@@ -22,7 +21,11 @@ class ImpactScreen extends ConsumerWidget {
         elevation: 0,
         leading: context.canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AnnvaColors.primary, size: 18),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AnnvaColors.primary,
+                  size: 18,
+                ),
                 onPressed: () => context.pop(),
               )
             : null,
@@ -42,26 +45,45 @@ class ImpactScreen extends ConsumerWidget {
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 3. WEEKLY RESCUE CHART
-            Text('WEEKLY RESCUES · KG', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+            Text(
+              'WEEKLY RESCUES · KG',
+              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+            ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildWeeklyChart(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 4. CITY BREAKDOWN
-            Text('RESCUES BY CITY', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+            Text(
+              'RESCUES BY CITY',
+              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+            ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildCityBreakdown(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 5. PARTNER LOGOS
-            Text('RESCUE PARTNERS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+            Text(
+              'RESCUE PARTNERS',
+              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+            ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildPartners(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 6. PRASAD PROTOCOL
-            Text('PRASAD PROTOCOL', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
-            Text('Sacred surplus, rescued daily', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+            Text(
+              'PRASAD PROTOCOL',
+              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+            ),
+            Text(
+              'Sacred surplus, rescued daily',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.muted,
+                fontSize: 12,
+              ),
+            ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildPrasadProtocol(),
             const SizedBox(height: AnnvaSpacing.xxl),
@@ -107,7 +129,8 @@ class ImpactScreen extends ConsumerWidget {
             _buildHeroCard(
               label: 'CITIES LIVE',
               value: '6',
-              subtext: 'Bengaluru · Mumbai · Delhi · Pune · Chennai · Hyderabad',
+              subtext:
+                  'Bengaluru · Mumbai · Delhi · Pune · Chennai · Hyderabad',
             ),
           ],
         );
@@ -115,7 +138,13 @@ class ImpactScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeroCard({required String label, required String value, required String subtext, bool isPrimary = false, double valueSize = 48}) {
+  Widget _buildHeroCard({
+    required String label,
+    required String value,
+    required String subtext,
+    bool isPrimary = false,
+    double valueSize = 48,
+  }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -126,11 +155,33 @@ class ImpactScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: AnnvaTextStyles.label.copyWith(color: isPrimary ? AnnvaColors.creamLight.withValues(alpha: 0.7) : AnnvaColors.ochre)),
+          Text(
+            label,
+            style: AnnvaTextStyles.label.copyWith(
+              color: isPrimary
+                  ? AnnvaColors.creamLight.withValues(alpha: 0.7)
+                  : AnnvaColors.ochre,
+            ),
+          ),
           const Spacer(),
-          Text(value, style: AnnvaTextStyles.h1.copyWith(color: isPrimary ? AnnvaColors.creamLight : AnnvaColors.primary, fontSize: valueSize)),
+          Text(
+            value,
+            style: AnnvaTextStyles.h1.copyWith(
+              color: isPrimary ? AnnvaColors.creamLight : AnnvaColors.primary,
+              fontSize: valueSize,
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(subtext, style: GoogleFonts.workSans(color: isPrimary ? AnnvaColors.creamLight.withValues(alpha: 0.6) : AnnvaColors.muted, fontSize: 10)),
+          Text(
+            subtext,
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              color: isPrimary
+                  ? AnnvaColors.creamLight.withValues(alpha: 0.6)
+                  : AnnvaColors.muted,
+              fontSize: 10,
+            ),
+          ),
         ],
       ),
     );
@@ -156,10 +207,25 @@ class ImpactScreen extends ConsumerWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
-                  final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                  final days = [
+                    'Mon',
+                    'Tue',
+                    'Wed',
+                    'Thu',
+                    'Fri',
+                    'Sat',
+                    'Sun',
+                  ];
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(days[value.toInt()], style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 10)),
+                    child: Text(
+                      days[value.toInt()],
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: AnnvaColors.muted,
+                        fontSize: 10,
+                      ),
+                    ),
                   );
                 },
                 reservedSize: 28,
@@ -232,22 +298,37 @@ class ImpactScreen extends ConsumerWidget {
             children: [
               SizedBox(
                 width: 100,
-                child: Text(city['name'] as String, style: GoogleFonts.workSans(fontWeight: FontWeight.w600, fontSize: 13)),
+                child: Text(
+                  city['name'] as String,
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
               ),
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final width = constraints.maxWidth * (city['pct'] as double);
+                    final width =
+                        constraints.maxWidth * (city['pct'] as double);
                     return Row(
                       children: [
                         Container(
                           height: 12,
-                          width: width.clamp(4.0, double.infinity), // Min width for visibility
+                          width: width.clamp(
+                            4.0,
+                            double.infinity,
+                          ), // Min width for visibility
                           decoration: BoxDecoration(
                             color: AnnvaColors.primary,
                             borderRadius: BorderRadius.circular(6),
                           ),
-                        ).animate().scaleX(alignment: Alignment.centerLeft, duration: 600.ms, curve: Curves.easeOutCubic),
+                        ).animate().scaleX(
+                          alignment: Alignment.centerLeft,
+                          duration: 600.ms,
+                          curve: Curves.easeOutCubic,
+                        ),
                       ],
                     );
                   },
@@ -256,11 +337,27 @@ class ImpactScreen extends ConsumerWidget {
               const SizedBox(width: 12),
               SizedBox(
                 width: 50,
-                child: Text('${((city['pct'] as double) * 100).toInt()}%', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12, fontWeight: FontWeight.bold)),
+                child: Text(
+                  '${((city['pct'] as double) * 100).toInt()}%',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.muted,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               SizedBox(
                 width: 70,
-                child: Text('${city['kg']} kg', style: GoogleFonts.workSans(color: AnnvaColors.primary, fontSize: 12), textAlign: TextAlign.right),
+                child: Text(
+                  '${city['kg']} kg',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    color: AnnvaColors.primary,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
               ),
             ],
           ),
@@ -270,7 +367,16 @@ class ImpactScreen extends ConsumerWidget {
   }
 
   Widget _buildPartners() {
-    final partners = ['NCC', 'NYKS', 'NSS', 'Akshaya Patra', 'Robin Hood Army', 'Feeding India', 'Goonj', 'The Better India'];
+    final partners = [
+      'NCC',
+      'NYKS',
+      'NSS',
+      'Akshaya Patra',
+      'Robin Hood Army',
+      'Feeding India',
+      'Goonj',
+      'The Better India',
+    ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -283,7 +389,14 @@ class ImpactScreen extends ConsumerWidget {
               borderRadius: BorderRadius.circular(AnnvaRadius.full),
               border: Border.all(color: AnnvaColors.border),
             ),
-            child: Text(partner, style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+            child: Text(
+              partner,
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.muted,
+                fontSize: 12,
+              ),
+            ),
           );
         }).toList(),
       ),
@@ -292,9 +405,21 @@ class ImpactScreen extends ConsumerWidget {
 
   Widget _buildPrasadProtocol() {
     final tiles = [
-      {'title': 'Golden Temple, Amritsar', 'subtitle': 'Langar surplus · Coming soon', 'emoji': '🛕'},
-      {'title': 'ISKCON Bengaluru', 'subtitle': 'Prasad rescue · Pilot Q3 2026', 'emoji': '🛕'},
-      {'title': 'Tirupati Temple Trust', 'subtitle': 'Partnership discussions', 'emoji': '🛕'},
+      {
+        'title': 'Golden Temple, Amritsar',
+        'subtitle': 'Langar surplus · Coming soon',
+        'emoji': '🛕',
+      },
+      {
+        'title': 'ISKCON Bengaluru',
+        'subtitle': 'Prasad rescue · Pilot Q3 2026',
+        'emoji': '🛕',
+      },
+      {
+        'title': 'Tirupati Temple Trust',
+        'subtitle': 'Partnership discussions',
+        'emoji': '🛕',
+      },
     ];
 
     return Column(
@@ -315,8 +440,22 @@ class ImpactScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tile['title']!, style: GoogleFonts.workSans(fontWeight: FontWeight.bold, color: AnnvaColors.primary)),
-                    Text(tile['subtitle']!, style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+                    Text(
+                      tile['title']!,
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontWeight: FontWeight.bold,
+                        color: AnnvaColors.primary,
+                      ),
+                    ),
+                    Text(
+                      tile['subtitle']!,
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: AnnvaColors.muted,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -340,7 +479,10 @@ class ImpactScreen extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text('NGO RESCUE FUND', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+              Text(
+                'NGO RESCUE FUND',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
               const Spacer(),
               const Icon(Icons.favorite, color: Colors.red, size: 16),
             ],
@@ -352,14 +494,21 @@ class ImpactScreen extends ConsumerWidget {
               final total = snapshot.data?.snapshot.value as num? ?? 0;
               return Text(
                 '₹${total.toStringAsFixed(0)}',
-                style: AnnvaTextStyles.h1.copyWith(fontSize: 32, color: AnnvaColors.primary),
+                style: AnnvaTextStyles.h1.copyWith(
+                  fontSize: 32,
+                  color: AnnvaColors.primary,
+                ),
               );
             },
           ),
           const SizedBox(height: 4),
           Text(
             'Forfeited deposits repurposed for NGO logistical support. No waste, only rescue.',
-            style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 11),
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              color: AnnvaColors.muted,
+              fontSize: 11,
+            ),
           ),
         ],
       ),
@@ -377,21 +526,45 @@ class ImpactScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('अन्न ही ब्रह्म है', style: TextStyle(fontFamily: 'Noto Serif Devanagari', fontSize: 20, color: AnnvaColors.creamLight)),
+          const Text(
+            'अन्न ही ब्रह्म है',
+            style: TextStyle(
+              fontFamily: 'NotoSerifDevanagari',
+              fontSize: 20,
+              color: AnnvaColors.creamLight,
+            ),
+          ),
           const SizedBox(height: 8),
-          Text('Register your event. We\'ll pre-position rescue.', style: GoogleFonts.workSans(color: AnnvaColors.creamLight.withValues(alpha: 0.7), fontSize: 14)),
+          Text(
+            'Register your event. We\'ll pre-position rescue.',
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              color: AnnvaColors.creamLight.withValues(alpha: 0.7),
+              fontSize: 14,
+            ),
+          ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Events page coming soon.')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Events page coming soon.')),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AnnvaColors.creamLight.withValues(alpha: 0.2),
               foregroundColor: AnnvaColors.creamLight,
               elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AnnvaRadius.full),
+              ),
             ),
-            child: Text('Register an event →', style: GoogleFonts.workSans(fontWeight: FontWeight.bold)),
+            child: Text(
+              'Register an event →',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

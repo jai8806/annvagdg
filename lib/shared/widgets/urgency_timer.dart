@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 
@@ -120,7 +119,8 @@ class _UrgencyTimerState extends State<UrgencyTimer> {
         const SizedBox(width: 4),
         Text(
           _formattedTime,
-          style: GoogleFonts.workSans(
+          style: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: widget.fontSize,
             fontWeight: FontWeight.w500,
             color: _timerColor,

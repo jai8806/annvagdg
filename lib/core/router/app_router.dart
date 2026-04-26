@@ -14,6 +14,7 @@ import '../../features/seller/screens/seller_home_screen.dart';
 import '../../features/volunteer/screens/volunteer_home_screen.dart';
 import '../../features/ngo/screens/ngo_home_screen.dart';
 import '../../features/impact/screens/impact_screen.dart';
+import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/demo/demo_screen.dart';
 import '../../shared/widgets/annva_scaffold.dart';
@@ -32,18 +33,19 @@ GoRouter appRouter(AppRouterRef ref) {
     initialLocation: '/',
     redirect: (context, state) {
       final authState = ref.read(authNotifierProvider);
-      
+
       // CRITICAL: while loading prefs, don't redirect anywhere
       if (authState.isLoading) return null;
-      
+
       final isAuthenticated = authState.isAuthenticated;
       final role = authState.role;
       final loc = state.matchedLocation;
-      
+
       final isAuthRoute = loc.startsWith('/auth');
       final isDemoRoute = loc == '/';
-      final isPublicRoute = isAuthRoute || isDemoRoute;
-      
+      final isOnboardingRoute = loc == '/onboarding';
+      final isPublicRoute = isAuthRoute || isDemoRoute || isOnboardingRoute;
+
       // Not authenticated: only allow '/' and '/auth/*'
       if (!isAuthenticated && !isPublicRoute) {
         return '/';
@@ -53,27 +55,33 @@ GoRouter appRouter(AppRouterRef ref) {
       if (isAuthenticated && role == null && !isAuthRoute) {
         return '/auth/role';
       }
-      
+
       // Authenticated but on auth route: go to role home
       if (isAuthenticated && role != null && isAuthRoute) {
         return _roleHome(role);
       }
-      
+
       // Authenticated on demo: go to role home
       if (isAuthenticated && role != null && isDemoRoute) {
         return _roleHome(role);
       }
-      
+
       return null;
     },
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const DemoScreen(key: ValueKey('demo_screen')), // Landing
+        builder: (context, state) =>
+            const DemoScreen(key: ValueKey('demo_screen')), // Landing
       ),
       GoRoute(
         path: '/demo',
-        builder: (context, state) => const DemoScreen(key: ValueKey('demo_screen_alt')),
+        builder: (context, state) =>
+            const DemoScreen(key: ValueKey('demo_screen_alt')),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: '/auth',
@@ -89,7 +97,7 @@ GoRouter appRouter(AppRouterRef ref) {
           ),
         ],
       ),
-      
+
       // Authenticated area with Bottom Nav
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -98,11 +106,13 @@ GoRouter appRouter(AppRouterRef ref) {
           // Consumer
           GoRoute(
             path: '/consumer',
-            builder: (context, state) => const ConsumerHomeScreen(key: ValueKey('consumer_home')),
+            builder: (context, state) =>
+                const ConsumerHomeScreen(key: ValueKey('consumer_home')),
             routes: [
               GoRoute(
                 path: 'map',
-                builder: (context, state) => const ConsumerMapScreen(key: ValueKey('consumer_map')),
+                builder: (context, state) =>
+                    const ConsumerMapScreen(key: ValueKey('consumer_map')),
               ),
               GoRoute(
                 path: 'cart',
@@ -120,33 +130,40 @@ GoRouter appRouter(AppRouterRef ref) {
           // Seller
           GoRoute(
             path: '/seller',
-            builder: (context, state) => const SellerHomeScreen(key: ValueKey('seller_home')),
+            builder: (context, state) =>
+                const SellerHomeScreen(key: ValueKey('seller_home')),
           ),
           // Volunteer
           GoRoute(
             path: '/volunteer',
-            builder: (context, state) => const VolunteerHomeScreen(key: ValueKey('volunteer_home')),
+            builder: (context, state) =>
+                const VolunteerHomeScreen(key: ValueKey('volunteer_home')),
             routes: [
               GoRoute(
                 path: 'missions',
-                builder: (context, state) => const Scaffold(body: Center(child: Text('Missions Screen'))),
+                builder: (context, state) => const Scaffold(
+                  body: Center(child: Text('Missions Screen')),
+                ),
               ),
             ],
           ),
           // NGO
           GoRoute(
             path: '/ngo',
-            builder: (context, state) => const NgoHomeScreen(key: ValueKey('ngo_home')),
+            builder: (context, state) =>
+                const NgoHomeScreen(key: ValueKey('ngo_home')),
           ),
           // Impact (Shared)
           GoRoute(
             path: '/impact',
-            builder: (context, state) => const ImpactScreen(key: ValueKey('impact_screen')),
+            builder: (context, state) =>
+                const ImpactScreen(key: ValueKey('impact_screen')),
           ),
           // Profile (Shared)
           GoRoute(
             path: '/profile',
-            builder: (context, state) => const ProfileScreen(key: ValueKey('profile_screen')),
+            builder: (context, state) =>
+                const ProfileScreen(key: ValueKey('profile_screen')),
           ),
         ],
       ),
@@ -164,9 +181,13 @@ GoRouter appRouter(AppRouterRef ref) {
 
 String _roleHome(String? role) {
   switch (role) {
-    case 'seller': return '/seller';
-    case 'volunteer': return '/volunteer';
-    case 'ngo': return '/ngo';
-    default: return '/consumer';
+    case 'seller':
+      return '/seller';
+    case 'volunteer':
+      return '/volunteer';
+    case 'ngo':
+      return '/ngo';
+    default:
+      return '/consumer';
   }
 }

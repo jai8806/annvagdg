@@ -46,7 +46,8 @@ class FoodListing with _$FoodListing {
   }) = _FoodListing;
   const FoodListing._();
 
-  factory FoodListing.fromJson(Map<String, dynamic> json) => _$FoodListingFromJson(json);
+  factory FoodListing.fromJson(Map<String, dynamic> json) =>
+      _$FoodListingFromJson(json);
 
   factory FoodListing.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
@@ -57,5 +58,6 @@ class FoodListing with _$FoodListing {
   String get sellerLabel => '$sellerName · $address';
   String get formattedPrice => '₹$currentPrice';
   String get formattedOriginalPrice => '₹$originalPrice';
-  String get quantityLabel => '${qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg • $servings servings';
+  String get quantityLabel =>
+      '${qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg • $servings servings';
 }

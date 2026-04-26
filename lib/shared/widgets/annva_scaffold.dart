@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 import '../../features/auth/providers/auth_provider.dart';
@@ -11,10 +10,7 @@ import '../../features/auth/providers/auth_provider.dart';
 class AnnvaScaffold extends ConsumerWidget {
   final Widget child;
 
-  const AnnvaScaffold({
-    super.key,
-    required this.child,
-  });
+  const AnnvaScaffold({super.key, required this.child});
 
   // ─── Nav configs per role ─────────────────────────────────────────────────
 
@@ -22,30 +18,75 @@ class AnnvaScaffold extends ConsumerWidget {
     switch (role) {
       case 'seller':
         return const [
-          _NavItem(Icons.dashboard_outlined, Icons.dashboard, 'Dashboard', '/seller'),
-          _NavItem(Icons.add_circle_outline, Icons.add_circle, 'List Item', '/seller'),
-          _NavItem(Icons.bar_chart_outlined, Icons.bar_chart, 'Impact', '/impact'),
+          _NavItem(
+            Icons.dashboard_outlined,
+            Icons.dashboard,
+            'Dashboard',
+            '/seller',
+          ),
+          _NavItem(
+            Icons.add_circle_outline,
+            Icons.add_circle,
+            'List Item',
+            '/seller',
+          ),
+          _NavItem(
+            Icons.bar_chart_outlined,
+            Icons.bar_chart,
+            'Impact',
+            '/impact',
+          ),
           _NavItem(Icons.person_outline, Icons.person, 'Profile', '/profile'),
         ];
       case 'volunteer':
         return const [
           _NavItem(Icons.map_outlined, Icons.map, 'Rescues', '/volunteer'),
-          _NavItem(Icons.emoji_events_outlined, Icons.emoji_events, 'Missions', '/volunteer/missions'),
-          _NavItem(Icons.bar_chart_outlined, Icons.bar_chart, 'Impact', '/impact'),
+          _NavItem(
+            Icons.emoji_events_outlined,
+            Icons.emoji_events,
+            'Missions',
+            '/volunteer/missions',
+          ),
+          _NavItem(
+            Icons.bar_chart_outlined,
+            Icons.bar_chart,
+            'Impact',
+            '/impact',
+          ),
           _NavItem(Icons.person_outline, Icons.person, 'Profile', '/profile'),
         ];
       case 'ngo':
         return const [
-          _NavItem(Icons.notifications_outlined, Icons.notifications, 'Incoming', '/ngo'),
-          _NavItem(Icons.bar_chart_outlined, Icons.bar_chart, 'Impact', '/impact'),
+          _NavItem(
+            Icons.notifications_outlined,
+            Icons.notifications,
+            'Incoming',
+            '/ngo',
+          ),
+          _NavItem(
+            Icons.bar_chart_outlined,
+            Icons.bar_chart,
+            'Impact',
+            '/impact',
+          ),
           _NavItem(Icons.person_outline, Icons.person, 'Profile', '/profile'),
         ];
       default: // consumer
         return const [
           _NavItem(Icons.home_outlined, Icons.home, 'Home', '/consumer'),
           _NavItem(Icons.map_outlined, Icons.map, 'Map', '/consumer/map'),
-          _NavItem(Icons.shopping_bag_outlined, Icons.shopping_bag, 'Cart', '/consumer/cart'),
-          _NavItem(Icons.bar_chart_outlined, Icons.bar_chart, 'Impact', '/impact'),
+          _NavItem(
+            Icons.shopping_bag_outlined,
+            Icons.shopping_bag,
+            'Cart',
+            '/consumer/cart',
+          ),
+          _NavItem(
+            Icons.bar_chart_outlined,
+            Icons.bar_chart,
+            'Impact',
+            '/impact',
+          ),
           _NavItem(Icons.person_outline, Icons.person, 'Profile', '/profile'),
         ];
     }
@@ -53,7 +94,7 @@ class AnnvaScaffold extends ConsumerWidget {
 
   int _currentIndex(BuildContext context, List<_NavItem> items) {
     final loc = GoRouterState.of(context).matchedLocation;
-    
+
     // Profile and Impact are shared sub-routes
     if (loc.startsWith('/profile')) return items.length - 1;
     final impactIdx = items.indexWhere((i) => i.route == '/impact');
@@ -63,12 +104,12 @@ class AnnvaScaffold extends ConsumerWidget {
     for (int i = 0; i < items.length; i++) {
       if (loc == items[i].route) return i;
     }
-    
+
     // Prefix match
     for (int i = 0; i < items.length; i++) {
       if (loc.startsWith(items[i].route) && items[i].route != '/') return i;
     }
-    
+
     return 0;
   }
 
@@ -93,8 +134,16 @@ class AnnvaScaffold extends ConsumerWidget {
           selectedItemColor: AnnvaColors.primary,
           unselectedItemColor: AnnvaColors.muted,
           elevation: 0,
-          selectedLabelStyle: GoogleFonts.workSans(fontSize: 11, fontWeight: FontWeight.w500),
-          unselectedLabelStyle: GoogleFonts.workSans(fontSize: 11, fontWeight: FontWeight.w400),
+          selectedLabelStyle: TextStyle(
+            fontFamily: 'WorkSans',
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontFamily: 'WorkSans',
+            fontSize: 11,
+            fontWeight: FontWeight.w400,
+          ),
           onTap: (index) {
             final route = items[index].route;
             // index 0 is the home tab for the role

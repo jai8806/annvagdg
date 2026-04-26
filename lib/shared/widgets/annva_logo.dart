@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 
@@ -17,11 +16,7 @@ class AnnvaLogo extends StatelessWidget {
   /// Color override. Defaults to AnnvaColors.primary.
   final Color? color;
 
-  const AnnvaLogo({
-    super.key,
-    this.fontSize = 24,
-    this.color,
-  });
+  const AnnvaLogo({super.key, this.fontSize = 24, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +30,8 @@ class AnnvaLogo extends StatelessWidget {
         // Devanagari: अन्न
         Text(
           'अन्न',
-          style: GoogleFonts.notoSerifDevanagari(
+          style: TextStyle(
+            fontFamily: 'NotoSerifDevanagari',
             fontSize: fontSize,
             fontWeight: FontWeight.w400,
             color: textColor,
@@ -45,7 +41,8 @@ class AnnvaLogo extends StatelessWidget {
         // Latin: Annva
         Text(
           'Annva',
-          style: GoogleFonts.instrumentSerif(
+          style: TextStyle(
+            fontFamily: 'InstrumentSerif',
             fontSize: fontSize * 0.9,
             fontWeight: FontWeight.w400,
             color: textColor,

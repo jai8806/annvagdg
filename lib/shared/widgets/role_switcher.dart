@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 import '../../core/theme/annva_spacing.dart';
@@ -60,10 +59,7 @@ class RoleSwitcher extends StatelessWidget {
       decoration: BoxDecoration(
         color: AnnvaColors.backgroundCard,
         borderRadius: BorderRadius.circular(AnnvaRadius.full),
-        border: Border.all(
-          color: AnnvaColors.border,
-          width: 0.5,
-        ),
+        border: Border.all(color: AnnvaColors.border, width: 0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -74,19 +70,15 @@ class RoleSwitcher extends StatelessWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 7,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
-                color: isActive
-                    ? AnnvaColors.primary
-                    : Colors.transparent,
+                color: isActive ? AnnvaColors.primary : Colors.transparent,
                 borderRadius: BorderRadius.circular(AnnvaRadius.full),
               ),
               child: Text(
                 role.label,
-                style: GoogleFonts.workSans(
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
                   fontSize: 12,
                   fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                   color: isActive

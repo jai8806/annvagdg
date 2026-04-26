@@ -11,13 +11,16 @@ class PriceLockCleanup extends _$PriceLockCleanup {
 
   @override
   void build() {
-    _timer = Timer.periodic(const Duration(minutes: 5), (_) => _cleanupExpiredLocks());
+    _timer = Timer.periodic(
+      const Duration(minutes: 5),
+      (_) => _cleanupExpiredLocks(),
+    );
     ref.onDispose(() => _timer?.cancel());
   }
 
   Future<void> _cleanupExpiredLocks() async {
     final now = Timestamp.now();
-    
+
     // 1. Find expired locks
     final snapshot = await FirebaseFirestore.instance
         .collection('listings')
@@ -46,7 +49,7 @@ class PriceLockCleanup extends _$PriceLockCleanup {
           .where('listingId', isEqualTo: listingId)
           .where('status', isEqualTo: 'active')
           .get();
-      
+
       for (var depDoc in depSnapshot.docs) {
         await depDoc.reference.update({'status': 'forfeited_to_ngo'});
       }

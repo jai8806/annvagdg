@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/theme/annva_colors.dart';
@@ -34,7 +33,11 @@ class ProfileScreen extends ConsumerWidget {
         elevation: 0,
         leading: context.canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AnnvaColors.primary, size: 18),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AnnvaColors.primary,
+                  size: 18,
+                ),
                 onPressed: () => context.pop(),
               )
             : null,
@@ -63,25 +66,26 @@ class ProfileScreen extends ConsumerWidget {
                 alignment: Alignment.center,
                 child: Text(
                   role.substring(0, 1).toUpperCase(),
-                  style: AnnvaTextStyles.h1.copyWith(color: roleColor, fontSize: 32),
+                  style: AnnvaTextStyles.h1.copyWith(
+                    color: roleColor,
+                    fontSize: 32,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: AnnvaSpacing.md),
 
             // Phone
-            Center(
-              child: Text(
-                phone,
-                style: AnnvaTextStyles.h2,
-              ),
-            ),
+            Center(child: Text(phone, style: AnnvaTextStyles.h2)),
             const SizedBox(height: 8),
 
             // Role chip
             Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: roleColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AnnvaRadius.full),
@@ -89,7 +93,8 @@ class ProfileScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   role.toUpperCase(),
-                  style: GoogleFonts.workSans(
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
                     color: roleColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
@@ -126,7 +131,8 @@ class ProfileScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   'Switch role →',
-                  style: GoogleFonts.workSans(
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
                     color: AnnvaColors.primary,
                     fontWeight: FontWeight.w600,
                   ),
@@ -145,7 +151,9 @@ class ProfileScreen extends ConsumerWidget {
                   if (context.mounted) context.go('/');
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AnnvaColors.cascadeUrgent.withValues(alpha: 0.08),
+                  backgroundColor: AnnvaColors.cascadeUrgent.withValues(
+                    alpha: 0.08,
+                  ),
                   foregroundColor: AnnvaColors.cascadeUrgent,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -154,7 +162,10 @@ class ProfileScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   'Sign out',
-                  style: GoogleFonts.workSans(fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),

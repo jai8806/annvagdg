@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_spacing.dart';
 import '../models/cascade_stage.dart';
@@ -16,11 +15,7 @@ class CascadeBadge extends StatefulWidget {
   /// If true, shows the short label (e.g., "Fresh") instead of the full label.
   final bool compact;
 
-  const CascadeBadge({
-    super.key,
-    required this.stage,
-    this.compact = false,
-  });
+  const CascadeBadge({super.key, required this.stage, this.compact = false});
 
   @override
   State<CascadeBadge> createState() => _CascadeBadgeState();
@@ -38,9 +33,10 @@ class _CascadeBadgeState extends State<CascadeBadge>
       vsync: this,
       duration: _animationDuration,
     );
-    _pulseAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _pulseAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _startAnimationIfNeeded();
   }
 
@@ -85,22 +81,15 @@ class _CascadeBadgeState extends State<CascadeBadge>
   @override
   Widget build(BuildContext context) {
     final stageColor = widget.stage.color;
-    final label =
-        widget.compact ? widget.stage.shortLabel : widget.stage.label;
+    final label = widget.compact ? widget.stage.shortLabel : widget.stage.label;
 
     Widget badge = AnimatedContainer(
       duration: const Duration(milliseconds: 400),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: stageColor.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AnnvaRadius.full),
-        border: Border.all(
-          color: stageColor.withValues(alpha: 0.3),
-          width: 1,
-        ),
+        border: Border.all(color: stageColor.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -118,7 +107,8 @@ class _CascadeBadgeState extends State<CascadeBadge>
           // Stage label
           Text(
             label,
-            style: GoogleFonts.workSans(
+            style: TextStyle(
+              fontFamily: 'WorkSans',
               fontSize: 11,
               fontWeight: FontWeight.w600,
               color: stageColor,
@@ -130,7 +120,8 @@ class _CascadeBadgeState extends State<CascadeBadge>
     );
 
     // Wrap with animation for mid and urgent stages
-    if (widget.stage == CascadeStage.ngo || widget.stage == CascadeStage.lastCall) {
+    if (widget.stage == CascadeStage.ngo ||
+        widget.stage == CascadeStage.lastCall) {
       badge = _buildPulsingRing(badge, stageColor);
     } else if (widget.stage == CascadeStage.hotDeal) {
       badge = _buildGentleGlow(badge, stageColor);

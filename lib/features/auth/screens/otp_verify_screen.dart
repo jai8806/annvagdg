@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/annva_colors.dart';
 import '../../../core/theme/annva_spacing.dart';
@@ -16,7 +15,10 @@ class OtpVerifyScreen extends ConsumerStatefulWidget {
 }
 
 class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   int _countdown = 30;
   Timer? _timer;
@@ -29,8 +31,12 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
 
   @override
   void dispose() {
-    for (var c in _controllers) { c.dispose(); }
-    for (var f in _focusNodes) { f.dispose(); }
+    for (var c in _controllers) {
+      c.dispose();
+    }
+    for (var f in _focusNodes) {
+      f.dispose();
+    }
     _timer?.cancel();
     super.dispose();
   }
@@ -74,7 +80,9 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
     final phoneStr = authState.phoneNumber ?? '0000000000';
-    final last4 = phoneStr.length >= 4 ? phoneStr.substring(phoneStr.length - 4) : 'XXXX';
+    final last4 = phoneStr.length >= 4
+        ? phoneStr.substring(phoneStr.length - 4)
+        : 'XXXX';
 
     return Scaffold(
       backgroundColor: AnnvaColors.background,
@@ -88,14 +96,17 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnnvaSpacing.containerPadding,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: AnnvaSpacing.xl),
               Text(
                 'Enter OTP',
-                style: GoogleFonts.instrumentSerif(
+                style: TextStyle(
+                  fontFamily: 'InstrumentSerif',
                   fontSize: 40,
                   fontWeight: FontWeight.w400,
                   color: AnnvaColors.primary,
@@ -104,7 +115,8 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
               const SizedBox(height: AnnvaSpacing.sm),
               Text(
                 'Sent to +91 XXXXXX$last4',
-                style: GoogleFonts.workSans(
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
                   fontSize: 16,
                   color: AnnvaColors.muted,
                 ),
@@ -116,7 +128,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(6, (index) => _buildOtpBox(index)),
               ),
-              
+
               const SizedBox(height: AnnvaSpacing.xl),
 
               // Resend text
@@ -124,7 +136,8 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                 child: _countdown > 0
                     ? Text(
                         'Resend OTP in 0:${_countdown.toString().padLeft(2, '0')}',
-                        style: GoogleFonts.workSans(
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
                           fontSize: 14,
                           color: AnnvaColors.muted,
                         ),
@@ -133,7 +146,8 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                         onTap: _startCountdown,
                         child: Text(
                           'Resend OTP',
-                          style: GoogleFonts.workSans(
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: AnnvaColors.ochre,
@@ -153,12 +167,12 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
       width: 48,
       height: 56,
       decoration: BoxDecoration(
-        color: _controllers[index].text.isNotEmpty 
-            ? AnnvaColors.backgroundCard 
+        color: _controllers[index].text.isNotEmpty
+            ? AnnvaColors.backgroundCard
             : AnnvaColors.backgroundSecondary,
         border: Border.all(
-          color: _focusNodes[index].hasFocus 
-              ? AnnvaColors.primary 
+          color: _focusNodes[index].hasFocus
+              ? AnnvaColors.primary
               : Colors.transparent,
           width: 2,
         ),
@@ -171,7 +185,8 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           maxLength: 1,
-          style: GoogleFonts.workSans(
+          style: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 24,
             fontWeight: FontWeight.w600,
             color: AnnvaColors.primary,

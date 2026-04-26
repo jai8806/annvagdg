@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../core/theme/annva_colors.dart';
@@ -36,7 +35,15 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   int _cookedMinutesElapsed = 0;
   bool _isRefrigerated = false;
 
-  final _verticals = ['Restaurant', 'Kirana', 'Bakery', 'Event', 'Corporate', 'Temple / Gurudwara', 'Mosque'];
+  final _verticals = [
+    'Restaurant',
+    'Kirana',
+    'Bakery',
+    'Event',
+    'Corporate',
+    'Temple / Gurudwara',
+    'Mosque',
+  ];
   final _allDiets = ['Veg', 'Non-veg', 'Jain', 'Halal'];
 
   @override
@@ -86,24 +93,32 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   }
 
   Future<void> _listSurplus() async {
-    if (_nameCtrl.text.isEmpty || _qtyCtrl.text.isEmpty || _priceCtrl.text.isEmpty) {
+    if (_nameCtrl.text.isEmpty ||
+        _qtyCtrl.text.isEmpty ||
+        _priceCtrl.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill all required fields.')),
       );
       return;
     }
 
-    final remainingMins = _isRefrigerated ? (24 * 60) : (240 - _cookedMinutesElapsed);
+    final remainingMins = _isRefrigerated
+        ? (24 * 60)
+        : (240 - _cookedMinutesElapsed);
     final expiresAt = DateTime.now().add(Duration(minutes: remainingMins));
-    
+
     CascadeStage stage;
-    if (_cookedMinutesElapsed >= 210) { // 3.5h
+    if (_cookedMinutesElapsed >= 210) {
+      // 3.5h
       stage = CascadeStage.ngo;
-    } else if (_cookedMinutesElapsed >= 180) { // 3h
+    } else if (_cookedMinutesElapsed >= 180) {
+      // 3h
       stage = CascadeStage.lastCall;
-    } else if (_cookedMinutesElapsed >= 120) { // 2h
+    } else if (_cookedMinutesElapsed >= 120) {
+      // 2h
       stage = CascadeStage.hotDeal;
-    } else if (_cookedMinutesElapsed >= 60) { // 1h
+    } else if (_cookedMinutesElapsed >= 60) {
+      // 1h
       stage = CascadeStage.goodDeal;
     } else {
       stage = CascadeStage.fresh;
@@ -125,7 +140,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       address: 'Lalbagh',
       diet: _selectedDiets.map((e) => e.toLowerCase()).toList(),
       qtyKg: double.tryParse(_qtyCtrl.text) ?? 0.0,
-      servings: ((double.tryParse(_qtyCtrl.text) ?? 0.0) * 4).round(), // arbitrary calculation
+      servings: ((double.tryParse(_qtyCtrl.text) ?? 0.0) * 4)
+          .round(), // arbitrary calculation
       originalPrice: originalPrice,
       currentPrice: currentPrice,
       stage: stage,
@@ -137,14 +153,19 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       isActive: true,
     );
 
-    await FirebaseFirestore.instance.collection('listings').doc(newListing.id).set(newListing.toJson());
+    await FirebaseFirestore.instance
+        .collection('listings')
+        .doc(newListing.id)
+        .set(newListing.toJson());
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('✓ Listed! Your item is now live on the cascade.')),
+        const SnackBar(
+          content: Text('✓ Listed! Your item is now live on the cascade.'),
+        ),
       );
       ref.invalidate(activeListingsProvider);
-      
+
       setState(() {
         _nameCtrl.clear();
         _qtyCtrl.clear();
@@ -165,7 +186,11 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         elevation: 0,
         leading: context.canPop()
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AnnvaColors.primary, size: 18),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AnnvaColors.primary,
+                  size: 18,
+                ),
                 onPressed: () => context.pop(),
               )
             : null,
@@ -183,13 +208,22 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('SELLER', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+                  Text(
+                    'SELLER',
+                    style: AnnvaTextStyles.label.copyWith(
+                      color: AnnvaColors.ochre,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Text('Ravi\'s Kitchen', style: AnnvaTextStyles.h1),
                   const SizedBox(height: 4),
                   Text(
                     'MTR — Lalbagh · Restaurant partner since 2024',
-                    style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13),
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),
@@ -202,7 +236,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               height: 160,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AnnvaSpacing.containerPadding,
+                ),
                 children: [
                   _buildPrimaryStatCard(),
                   const SizedBox(width: AnnvaSpacing.sm),
@@ -224,17 +260,37 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('BRSR / ESG EXPORT', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+                        Text(
+                          'BRSR / ESG EXPORT',
+                          style: AnnvaTextStyles.label.copyWith(
+                            color: AnnvaColors.ochre,
+                          ),
+                        ),
                         const Spacer(),
-                        Text('1,842 kg rescued · 4.6T CO₂e avoided', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+                        Text(
+                          '1,842 kg rescued · 4.6T CO₂e avoided',
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            color: AnnvaColors.muted,
+                            fontSize: 12,
+                          ),
+                        ),
                         const SizedBox(height: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: AnnvaColors.border),
-                            borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                            borderRadius: BorderRadius.circular(
+                              AnnvaRadius.full,
+                            ),
                           ),
-                          child: Text('Download PDF', style: AnnvaTextStyles.bodySmall),
+                          child: Text(
+                            'Download PDF',
+                            style: AnnvaTextStyles.bodySmall,
+                          ),
                         ),
                       ],
                     ),
@@ -259,12 +315,30 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('List surplus food', style: AnnvaTextStyles.h2),
-                            Text('Snap a photo. Our AI fills the rest.', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13)),
+                            Text(
+                              'List surplus food',
+                              style: AnnvaTextStyles.h2,
+                            ),
+                            Text(
+                              'Snap a photo. Our AI fills the rest.',
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                color: AnnvaColors.muted,
+                                fontSize: 13,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      Text('✦ AI-assisted', style: GoogleFonts.workSans(color: AnnvaColors.ochre, fontSize: 12, fontWeight: FontWeight.w600)),
+                      Text(
+                        '✦ AI-assisted',
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
+                          color: AnnvaColors.ochre,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: AnnvaSpacing.md),
@@ -302,9 +376,18 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                         backgroundColor: AnnvaColors.primary,
                         foregroundColor: AnnvaColors.primaryForeground,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                        ),
                       ),
-                      child: Text('List this item →', style: GoogleFonts.workSans(fontWeight: FontWeight.bold, fontSize: 16)),
+                      child: Text(
+                        'List this item →',
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -315,8 +398,16 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           // 4. LIVE LISTINGS
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(AnnvaSpacing.containerPadding, AnnvaSpacing.xl, AnnvaSpacing.containerPadding, AnnvaSpacing.sm),
-              child: Text('YOUR LIVE LISTINGS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+              padding: const EdgeInsets.fromLTRB(
+                AnnvaSpacing.containerPadding,
+                AnnvaSpacing.xl,
+                AnnvaSpacing.containerPadding,
+                AnnvaSpacing.sm,
+              ),
+              child: Text(
+                'YOUR LIVE LISTINGS',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
             ),
           ),
           _buildLiveListings(),
@@ -337,10 +428,28 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('RECOVERED TODAY', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.creamLight.withValues(alpha: 0.7))),
+          Text(
+            'RECOVERED TODAY',
+            style: AnnvaTextStyles.label.copyWith(
+              color: AnnvaColors.creamLight.withValues(alpha: 0.7),
+            ),
+          ),
           const Spacer(),
-          Text('₹9,840', style: AnnvaTextStyles.h1.copyWith(color: AnnvaColors.creamLight, fontSize: 40)),
-          Text('vs ₹34,200 would-have-wasted', style: GoogleFonts.workSans(color: AnnvaColors.creamLight.withValues(alpha: 0.6), fontSize: 12)),
+          Text(
+            '₹9,840',
+            style: AnnvaTextStyles.h1.copyWith(
+              color: AnnvaColors.creamLight,
+              fontSize: 40,
+            ),
+          ),
+          Text(
+            'vs ₹34,200 would-have-wasted',
+            style: TextStyle(
+              fontFamily: 'WorkSans',
+              color: AnnvaColors.creamLight.withValues(alpha: 0.6),
+              fontSize: 12,
+            ),
+          ),
           const SizedBox(height: 16),
           Container(
             height: 6,
@@ -365,7 +474,13 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     );
   }
 
-  Widget _buildLightStatCard({required String label, required String value, required String subtext, String? actionText, Widget? actionWidget}) {
+  Widget _buildLightStatCard({
+    required String label,
+    required String value,
+    required String subtext,
+    String? actionText,
+    Widget? actionWidget,
+  }) {
     return Container(
       width: 280,
       padding: const EdgeInsets.all(20),
@@ -377,14 +492,38 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+          Text(
+            label,
+            style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+          ),
           const Spacer(),
-          Text(value, style: AnnvaTextStyles.h1.copyWith(color: AnnvaColors.primary, fontSize: 24)),
+          Text(
+            value,
+            style: AnnvaTextStyles.h1.copyWith(
+              color: AnnvaColors.primary,
+              fontSize: 24,
+            ),
+          ),
           if (subtext.isNotEmpty)
-            Text(subtext, style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12)),
+            Text(
+              subtext,
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.muted,
+                fontSize: 12,
+              ),
+            ),
           const SizedBox(height: 12),
           if (actionText != null)
-            Text(actionText, style: GoogleFonts.workSans(color: AnnvaColors.ochre, fontSize: 13, fontWeight: FontWeight.w600)),
+            Text(
+              actionText,
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.ochre,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           if (actionWidget != null) actionWidget,
         ],
       ),
@@ -400,7 +539,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         decoration: BoxDecoration(
           color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(AnnvaRadius.xl),
-          border: Border.all(color: AnnvaColors.border, style: BorderStyle.solid), // Should be dashed but solid for simplicity
+          border: Border.all(
+            color: AnnvaColors.border,
+            style: BorderStyle.solid,
+          ), // Should be dashed but solid for simplicity
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -409,10 +551,28 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.add_a_photo_outlined, color: AnnvaColors.muted, size: 32),
+                  const Icon(
+                    Icons.add_a_photo_outlined,
+                    color: AnnvaColors.muted,
+                    size: 32,
+                  ),
                   const SizedBox(height: 8),
-                  Text('Tap to upload', style: GoogleFonts.workSans(fontWeight: FontWeight.w600, fontSize: 12)),
-                  Text('JPG, PNG · max 8MB', style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 10)),
+                  Text(
+                    'Tap to upload',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Text(
+                    'JPG, PNG · max 8MB',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                      fontSize: 10,
+                    ),
+                  ),
                 ],
               ),
             if (_selectedImage != null)
@@ -429,7 +589,14 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     children: [
                       const CircularProgressIndicator(color: AnnvaColors.ochre),
                       const SizedBox(height: 8),
-                      Text('OCR processing...', style: GoogleFonts.workSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      Text(
+                        'OCR processing...',
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -438,12 +605,23 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               Positioned(
                 bottom: 8,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AnnvaColors.cascadeFresh,
                     borderRadius: BorderRadius.circular(AnnvaRadius.sm),
                   ),
-                  child: Text('✓ OCR complete', style: GoogleFonts.workSans(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    '✓ OCR complete',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ).animate().fadeIn(),
           ],
@@ -460,19 +638,32 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           children: [
             Expanded(child: _buildTextField('Item name', _nameCtrl)),
             const SizedBox(width: 16),
-            Expanded(child: _buildDropdown('Vertical', _verticals, _selectedVertical, (v) => setState(() => _selectedVertical = v!))),
+            Expanded(
+              child: _buildDropdown(
+                'Vertical',
+                _verticals,
+                _selectedVertical,
+                (v) => setState(() => _selectedVertical = v!),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 16),
         Row(
           children: [
-            Expanded(child: _buildTextField('Quantity kg', _qtyCtrl, isNumeric: true)),
+            Expanded(
+              child: _buildTextField('Quantity kg', _qtyCtrl, isNumeric: true),
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTextField('Original price ₹', _priceCtrl, isNumeric: true),
+                  _buildTextField(
+                    'Original price ₹',
+                    _priceCtrl,
+                    isNumeric: true,
+                  ),
                   const SizedBox(height: 4),
                   _buildPriceCalculation(),
                 ],
@@ -481,7 +672,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           ],
         ),
         const SizedBox(height: 24),
-        Text('WHEN WAS THIS COOKED?', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre)),
+        Text(
+          'WHEN WAS THIS COOKED?',
+          style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+        ),
         const SizedBox(height: 8),
         _buildCookTimeSelector(),
         const SizedBox(height: 16),
@@ -520,7 +714,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
           backgroundColor: AnnvaColors.backgroundCard,
-          side: BorderSide(color: isSelected ? AnnvaColors.primary : AnnvaColors.border),
+          side: BorderSide(
+            color: isSelected ? AnnvaColors.primary : AnnvaColors.border,
+          ),
         );
       }).toList(),
     );
@@ -529,7 +725,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   Widget _buildRefrigerationToggle() {
     return Row(
       children: [
-        Text('Currently refrigerated?', style: GoogleFonts.workSans(fontSize: 14)),
+        Text(
+          'Currently refrigerated?',
+          style: TextStyle(fontFamily: 'WorkSans', fontSize: 14),
+        ),
         const SizedBox(width: 8),
         Switch(
           value: _isRefrigerated,
@@ -540,7 +739,15 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         if (_isRefrigerated)
           Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text('Safe for 24h', style: GoogleFonts.workSans(color: AnnvaColors.cascadeFresh, fontWeight: FontWeight.bold, fontSize: 13)),
+            child: Text(
+              'Safe for 24h',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                color: AnnvaColors.cascadeFresh,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
           ),
       ],
     );
@@ -548,13 +755,20 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
   Widget _buildTimeRemaining() {
     if (_isRefrigerated) {
-      return Text('⏱ 24h 0m remaining before NGO cascade', style: GoogleFonts.workSans(color: AnnvaColors.cascadeFresh, fontWeight: FontWeight.w600));
+      return Text(
+        '⏱ 24h 0m remaining before NGO cascade',
+        style: TextStyle(
+          fontFamily: 'WorkSans',
+          color: AnnvaColors.cascadeFresh,
+          fontWeight: FontWeight.w600,
+        ),
+      );
     }
-    
+
     final remainingMins = 240 - _cookedMinutesElapsed;
     final hrs = remainingMins ~/ 60;
     final mins = remainingMins % 60;
-    
+
     Color color = AnnvaColors.cascadeFresh;
     if (remainingMins < 60) {
       color = AnnvaColors.cascadeUrgent;
@@ -562,7 +776,14 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       color = AnnvaColors.cascadeMid;
     }
 
-    return Text('⏱ ${hrs}h ${mins}m remaining before NGO cascade', style: GoogleFonts.workSans(color: color, fontWeight: FontWeight.w600));
+    return Text(
+      '⏱ ${hrs}h ${mins}m remaining before NGO cascade',
+      style: TextStyle(
+        fontFamily: 'WorkSans',
+        color: color,
+        fontWeight: FontWeight.w600,
+      ),
+    );
   }
 
   Widget _buildPriceCalculation() {
@@ -575,17 +796,30 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
     return Text(
       'Annva price: ₹$listingPrice ($discountPercent% off)',
-      style: GoogleFonts.workSans(color: AnnvaColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+      style: TextStyle(
+        fontFamily: 'WorkSans',
+        color: AnnvaColors.primary,
+        fontWeight: FontWeight.bold,
+        fontSize: 13,
+      ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController ctrl, {bool isNumeric = false}) {
+  Widget _buildTextField(
+    String label,
+    TextEditingController ctrl, {
+    bool isNumeric = false,
+  }) {
     return TextField(
       controller: ctrl,
       keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13),
+        labelStyle: TextStyle(
+          fontFamily: 'WorkSans',
+          color: AnnvaColors.muted,
+          fontSize: 13,
+        ),
         filled: true,
         fillColor: AnnvaColors.backgroundCard,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -601,7 +835,12 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     );
   }
 
-  Widget _buildDropdown(String label, List<String> items, String value, void Function(String?) onChanged) {
+  Widget _buildDropdown(
+    String label,
+    List<String> items,
+    String value,
+    void Function(String?) onChanged,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -614,7 +853,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           value: value,
           isExpanded: true,
           hint: Text(label),
-          items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+          items: items
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
           onChanged: onChanged,
         ),
       ),
@@ -643,7 +884,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               },
               selectedColor: AnnvaColors.primary.withValues(alpha: 0.1),
               backgroundColor: AnnvaColors.backgroundCard,
-              side: BorderSide(color: isSelected ? AnnvaColors.primary : AnnvaColors.border),
+              side: BorderSide(
+                color: isSelected ? AnnvaColors.primary : AnnvaColors.border,
+              ),
             ),
           );
         }).toList(),
@@ -653,15 +896,31 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
   Widget _buildLiveListings() {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('listings').where('sellerId', isEqualTo: 's1').where('isActive', isEqualTo: true).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('listings')
+          .where('sellerId', isEqualTo: 's1')
+          .where('isActive', isEqualTo: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+          return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
         if (snapshot.hasError) {
-          return SliverToBoxAdapter(child: Center(child: Text('Error loading listings', style: GoogleFonts.workSans(color: AnnvaColors.muted))));
+          return SliverToBoxAdapter(
+            child: Center(
+              child: Text(
+                'Error loading listings',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  color: AnnvaColors.muted,
+                ),
+              ),
+            ),
+          );
         }
-        
+
         final docs = snapshot.data?.docs ?? [];
         if (docs.isEmpty) {
           return SliverToBoxAdapter(
@@ -670,31 +929,35 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               child: Text(
                 'No active listings. List your first item above.',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.workSans(color: AnnvaColors.muted),
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  color: AnnvaColors.muted,
+                ),
               ),
             ),
           );
         }
 
-        final listings = docs.map((doc) => FoodListing.fromFirestore(doc)).toList();
+        final listings = docs
+            .map((doc) => FoodListing.fromFirestore(doc))
+            .toList();
         listings.sort((a, b) => a.expiresAt.compareTo(b.expiresAt));
 
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnnvaSpacing.containerPadding,
+          ),
           sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
-                  child: FoodListingCard(
-                    listing: listings[index],
-                    onTap: () {},
-                    onRescueTap: () {},
-                  ),
-                );
-              },
-              childCount: listings.length,
-            ),
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
+                child: FoodListingCard(
+                  listing: listings[index],
+                  onTap: () {},
+                  onRescueTap: () {},
+                ),
+              );
+            }, childCount: listings.length),
           ),
         );
       },

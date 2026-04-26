@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/annva_colors.dart';
 import '../../core/theme/annva_spacing.dart';
@@ -58,11 +57,14 @@ class FoodListingCard extends ConsumerWidget {
     final currentUserId = auth.userId;
     final stage = listing.stage;
 
-    final isLockedByMe = listing.lockedByUserId != null && listing.lockedByUserId == currentUserId;
-    final isLockedByOther = listing.lockedByUserId != null && 
-                           listing.lockedByUserId != currentUserId && 
-                           listing.lockedUntil != null && 
-                           listing.lockedUntil!.isAfter(DateTime.now());
+    final isLockedByMe =
+        listing.lockedByUserId != null &&
+        listing.lockedByUserId == currentUserId;
+    final isLockedByOther =
+        listing.lockedByUserId != null &&
+        listing.lockedByUserId != currentUserId &&
+        listing.lockedUntil != null &&
+        listing.lockedUntil!.isAfter(DateTime.now());
 
     return GestureDetector(
       onTap: onTap,
@@ -108,7 +110,8 @@ class FoodListingCard extends ConsumerWidget {
                       // Row 2: Food name
                       Text(
                         listing.name,
-                        style: GoogleFonts.instrumentSerif(
+                        style: TextStyle(
+                          fontFamily: 'InstrumentSerif',
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                           color: AnnvaColors.primary,
@@ -121,7 +124,8 @@ class FoodListingCard extends ConsumerWidget {
                       // Row 3: Seller + location + vertical
                       Text(
                         listing.sellerLabel,
-                        style: GoogleFonts.workSans(
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: AnnvaColors.muted,
@@ -136,10 +140,17 @@ class FoodListingCard extends ConsumerWidget {
                       const SizedBox(height: AnnvaSpacing.sm),
                       if (isLockedByOther)
                         Padding(
-                          padding: const EdgeInsets.only(bottom: AnnvaSpacing.xs),
+                          padding: const EdgeInsets.only(
+                            bottom: AnnvaSpacing.xs,
+                          ),
                           child: Text(
                             '🔒 Locked by another user · ${listing.lockedUntil!.difference(DateTime.now()).inMinutes}m left',
-                            style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 11, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
+                              color: AnnvaColors.muted,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
 
@@ -158,7 +169,9 @@ class FoodListingCard extends ConsumerWidget {
 
   /// Top row: food image thumbnail + cascade stage badge.
   Widget _buildHeaderRow(CascadeStage stage) {
-    String displayEmoji = listing.imageUrl.isNotEmpty ? listing.imageUrl : '🍽️';
+    String displayEmoji = listing.imageUrl.isNotEmpty
+        ? listing.imageUrl
+        : '🍽️';
     if (listing.vertical == 'Temple / Gurudwara') {
       displayEmoji = '🛕';
     } else if (listing.vertical == 'Mosque') {
@@ -177,10 +190,7 @@ class FoodListingCard extends ConsumerWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
-          child: Text(
-            displayEmoji,
-            style: const TextStyle(fontSize: 32),
-          ),
+          child: Text(displayEmoji, style: const TextStyle(fontSize: 32)),
         ),
         const Spacer(),
         // Stage badge — top right
@@ -208,7 +218,8 @@ class FoodListingCard extends ConsumerWidget {
                 ),
                 child: Text(
                   'FREE PICKUP',
-                  style: GoogleFonts.workSans(
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
                     color: AnnvaColors.cascadeUrgent,
@@ -218,7 +229,9 @@ class FoodListingCard extends ConsumerWidget {
               )
             else
               Text(
-                isLockedByMe ? '₹${listing.lockedPrice?.round() ?? listing.currentPrice}' : listing.formattedPrice,
+                isLockedByMe
+                    ? '₹${listing.lockedPrice?.round() ?? listing.currentPrice}'
+                    : listing.formattedPrice,
                 style: AnnvaTextStyles.price,
               ),
 
@@ -236,7 +249,8 @@ class FoodListingCard extends ConsumerWidget {
             Expanded(
               child: Text(
                 listing.quantityLabel,
-                style: GoogleFonts.workSans(
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                   color: AnnvaColors.muted,
@@ -253,7 +267,8 @@ class FoodListingCard extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 2),
             child: Text(
               '🔒 YOUR LOCK · ${listing.lockedUntil!.difference(DateTime.now()).inMinutes}m ${listing.lockedUntil!.difference(DateTime.now()).inSeconds % 60}s left',
-              style: GoogleFonts.workSans(
+              style: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
                 color: AnnvaColors.cascadeFresh,
@@ -265,17 +280,18 @@ class FoodListingCard extends ConsumerWidget {
   }
 
   /// Bottom row: urgency timer + "Rescue →" CTA button.
-  Widget _buildFooterRow(BuildContext context, bool isLockedByMe, bool isLockedByOther) {
+  Widget _buildFooterRow(
+    BuildContext context,
+    bool isLockedByMe,
+    bool isLockedByOther,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             // Timer
-            UrgencyTimer(
-              expiresAt: listing.expiresAt,
-              fontSize: 13,
-            ),
+            UrgencyTimer(expiresAt: listing.expiresAt, fontSize: 13),
             const Spacer(),
             // Rescue CTA button
             SizedBox(
@@ -283,14 +299,17 @@ class FoodListingCard extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: isLockedByOther ? null : onRescueTap,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isLockedByOther ? Colors.grey : listing.stage.color,
+                  backgroundColor: isLockedByOther
+                      ? Colors.grey
+                      : listing.stage.color,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   ),
-                  textStyle: GoogleFonts.workSans(
+                  textStyle: TextStyle(
+                    fontFamily: 'WorkSans',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -309,7 +328,8 @@ class FoodListingCard extends ConsumerWidget {
               },
               child: Text(
                 '🔒 Lock this price — ₹10',
-                style: GoogleFonts.workSans(
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   color: AnnvaColors.ochre,

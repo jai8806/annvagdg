@@ -12,7 +12,9 @@ class DemoHeatmap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AnnvaSpacing.containerPadding,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +40,8 @@ class DemoHeatmap extends StatelessWidget {
                 children: [
                   // OpenStreetMap tile layer — free, no API key
                   TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'in.annva.annva',
                     tileProvider: NetworkTileProvider(
                       headers: {
@@ -55,21 +58,27 @@ class DemoHeatmap extends StatelessWidget {
                       CircleMarker(
                         point: const LatLng(12.9507, 77.5848),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeUrgent.withValues(
+                          alpha: 0.35,
+                        ),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9116, 77.6389),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeUrgent.withValues(
+                          alpha: 0.35,
+                        ),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9756, 77.6099),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeUrgent.withValues(
+                          alpha: 0.35,
+                        ),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
@@ -135,8 +144,8 @@ class DemoHeatmap extends StatelessWidget {
   }
 
   Widget _legendDot(Color color) => Container(
-        width: 10,
-        height: 10,
-        decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-      );
+    width: 10,
+    height: 10,
+    decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+  );
 }

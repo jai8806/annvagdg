@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 import '../../../core/theme/annva_colors.dart';
@@ -21,7 +20,8 @@ class ListingDetailScreen extends ConsumerStatefulWidget {
   const ListingDetailScreen({super.key, required this.listingId});
 
   @override
-  ConsumerState<ListingDetailScreen> createState() => _ListingDetailScreenState();
+  ConsumerState<ListingDetailScreen> createState() =>
+      _ListingDetailScreenState();
 }
 
 class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
@@ -65,8 +65,10 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
 
           // Force qty bounds
           if (_qty > listing.qtyKg) _qty = listing.qtyKg;
-          
-          final pricePerKg = listing.qtyKg > 0 ? listing.currentPrice / listing.qtyKg : 0;
+
+          final pricePerKg = listing.qtyKg > 0
+              ? listing.currentPrice / listing.qtyKg
+              : 0;
           final totalPrice = pricePerKg * _qty;
 
           return Stack(
@@ -116,10 +118,16 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.background.withValues(alpha: 0.8),
+                                  color: AnnvaColors.background.withValues(
+                                    alpha: 0.8,
+                                  ),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.arrow_back_ios_new_rounded, color: AnnvaColors.primary, size: 18),
+                                child: const Icon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  color: AnnvaColors.primary,
+                                  size: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -144,7 +152,11 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         const SizedBox(height: 4),
                         Text(
                           listing.sellerLabel,
-                          style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13),
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            color: AnnvaColors.muted,
+                            fontSize: 13,
+                          ),
                         ),
 
                         // Divider
@@ -161,37 +173,52 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                             Row(
                               children: [
                                 if (listing.currentPrice > 0) ...[
-                                  Text(listing.formattedPrice, style: AnnvaTextStyles.price),
+                                  Text(
+                                    listing.formattedPrice,
+                                    style: AnnvaTextStyles.price,
+                                  ),
                                   const SizedBox(width: 8),
                                   Text(
                                     listing.formattedOriginalPrice,
-                                    style: GoogleFonts.workSans(
+                                    style: TextStyle(
+                                      fontFamily: 'WorkSans',
                                       color: AnnvaColors.muted,
                                       decoration: TextDecoration.lineThrough,
                                     ),
                                   ),
                                 ] else ...[
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(AnnvaRadius.sm),
+                                      color: AnnvaColors.cascadeUrgent
+                                          .withValues(alpha: 0.1),
+                                      borderRadius: BorderRadius.circular(
+                                        AnnvaRadius.sm,
+                                      ),
                                     ),
                                     child: Text(
                                       'FREE PICKUP',
-                                      style: GoogleFonts.workSans(
+                                      style: TextStyle(
+                                        fontFamily: 'WorkSans',
                                         color: AnnvaColors.cascadeUrgent,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12,
                                       ),
                                     ),
                                   ),
-                                ]
+                                ],
                               ],
                             ),
                             Text(
                               listing.quantityLabel,
-                              style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 13),
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                color: AnnvaColors.muted,
+                                fontSize: 13,
+                              ),
                             ),
                           ],
                         ),
@@ -221,9 +248,13 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         Wrap(
                           spacing: 8,
                           children: listing.diet.map((d) {
-                            String emoji = d.toLowerCase().contains('veg') ? '🌱' : '🥩';
+                            String emoji = d.toLowerCase().contains('veg')
+                                ? '🌱'
+                                : '🥩';
                             return Chip(
-                              label: Text('$emoji ${d[0].toUpperCase()}${d.substring(1)}'),
+                              label: Text(
+                                '$emoji ${d[0].toUpperCase()}${d.substring(1)}',
+                              ),
                               backgroundColor: AnnvaColors.backgroundCard,
                               side: const BorderSide(color: AnnvaColors.border),
                             );
@@ -232,7 +263,8 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         const SizedBox(height: AnnvaSpacing.md),
                         Text(
                           '${listing.sellerName} has ${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg of ${listing.name} available for rescue. Enough for ${listing.servings} people.',
-                          style: GoogleFonts.workSans(
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
                             color: AnnvaColors.primary,
                             height: 1.5,
                           ),
@@ -261,24 +293,42 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   children: [
                                     Text(
                                       listing.sellerName,
-                                      style: GoogleFonts.workSans(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        fontFamily: 'WorkSans',
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     Text(
                                       listing.address,
-                                      style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12),
+                                      style: TextStyle(
+                                        fontFamily: 'WorkSans',
+                                        color: AnnvaColors.muted,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.border.withValues(alpha: 0.5),
-                                  borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                                  color: AnnvaColors.border.withValues(
+                                    alpha: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    AnnvaRadius.full,
+                                  ),
                                 ),
                                 child: Text(
                                   listing.vertical,
-                                  style: GoogleFonts.workSans(fontSize: 11, fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                    fontFamily: 'WorkSans',
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -295,13 +345,18 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         ),
 
                         // Quantity Selector
-                        Text('HOW MUCH DO YOU NEED?', style: AnnvaTextStyles.label),
+                        Text(
+                          'HOW MUCH DO YOU NEED?',
+                          style: AnnvaTextStyles.label,
+                        ),
                         const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                              onPressed: _qty > 1.0 ? () => setState(() => _qty -= 1.0) : null,
+                              onPressed: _qty > 1.0
+                                  ? () => setState(() => _qty -= 1.0)
+                                  : null,
                               icon: const Icon(Icons.remove_circle_outline),
                               color: AnnvaColors.primary,
                               iconSize: 32,
@@ -313,7 +368,9 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                             ),
                             const SizedBox(width: 24),
                             IconButton(
-                              onPressed: _qty < listing.qtyKg ? () => setState(() => _qty += 1.0) : null,
+                              onPressed: _qty < listing.qtyKg
+                                  ? () => setState(() => _qty += 1.0)
+                                  : null,
                               icon: const Icon(Icons.add_circle_outline),
                               color: AnnvaColors.primary,
                               iconSize: 32,
@@ -321,7 +378,9 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                           ],
                         ),
 
-                        const SizedBox(height: 120), // Padding for sticky bottom bar
+                        const SizedBox(
+                          height: 120,
+                        ), // Padding for sticky bottom bar
                       ]),
                     ),
                   ),
@@ -347,30 +406,52 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('₹${totalPrice.toStringAsFixed(0)}', style: AnnvaTextStyles.h1.copyWith(fontSize: 24)),
+                          Text(
+                            '₹${totalPrice.toStringAsFixed(0)}',
+                            style: AnnvaTextStyles.h1.copyWith(fontSize: 24),
+                          ),
                           Text(
                             'for ${_qty.toStringAsFixed(1).replaceAll('.0', '')}kg',
-                            style: GoogleFonts.workSans(color: AnnvaColors.muted, fontSize: 12),
+                            style: TextStyle(
+                              fontFamily: 'WorkSans',
+                              color: AnnvaColors.muted,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          ref.read(cartNotifierProvider.notifier).addItem(listing, _qty);
+                          ref
+                              .read(cartNotifierProvider.notifier)
+                              .addItem(listing, _qty);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Added to your rescue cart!')),
+                            const SnackBar(
+                              content: Text('Added to your rescue cart!'),
+                            ),
                           );
                           context.pop();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AnnvaColors.primary,
                           foregroundColor: AnnvaColors.primaryForeground,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AnnvaRadius.full,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
                         ),
                         child: Text(
                           'Add to Cart →',
-                          style: GoogleFonts.workSans(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -380,7 +461,9 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             ],
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator(color: AnnvaColors.primary)),
+        loading: () => const Center(
+          child: CircularProgressIndicator(color: AnnvaColors.primary),
+        ),
         error: (err, _) => _buildErrorState('Something went wrong.'),
       ),
     );
@@ -389,10 +472,13 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
   Widget _buildUrgencyTimer(DateTime expiresAt) {
     final diff = expiresAt.difference(_now);
     final isExpired = diff.isNegative;
-    
+
     if (isExpired) {
       return Center(
-        child: Text('EXPIRED', style: AnnvaTextStyles.h2.copyWith(color: AnnvaColors.muted)),
+        child: Text(
+          'EXPIRED',
+          style: AnnvaTextStyles.h2.copyWith(color: AnnvaColors.muted),
+        ),
       );
     }
 
@@ -421,7 +507,12 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
     if (isUrgent) {
       timerText = timerText
           .animate(onPlay: (c) => c.repeat(reverse: true))
-          .scale(begin: const Offset(1, 1), end: const Offset(1.05, 1.05), duration: 800.ms, curve: Curves.easeInOut)
+          .scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.05, 1.05),
+            duration: 800.ms,
+            curve: Curves.easeInOut,
+          )
           .tint(color: Colors.red.withValues(alpha: 0.2));
     }
 
@@ -429,11 +520,14 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
   }
 
   Widget _buildPriceLockSection(FoodListing listing, String? currentUserId) {
-    final isLockedByMe = listing.lockedByUserId != null && listing.lockedByUserId == currentUserId;
-    final isLockedByOther = listing.lockedByUserId != null && 
-                           listing.lockedByUserId != currentUserId && 
-                           listing.lockedUntil != null && 
-                           listing.lockedUntil!.isAfter(_now);
+    final isLockedByMe =
+        listing.lockedByUserId != null &&
+        listing.lockedByUserId == currentUserId;
+    final isLockedByOther =
+        listing.lockedByUserId != null &&
+        listing.lockedByUserId != currentUserId &&
+        listing.lockedUntil != null &&
+        listing.lockedUntil!.isAfter(_now);
 
     if (isLockedByMe) {
       final diff = listing.lockedUntil!.difference(_now);
@@ -449,11 +543,33 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
         ),
         child: Column(
           children: [
-            Text('🔒 Price locked at ₹${listing.lockedPrice?.round()}', style: GoogleFonts.workSans(fontWeight: FontWeight.bold, color: AnnvaColors.cascadeFresh)),
+            Text(
+              '🔒 Price locked at ₹${listing.lockedPrice?.round()}',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                color: AnnvaColors.cascadeFresh,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text('$mm:$ss remaining', style: GoogleFonts.workSans(fontSize: 12, color: AnnvaColors.cascadeFresh)),
+            Text(
+              '$mm:$ss remaining',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontSize: 12,
+                color: AnnvaColors.cascadeFresh,
+              ),
+            ),
             const SizedBox(height: 8),
-            Text('"Add to cart to secure this deal →"', style: GoogleFonts.workSans(fontSize: 12, fontStyle: FontStyle.italic, color: AnnvaColors.primary)),
+            Text(
+              '"Add to cart to secure this deal →"',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontSize: 12,
+                fontStyle: FontStyle.italic,
+                color: AnnvaColors.primary,
+              ),
+            ),
           ],
         ),
       );
@@ -473,17 +589,43 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
         ),
         child: Column(
           children: [
-            Text('🔒 Someone locked this price', style: GoogleFonts.workSans(fontWeight: FontWeight.bold, color: AnnvaColors.muted)),
+            Text(
+              '🔒 Someone locked this price',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontWeight: FontWeight.bold,
+                color: AnnvaColors.muted,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text('Available in $mm:$ss', style: GoogleFonts.workSans(fontSize: 12, color: AnnvaColors.muted)),
+            Text(
+              'Available in $mm:$ss',
+              style: TextStyle(
+                fontFamily: 'WorkSans',
+                fontSize: 12,
+                color: AnnvaColors.muted,
+              ),
+            ),
             const SizedBox(height: 12),
             OutlinedButton(
               onPressed: () {
-                ref.read(priceLockNotifierProvider.notifier).notifyWhenUnlocked(listing.id, listing.name, listing.currentPrice.toDouble());
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("We'll notify you when this unlocks ✓")));
+                ref
+                    .read(priceLockNotifierProvider.notifier)
+                    .notifyWhenUnlocked(
+                      listing.id,
+                      listing.name,
+                      listing.currentPrice.toDouble(),
+                    );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("We'll notify you when this unlocks ✓"),
+                  ),
+                );
               },
               style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                ),
                 side: const BorderSide(color: AnnvaColors.primary),
               ),
               child: const Text('Notify me when it unlocks 🔔'),
@@ -511,9 +653,22 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Lock this price for 20 minutes', style: GoogleFonts.workSans(fontWeight: FontWeight.bold, color: AnnvaColors.primary)),
-                    Text('Pay ₹10 deposit now. If you order within 20 min, ₹10 applies to total. If not, ₹10 goes to our NGO fund. 🌱', 
-                      style: GoogleFonts.workSans(fontSize: 11, color: AnnvaColors.muted)),
+                    Text(
+                      'Lock this price for 20 minutes',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontWeight: FontWeight.bold,
+                        color: AnnvaColors.primary,
+                      ),
+                    ),
+                    Text(
+                      'Pay ₹10 deposit now. If you order within 20 min, ₹10 applies to total. If not, ₹10 goes to our NGO fund. 🌱',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontSize: 11,
+                        color: AnnvaColors.muted,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -524,17 +679,31 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                ref.read(priceLockNotifierProvider.notifier).lockPrice(listing.id, listing.currentPrice.toDouble());
+                ref
+                    .read(priceLockNotifierProvider.notifier)
+                    .lockPrice(listing.id, listing.currentPrice.toDouble());
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('🔒 Price locked! You have 20 minutes. ₹10 deposit recorded.'))
+                  const SnackBar(
+                    content: Text(
+                      '🔒 Price locked! You have 20 minutes. ₹10 deposit recorded.',
+                    ),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AnnvaColors.ochre,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AnnvaRadius.full)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AnnvaRadius.full),
+                ),
               ),
-              child: Text('Lock at ₹${listing.currentPrice} →', style: GoogleFonts.workSans(fontWeight: FontWeight.bold)),
+              child: Text(
+                'Lock at ₹${listing.currentPrice} →',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],
@@ -555,7 +724,12 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
     return Scaffold(
       appBar: AppBar(backgroundColor: AnnvaColors.background, elevation: 0),
       backgroundColor: AnnvaColors.background,
-      body: Center(child: Text(msg, style: GoogleFonts.workSans(color: AnnvaColors.muted))),
+      body: Center(
+        child: Text(
+          msg,
+          style: TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
+        ),
+      ),
     );
   }
 }

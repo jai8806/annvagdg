@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787184149154",
+    "project_id": "annva-mvp",
+    "storage_bucket": "annva-mvp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787184149154:android:4d39397b7c85d9f4a6edfb",
+        "android_client_info": {
+          "package_name": "in.annva.annva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8HG0wcxVr_r9RfsnWi3Wjp0vg6TiWN44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
