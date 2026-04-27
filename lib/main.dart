@@ -24,8 +24,8 @@ void main() async {
       persistenceEnabled: true,
       cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
     );
-  } catch (_) {
-    // Keep app bootable even if Firebase init fails on device.
+  } catch (e) {
+    debugPrint('Firebase initialization failed: $e');
   }
 
   runApp(const ProviderScope(child: AnnvaApp()));
@@ -63,10 +63,10 @@ class _AnnvaAppState extends ConsumerState<AnnvaApp> {
                 backgroundColor: AnnvaColors.background,
                 body: Center(
                   child: Text(
-                    'अन्न',
+                    'अन्नवा',
                     style: AnnvaTextStyles.devanagariWatermark.copyWith(
                       fontSize: 48,
-                      color: AnnvaColors.primary.withValues(alpha: 0.4),
+                      color: AnnvaColors.primary.withOpacity(0.4),
                     ),
                   ),
                 ),
@@ -75,19 +75,23 @@ class _AnnvaAppState extends ConsumerState<AnnvaApp> {
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: overlayStyle,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              content,
-              if (_showSplash)
-                SplashScreen(
-                  onFinished: (onboarded) {
-                    router.go(onboarded ? '/' : '/onboarding');
-                    if (!mounted) return;
-                    setState(() => _showSplash = false);
-                  },
-                ),
-            ],
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            child: _showSplash
+                ? SplashScreen(
+                    key: const ValueKey('splash'),
+                    onFinished: (onboarded) {
+                      router.go(onboarded ? '/' : '/onboarding');
+                      if (!mounted) return;
+                      // Small delay to let router initialize the new page
+                      Future.delayed(const Duration(milliseconds: 50), () {
+                        if (mounted) setState(() => _showSplash = false);
+                      });
+                    },
+                  )
+                : content, // content already contains the current route via router
           ),
         );
       },

@@ -120,18 +120,18 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     if (cartItems.isEmpty && !_isProcessing) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Checkout", style: AnnvaTextStyles.h1),
+          title: Text('Checkout', style: AnnvaTextStyles.h1),
           backgroundColor: AnnvaColors.background,
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Your cart is empty"),
+              const Text('Your cart is empty'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => context.go('/consumer'),
-                child: const Text("Back to browsing"),
+                child: const Text('Back to browsing'),
               ),
             ],
           ),
@@ -157,7 +157,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               icon: const Icon(Icons.arrow_back, color: AnnvaColors.primary),
               onPressed: () => context.pop(),
             ),
-            title: Text("Checkout", style: AnnvaTextStyles.h1),
+            title: Text('Checkout', style: AnnvaTextStyles.h1),
             centerTitle: false,
           ),
           body: SingleChildScrollView(
@@ -165,15 +165,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSectionLabel("YOUR RESCUE ORDER"),
+                _buildSectionLabel('YOUR RESCUE ORDER'),
                 _buildOrderSummaryCard(cartItems, savings, subtotal),
                 const SizedBox(height: 24),
                 
-                _buildSectionLabel("PICKUP FROM"),
+                _buildSectionLabel('PICKUP FROM'),
                 _buildPickupDetailsCard(cartItems.first.listing),
                 const SizedBox(height: 24),
                 
-                _buildSectionLabel("PAY WITH"),
+                _buildSectionLabel('PAY WITH'),
                 _buildPaymentMethodCard(),
                 const SizedBox(height: 24),
 
@@ -211,7 +211,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               children: [
-                const Text("🥘"),
+                const Text('🥘'),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -219,9 +219,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     style: AnnvaTextStyles.body.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text("${item.qtyKg}kg", style: AnnvaTextStyles.bodySmall),
+                Text('${item.qtyKg}kg', style: AnnvaTextStyles.bodySmall),
                 const SizedBox(width: 12),
-                Text("₹${item.totalPrice.toStringAsFixed(0)}", style: AnnvaTextStyles.body),
+                Text('₹${item.totalPrice.toStringAsFixed(0)}', style: AnnvaTextStyles.body),
               ],
             ),
           )),
@@ -229,8 +229,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Rescue discount saved", style: AnnvaTextStyles.bodySmall),
-              Text("-₹${savings.toStringAsFixed(0)}", 
+              Text('Rescue discount saved', style: AnnvaTextStyles.bodySmall),
+              Text('-₹${savings.toStringAsFixed(0)}', 
                 style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.cascadeFresh)),
             ],
           ),
@@ -246,8 +246,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Total", style: AnnvaTextStyles.h3),
-              Text("₹${total.toStringAsFixed(0)}", 
+              Text('Total', style: AnnvaTextStyles.h3),
+              Text('₹${total.toStringAsFixed(0)}', 
                 style: AnnvaTextStyles.h2.copyWith(fontSize: 24, color: AnnvaColors.primary, fontWeight: FontWeight.bold)),
             ],
           ),
@@ -270,7 +270,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("🍽", style: TextStyle(fontSize: 32)),
+              const Text('🍽', style: TextStyle(fontSize: 32)),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -280,8 +280,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     Text(listing.address, style: AnnvaTextStyles.bodySmall),
                     const SizedBox(height: 4),
                     GestureDetector(
-                      onTap: () => launchUrl(Uri.parse("https://www.google.com/maps/search/?api=1&query=${listing.lat},${listing.lng}")),
-                      child: Text("📍 Open in Maps →", 
+                      onTap: () => launchUrl(Uri.parse('https://www.google.com/maps/search/?api=1&query=${listing.lat},${listing.lng}')),
+                      child: Text('📍 Open in Maps →', 
                         style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.ochre, fontWeight: FontWeight.w600)),
                     ),
                   ],
@@ -293,7 +293,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AnnvaColors.background.withValues(alpha: 0.5),
+              color: AnnvaColors.background.withOpacity(0.5),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
@@ -303,15 +303,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   children: [
                     const Icon(Icons.timer_outlined, size: 14, color: AnnvaColors.muted),
                     const SizedBox(width: 6),
-                    Text("Pickup window:", style: AnnvaTextStyles.bodySmall),
+                    Text('Pickup window:', style: AnnvaTextStyles.bodySmall),
                     const SizedBox(width: 4),
                     UrgencyTimer(expiresAt: listing.expiresAt),
-                    Text(" remaining", style: AnnvaTextStyles.bodySmall),
+                    Text(' remaining', style: AnnvaTextStyles.bodySmall),
                   ],
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Pick up within this window to guarantee freshness.",
+                  'Pick up within this window to guarantee freshness.',
                   style: AnnvaTextStyles.bodySmall.copyWith(fontSize: 11, color: AnnvaColors.muted),
                 ),
               ],
@@ -361,7 +361,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               child: TextField(
                 controller: _upiController,
                 decoration: InputDecoration(
-                  hintText: "Enter UPI ID (e.g. name@upi)",
+                  hintText: 'Enter UPI ID (e.g. name@upi)',
                   hintStyle: AnnvaTextStyles.bodySmall,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   border: OutlineInputBorder(
@@ -411,7 +411,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           color: isSelected ? const Color(0xFFE8F0FE) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AnnvaColors.primary : AnnvaColors.border.withValues(alpha: 0.3),
+            color: isSelected ? AnnvaColors.primary : AnnvaColors.border.withOpacity(0.3),
             width: isSelected ? 1.5 : 0.5,
           ),
         ),
@@ -456,7 +456,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         children: [
           const Icon(Icons.lock_outline, size: 16, color: AnnvaColors.cascadeFresh),
           const SizedBox(width: 8),
-          Text("Price lock credit applied: -₹10", 
+          Text('Price lock credit applied: -₹10', 
             style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.cascadeFresh, fontWeight: FontWeight.w600)),
         ],
       ),
@@ -478,8 +478,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("₹${total.toStringAsFixed(0)}", style: AnnvaTextStyles.h1.copyWith(fontSize: 28)),
-                Text("via $_selectedMethod", style: AnnvaTextStyles.bodySmall.copyWith(fontSize: 11)),
+                Text('₹${total.toStringAsFixed(0)}', style: AnnvaTextStyles.h1.copyWith(fontSize: 28)),
+                Text('via $_selectedMethod', style: AnnvaTextStyles.bodySmall.copyWith(fontSize: 11)),
               ],
             ),
           ),
@@ -497,7 +497,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Pay & Rescue", style: AnnvaTextStyles.button.copyWith(fontSize: 16)),
+                  Text('Pay & Rescue', style: AnnvaTextStyles.button.copyWith(fontSize: 16)),
                   const SizedBox(width: 8),
                   const Icon(Icons.arrow_forward, size: 18),
                 ],
@@ -511,7 +511,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
   Widget _buildLoadingOverlay() {
     return Container(
-      color: Colors.black.withValues(alpha: 0.7),
+      color: Colors.black.withOpacity(0.7),
       width: double.infinity,
       height: double.infinity,
       child: Center(
@@ -519,11 +519,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Annva Logo placeholder (assuming it's a styled text or simple icon)
-            Text("अन्न Annva", style: AnnvaTextStyles.h1.copyWith(color: AnnvaColors.background, fontSize: 40)),
+            Text('अन्नवा Annva', style: AnnvaTextStyles.h1.copyWith(color: AnnvaColors.background, fontSize: 40)),
             const SizedBox(height: 24),
             const _StaggeredPulseDots(),
             const SizedBox(height: 16),
-            Text("Processing your rescue...", 
+            Text('Processing your rescue...', 
               style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.background, fontSize: 13)),
           ],
         ),

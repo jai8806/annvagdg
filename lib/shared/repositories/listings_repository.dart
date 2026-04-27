@@ -17,8 +17,10 @@ class ListingsRepository {
         .where('isActive', isEqualTo: true)
         .snapshots()
         .map((snapshot) {
+          final now = DateTime.now();
           final docs = snapshot.docs
               .map((doc) => FoodListing.fromFirestore(doc))
+              .where((listing) => listing.expiresAt.isAfter(now))
               .toList();
           docs.sort((a, b) => a.expiresAt.compareTo(b.expiresAt));
           return docs;

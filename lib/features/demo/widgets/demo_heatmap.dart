@@ -58,27 +58,21 @@ class DemoHeatmap extends StatelessWidget {
                       CircleMarker(
                         point: const LatLng(12.9507, 77.5848),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(
-                          alpha: 0.35,
-                        ),
+                        color: AnnvaColors.cascadeUrgent.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9116, 77.6389),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(
-                          alpha: 0.35,
-                        ),
+                        color: AnnvaColors.cascadeUrgent.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9756, 77.6099),
                         radius: 14,
-                        color: AnnvaColors.cascadeUrgent.withValues(
-                          alpha: 0.35,
-                        ),
+                        color: AnnvaColors.cascadeUrgent.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeUrgent,
                         borderStrokeWidth: 2,
                       ),
@@ -86,21 +80,21 @@ class DemoHeatmap extends StatelessWidget {
                       CircleMarker(
                         point: const LatLng(12.9352, 77.6245),
                         radius: 12,
-                        color: AnnvaColors.cascadeMid.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeMid.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeMid,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9698, 77.7500),
                         radius: 12,
-                        color: AnnvaColors.cascadeMid.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeMid.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeMid,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9010, 77.6860),
                         radius: 12,
-                        color: AnnvaColors.cascadeMid.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeMid.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeMid,
                         borderStrokeWidth: 2,
                       ),
@@ -108,14 +102,14 @@ class DemoHeatmap extends StatelessWidget {
                       CircleMarker(
                         point: const LatLng(12.9784, 77.6408),
                         radius: 10,
-                        color: AnnvaColors.cascadeFresh.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeFresh.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeFresh,
                         borderStrokeWidth: 2,
                       ),
                       CircleMarker(
                         point: const LatLng(12.9250, 77.5938),
                         radius: 10,
-                        color: AnnvaColors.cascadeFresh.withValues(alpha: 0.35),
+                        color: AnnvaColors.cascadeFresh.withOpacity(0.35),
                         borderColor: AnnvaColors.cascadeFresh,
                         borderStrokeWidth: 2,
                       ),

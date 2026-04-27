@@ -34,6 +34,7 @@ class DemoScreen extends ConsumerStatefulWidget {
 class _DemoScreenState extends ConsumerState<DemoScreen> {
   final ValueNotifier<String> _role = ValueNotifier('consumer');
   final ValueNotifier<int> _tick = ValueNotifier(0);
+  bool _isSeeding = false;
   Timer? _timer;
 
   @override
@@ -80,7 +81,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                       children: [
                         const AnnvaLogo(fontSize: 26),
                         const SizedBox(height: 4),
-                        Text(
+                        const Text(
                           'Food That Moves.',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -94,49 +95,65 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                     ),
                     Row(
                       children: [
-                        if (kDebugMode)
-                          TextButton(
-                            onPressed: () async {
-                              await FirestoreSeeder.seedListings();
+                        TextButton(
+                          onPressed: _isSeeding ? null : () async {
+                            setState(() => _isSeeding = true);
+                            try {
+                              // Added timeout to prevent hanging on bad connections
+                              await FirestoreSeeder.seedListings().timeout(const Duration(seconds: 20));
                               ref.invalidate(activeListingsProvider);
                               if (!context.mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Firestore seeded!'),
+                                  content: Text('Firestore seeded! 🎉'),
+                                  backgroundColor: Colors.green,
                                 ),
                               );
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: AnnvaColors.ochre.withValues(
-                                alpha: 0.1,
-                              ),
-                              foregroundColor: AnnvaColors.ochre,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AnnvaRadius.full,
+                            } catch (e) {
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Seeding failed: $e'),
+                                  backgroundColor: Colors.red,
                                 ),
-                              ),
+                              );
+                            } finally {
+                              if (mounted) setState(() => _isSeeding = false);
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: AnnvaColors.ochre.withOpacity(0.1),
+                            foregroundColor: AnnvaColors.ochre,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
                             ),
-                            child: Text(
-                              'Seed',
-                              style: TextStyle(
-                                fontFamily: 'WorkSans',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                AnnvaRadius.full,
                               ),
                             ),
                           ),
-                        if (kDebugMode) const SizedBox(width: AnnvaSpacing.sm),
+                          child: _isSeeding 
+                            ? const SizedBox(
+                                width: 14, 
+                                height: 14, 
+                                child: CircularProgressIndicator(strokeWidth: 2, color: AnnvaColors.ochre)
+                              )
+                            : const Text(
+                                'Seed',
+                                style: TextStyle(
+                                  fontFamily: 'WorkSans',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                        ),
+                        const SizedBox(width: AnnvaSpacing.sm),
                         TextButton(
                           onPressed: () => context.go('/auth'),
                           style: TextButton.styleFrom(
-                            backgroundColor: AnnvaColors.primary.withValues(
-                              alpha: 0.1,
-                            ),
+                            backgroundColor: AnnvaColors.primary.withOpacity(0.1),
                             foregroundColor: AnnvaColors.primary,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -148,14 +165,14 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                               ),
                             ),
                           ),
-                          child: Text(
-                            'Sign in',
-                            style: TextStyle(
-                              fontFamily: 'WorkSans',
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
+                            child: const Text(
+                              'Sign in',
+                              style: TextStyle(
+                                fontFamily: 'WorkSans',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
                         ),
                       ],
                     ),
@@ -219,23 +236,67 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
   }
 
   Widget _buildConsumerContent() {
-    final listings = getMockListings();
+    final listingsAsync = ref.watch(activeListingsProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildImpactCard(),
         const SizedBox(height: AnnvaSpacing.lg),
-        _buildSectionHeader('LIVE CASCADE', '${listings.length} active'),
-        const SizedBox(height: AnnvaSpacing.sm),
-        ...listings.map(
-          (listing) => Padding(
-            padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
-            child: FoodListingCard(
-              listing: listing,
-              onTap: () => _showListingSnackbar(context, listing.name),
-              onRescueTap: () => _showRescueSnackbar(context, listing.name),
+        listingsAsync.when(
+          data: (listings) {
+            final isLive = listings.isNotEmpty;
+            final displayListings = listings.isEmpty ? getMockListings() : listings;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSectionHeader(
+                  isLive ? 'LIVE CASCADE ✦' : 'DEMO CASCADE (MOCK)', 
+                  '${displayListings.length} active'
+                ),
+                const SizedBox(height: AnnvaSpacing.sm),
+                ...displayListings.map(
+                  (listing) => Padding(
+                    padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
+                    child: FoodListingCard(
+                      listing: listing,
+                      onTap: () => _showListingSnackbar(context, listing.name),
+                      onRescueTap: () => _showRescueSnackbar(context, listing.name),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: CircularProgressIndicator(),
             ),
           ),
+          error: (err, stack) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionHeader('LIVE CASCADE', 'Error'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      'Connection error: $err', 
+                      style: const TextStyle(color: Colors.red, fontSize: 10, fontFamily: 'WorkSans')
+                    ),
+                  ),
+                  ...getMockListings().map(
+                    (listing) => Padding(
+                      padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
+                      child: FoodListingCard(
+                        listing: listing,
+                        onTap: () => _showListingSnackbar(context, listing.name),
+                        onRescueTap: () => _showRescueSnackbar(context, listing.name),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
         ),
         const SizedBox(height: AnnvaSpacing.lg),
         const DemoHeatmap(),
@@ -244,7 +305,8 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
   }
 
   Widget _buildSellerContent() {
-    final listings = getMockListings().take(2).toList();
+    final listingsAsync = ref.watch(activeListingsProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -271,7 +333,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
             border: Border.all(color: AnnvaColors.border, width: 0.7),
           ),
           child: Center(
-            child: Text(
+            child: const Text(
               'Upload box mock\nTap to upload image + auto-fill details',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -283,16 +345,46 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
           ),
         ),
         const SizedBox(height: AnnvaSpacing.lg),
-        _buildSectionHeader('YOUR LIVE LISTINGS', '${listings.length} active'),
-        const SizedBox(height: AnnvaSpacing.sm),
-        ...listings.map(
-          (listing) => Padding(
-            padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
-            child: FoodListingCard(
-              listing: listing,
-              onTap: () => _showListingSnackbar(context, listing.name),
-              onRescueTap: () => _showRescueSnackbar(context, listing.name),
-            ),
+        listingsAsync.when(
+          data: (listings) {
+            final displayListings =
+                listings.isEmpty ? getMockListings().take(2).toList() : listings;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSectionHeader(
+                    'YOUR LIVE LISTINGS', '${displayListings.length} active'),
+                const SizedBox(height: AnnvaSpacing.sm),
+                ...displayListings.map(
+                  (listing) => Padding(
+                    padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
+                    child: FoodListingCard(
+                      listing: listing,
+                      onTap: () => _showListingSnackbar(context, listing.name),
+                      onRescueTap: () => _showRescueSnackbar(context, listing.name),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (_, __) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionHeader('YOUR LIVE LISTINGS', 'Offline'),
+              const SizedBox(height: AnnvaSpacing.sm),
+              ...getMockListings().take(2).map(
+                    (listing) => Padding(
+                      padding: const EdgeInsets.only(bottom: AnnvaSpacing.md),
+                      child: FoodListingCard(
+                        listing: listing,
+                        onTap: () => _showListingSnackbar(context, listing.name),
+                        onRescueTap: () => _showRescueSnackbar(context, listing.name),
+                      ),
+                    ),
+                  ),
+            ],
           ),
         ),
       ],
@@ -315,7 +407,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
             children: [
               Text(
                 'Karthik · Silver tier · Bengaluru chapter',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
@@ -328,9 +420,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                 child: LinearProgressIndicator(
                   minHeight: 8,
                   value: 64 / 125,
-                  backgroundColor: AnnvaColors.primaryForeground.withValues(
-                    alpha: 0.2,
-                  ),
+                  backgroundColor: AnnvaColors.primaryForeground.withOpacity(0.2),
                   color: AnnvaColors.ochre,
                 ),
               ),
@@ -340,7 +430,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                 style: TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 11,
-                  color: AnnvaColors.primaryForeground.withValues(alpha: 0.8),
+                  color: AnnvaColors.primaryForeground.withOpacity(0.8),
                 ),
               ),
             ],
@@ -489,7 +579,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
             child: TextButton(
               onPressed: () {},
               style: TextButton.styleFrom(
-                backgroundColor: AnnvaColors.ochre.withValues(alpha: 0.12),
+                backgroundColor: AnnvaColors.ochre.withOpacity(0.12),
                 foregroundColor: AnnvaColors.ochreDeep,
               ),
               child: const Text('Accept rescue →'),

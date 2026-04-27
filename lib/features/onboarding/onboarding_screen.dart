@@ -81,12 +81,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: _completeOnboarding,
                       child: Text(
                         'Skip',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'WorkSans',
                           fontSize: 12,
-                          color: AnnvaColors.primaryForeground.withValues(
-                            alpha: 0.5,
-                          ),
+                          color: AnnvaColors
+                              .creamLight, // Using creamLight for consistency
                         ),
                       ),
                     ),
@@ -97,12 +96,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Container(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
               decoration: BoxDecoration(
-                color: AnnvaColors.primaryForeground.withValues(alpha: 0.04),
+                color: AnnvaColors.primaryForeground.withOpacity(0.04),
                 border: Border(
                   top: BorderSide(
-                    color: AnnvaColors.primaryForeground.withValues(
-                      alpha: 0.08,
-                    ),
+                    color: AnnvaColors.primaryForeground.withOpacity(0.08),
                   ),
                 ),
               ),
@@ -119,8 +116,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: isActive ? 20 : 6,
                         height: 6,
                         decoration: BoxDecoration(
-                          color: AnnvaColors.ochre.withValues(
-                            alpha: isActive ? 1 : 0.3,
+                          color: AnnvaColors.ochre.withOpacity(
+                            isActive ? 1 : 0.3,
                           ),
                           borderRadius: BorderRadius.circular(999),
                         ),
@@ -201,11 +198,11 @@ class _ProblemPage extends StatelessWidget {
             Text(
               'While 194 million Indians\ngo hungry every night.',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 13,
                 height: 1.5,
-                color: AnnvaColors.primaryForeground.withValues(alpha: 0.5),
+                color: AnnvaColors.creamLight,
               ),
             ),
           ],
@@ -231,7 +228,7 @@ class _SolutionPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AnnvaColors.primaryForeground.withValues(alpha: 0.1),
+                  color: AnnvaColors.primaryForeground.withOpacity(0.1),
                 ),
               ),
               child: Column(
@@ -271,10 +268,10 @@ class _SolutionPage extends StatelessWidget {
             Text(
               'Powered by food safety science,\nnot arbitrary expiry labels.',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 12,
-                color: AnnvaColors.primaryForeground.withValues(alpha: 0.5),
+                color: AnnvaColors.creamLight,
               ),
             ),
           ],
@@ -318,7 +315,7 @@ class _CascadeRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
-              color: chipColor.withValues(alpha: 0.2),
+              color: chipColor.withOpacity(0.2),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
@@ -370,14 +367,10 @@ class _RolesPage extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AnnvaColors.primaryForeground.withValues(
-                      alpha: 0.06,
-                    ),
+                    color: AnnvaColors.primaryForeground.withOpacity(0.06),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: AnnvaColors.primaryForeground.withValues(
-                        alpha: 0.1,
-                      ),
+                      color: AnnvaColors.primaryForeground.withOpacity(0.1),
                     ),
                   ),
                   child: Column(
@@ -397,12 +390,10 @@ class _RolesPage extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         role.$3,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'WorkSans',
                           fontSize: 9,
-                          color: AnnvaColors.primaryForeground.withValues(
-                            alpha: 0.5,
-                          ),
+                          color: AnnvaColors.creamLight,
                         ),
                       ),
                     ],
@@ -421,13 +412,13 @@ class _RolesPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            Text(
+            const Text(
               'अन्न ही ब्रह्म है · Food is sacred',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'NotoSerifDevanagari',
                 fontSize: 11,
-                color: AnnvaColors.primaryForeground.withValues(alpha: 0.4),
+                color: AnnvaColors.creamLight,
               ),
             ),
           ],

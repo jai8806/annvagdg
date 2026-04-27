@@ -103,7 +103,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: AnnvaSpacing.xl),
-              Text(
+              const Text(
                 'Enter OTP',
                 style: TextStyle(
                   fontFamily: 'InstrumentSerif',
@@ -115,7 +115,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
               const SizedBox(height: AnnvaSpacing.sm),
               Text(
                 'Sent to +91 XXXXXX$last4',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 16,
                   color: AnnvaColors.muted,
@@ -136,7 +136,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                 child: _countdown > 0
                     ? Text(
                         'Resend OTP in 0:${_countdown.toString().padLeft(2, '0')}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'WorkSans',
                           fontSize: 14,
                           color: AnnvaColors.muted,
@@ -144,7 +144,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
                       )
                     : GestureDetector(
                         onTap: _startCountdown,
-                        child: Text(
+                        child: const Text(
                           'Resend OTP',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -185,7 +185,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           maxLength: 1,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'WorkSans',
             fontSize: 24,
             fontWeight: FontWeight.w600,

@@ -77,7 +77,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                     ),
                     child: Text(
                       '${cartItems.length}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         color: Colors.white,
                         fontSize: 10,
@@ -107,7 +107,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                 alignment: Alignment.center,
                 child: Text(
                   '487,312 kg rescued this month · 6 cities',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
@@ -215,7 +215,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                           child: Text(
                             'No active rescues near you right now.\nCheck back soon!',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'WorkSans',
                               color: AnnvaColors.muted,
                             ),
@@ -293,9 +293,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                                 .animate(onPlay: (c) => c.repeat())
                                 .shimmer(
                                   duration: 1200.ms,
-                                  color: AnnvaColors.backgroundCard.withValues(
-                                    alpha: 0.6,
-                                  ),
+                                  color: AnnvaColors.backgroundCard.withOpacity(0.6),
                                 ),
                       );
                     }, childCount: 4),
@@ -310,7 +308,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                         child: Text(
                           'Something moved.\nPull to refresh.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'WorkSans',
                             color: AnnvaColors.muted,
                           ),

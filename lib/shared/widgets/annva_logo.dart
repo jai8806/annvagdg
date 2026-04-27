@@ -5,8 +5,8 @@ import '../../core/theme/annva_colors.dart';
 /// "अन्न Annva" wordmark — the app's logotype.
 ///
 /// Visual spec (Section 6.11):
-/// - Always show the Devanagari "अन्न" first, then the Latin "Annva"
-/// - Noto Serif Devanagari for "अन्न", Instrument Serif for "Annva"
+/// - Always show the Devanagari "अन्नवा" first, then the Latin "Annva"
+/// - Noto Serif Devanagari for "अन्नवा", Instrument Serif for "Annva"
 /// - Deep indigo, side by side
 /// - Never show just "Annva" without the Devanagari prefix
 class AnnvaLogo extends StatelessWidget {
@@ -27,9 +27,9 @@ class AnnvaLogo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        // Devanagari: अन्न
+        // Devanagari: अन्नवा
         Text(
-          'अन्न',
+          'अन्नवा',
           style: TextStyle(
             fontFamily: 'NotoSerifDevanagari',
             fontSize: fontSize,

@@ -5,8 +5,6 @@ import '../../shared/models/food_listing.dart';
 
 class FirestoreSeeder {
   static Future<void> seedListings() async {
-    if (!kDebugMode) return;
-
     final firestore = FirebaseFirestore.instance;
     final listingsRef = firestore.collection('listings');
     final now = DateTime.now();
@@ -14,7 +12,7 @@ class FirestoreSeeder {
     final mockListings = [
       FoodListing(
         id: 'L01',
-        name: 'Fresh produce mix (assorted vegetables)',
+        name: '[LIVE] Fresh produce mix',
         sellerId: 's5',
         sellerName: 'Reliance Fresh',
         vertical: 'Kirana',
@@ -25,7 +23,7 @@ class FirestoreSeeder {
         originalPrice: 5000,
         currentPrice: 4250, // 85% of price
         stage: CascadeStage.fresh,
-        expiresAt: now.add(const Duration(minutes: 50)),
+        expiresAt: now.add(const Duration(hours: 6)),
         lat: 12.9116,
         lng: 77.6389,
         imageUrl: '🥦',
@@ -38,7 +36,7 @@ class FirestoreSeeder {
       ),
       FoodListing(
         id: 'L02',
-        name: 'Cold-pressed juice combo (6 bottles)',
+        name: '[LIVE] Cold-pressed juice',
         sellerId: 's4',
         sellerName: 'BBK Bakery',
         vertical: 'Bakery',
@@ -49,7 +47,7 @@ class FirestoreSeeder {
         originalPrice: 3000,
         currentPrice: 2100, // 70% of price
         stage: CascadeStage.goodDeal,
-        expiresAt: now.add(const Duration(minutes: 50)),
+        expiresAt: now.add(const Duration(hours: 5)),
         lat: 12.9352,
         lng: 77.6245,
         imageUrl: '🥤',
@@ -62,7 +60,7 @@ class FirestoreSeeder {
       ),
       FoodListing(
         id: 'L03',
-        name: 'Veg thali — catered',
+        name: '[LIVE] Veg thali',
         sellerId: 's3',
         sellerName: 'Nandhini Deluxe',
         vertical: 'Restaurant',
@@ -73,7 +71,7 @@ class FirestoreSeeder {
         originalPrice: 6000,
         currentPrice: 3000, // 50% of price
         stage: CascadeStage.hotDeal,
-        expiresAt: now.add(const Duration(minutes: 50)),
+        expiresAt: now.add(const Duration(hours: 4)),
         lat: 12.9250,
         lng: 77.5938,
         imageUrl: '🍱',
@@ -82,7 +80,7 @@ class FirestoreSeeder {
       ),
       FoodListing(
         id: 'L04',
-        name: 'Butter croissants (12 pcs)',
+        name: '[LIVE] Butter croissants',
         sellerId: 's2',
         sellerName: 'Third Wave Coffee',
         vertical: 'Bakery',
@@ -93,7 +91,7 @@ class FirestoreSeeder {
         originalPrice: 1800,
         currentPrice: 450, // 25% of price
         stage: CascadeStage.lastCall,
-        expiresAt: now.add(const Duration(minutes: 20)),
+        expiresAt: now.add(const Duration(hours: 1)),
         lat: 12.9784,
         lng: 77.6408,
         imageUrl: '🥐',
@@ -102,7 +100,7 @@ class FirestoreSeeder {
       ),
       FoodListing(
         id: 'L05',
-        name: 'Wedding biryani surplus',
+        name: '[LIVE] Wedding biryani',
         sellerId: 's6',
         sellerName: 'Taj West End',
         vertical: 'Event',
@@ -113,7 +111,7 @@ class FirestoreSeeder {
         originalPrice: 20000,
         currentPrice: 0, // FREE
         stage: CascadeStage.ngo,
-        expiresAt: now.add(const Duration(minutes: 5)),
+        expiresAt: now.add(const Duration(minutes: 30)),
         lat: 12.9716,
         lng: 77.5946,
         imageUrl: '🍛',

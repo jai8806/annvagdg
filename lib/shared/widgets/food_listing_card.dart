@@ -74,7 +74,7 @@ class FoodListingCard extends ConsumerWidget {
           color: AnnvaColors.backgroundCard,
           borderRadius: BorderRadius.circular(AnnvaRadius.lg),
           border: Border.all(
-            color: AnnvaColors.border.withValues(alpha: 0.5),
+            color: AnnvaColors.border.withOpacity(0.5),
             width: 0.5,
           ),
         ),
@@ -110,7 +110,7 @@ class FoodListingCard extends ConsumerWidget {
                       // Row 2: Food name
                       Text(
                         listing.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'InstrumentSerif',
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -124,7 +124,7 @@ class FoodListingCard extends ConsumerWidget {
                       // Row 3: Seller + location + vertical
                       Text(
                         listing.sellerLabel,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'WorkSans',
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -145,7 +145,7 @@ class FoodListingCard extends ConsumerWidget {
                           ),
                           child: Text(
                             '🔒 Locked by another user · ${listing.lockedUntil!.difference(DateTime.now()).inMinutes}m left',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'WorkSans',
                               color: AnnvaColors.muted,
                               fontSize: 11,
@@ -213,12 +213,12 @@ class FoodListingCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.1),
+                  color: AnnvaColors.cascadeUrgent.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(AnnvaRadius.sm),
                 ),
                 child: Text(
                   'FREE PICKUP',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -249,7 +249,7 @@ class FoodListingCard extends ConsumerWidget {
             Expanded(
               child: Text(
                 listing.quantityLabel,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -267,7 +267,7 @@ class FoodListingCard extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 2),
             child: Text(
               '🔒 YOUR LOCK · ${listing.lockedUntil!.difference(DateTime.now()).inMinutes}m ${listing.lockedUntil!.difference(DateTime.now()).inSeconds % 60}s left',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -308,7 +308,7 @@ class FoodListingCard extends ConsumerWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   ),
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -328,7 +328,7 @@ class FoodListingCard extends ConsumerWidget {
               },
               child: Text(
                 '🔒 Lock this price — ₹10',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 11,
                   fontWeight: FontWeight.w600,

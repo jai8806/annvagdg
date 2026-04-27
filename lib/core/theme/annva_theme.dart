@@ -28,7 +28,7 @@ class AnnvaTheme {
       ),
 
       // ─── APP BAR ───
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AnnvaColors.background,
         foregroundColor: AnnvaColors.primary,
         elevation: 0,
@@ -73,7 +73,7 @@ class AnnvaTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -93,7 +93,7 @@ class AnnvaTheme {
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
           ),
           side: const BorderSide(color: AnnvaColors.border, width: 0.5),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -105,7 +105,7 @@ class AnnvaTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AnnvaColors.primary,
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontFamily: 'WorkSans',
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -139,12 +139,12 @@ class AnnvaTheme {
           borderRadius: BorderRadius.circular(AnnvaRadius.md),
           borderSide: const BorderSide(color: AnnvaColors.primary, width: 1.5),
         ),
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           fontFamily: 'WorkSans',
           fontSize: 14,
           color: AnnvaColors.mutedForeground,
         ),
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           fontFamily: 'WorkSans',
           fontSize: 14,
           color: AnnvaColors.muted,
@@ -155,7 +155,7 @@ class AnnvaTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AnnvaColors.backgroundCard,
         selectedColor: AnnvaColors.primary,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           fontFamily: 'WorkSans',
           fontSize: 12,
           fontWeight: FontWeight.w500,
@@ -175,7 +175,7 @@ class AnnvaTheme {
       ),
 
       // ─── TEXT THEME — fallback base text styles ───
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontFamily: 'InstrumentSerif',
           fontSize: 56,

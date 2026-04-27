@@ -35,17 +35,17 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
       backgroundColor: AnnvaColors.background,
       body: Stack(
         children: [
-          // Devanagari watermark: "अन्न" huge text very low opacity
+          // Devanagari watermark: "अन्नवा" huge text very low opacity
           Positioned(
             top: -20,
             right: -40,
             child: Text(
-              'अन्न',
+              'अन्नवा',
               style: TextStyle(
                 fontFamily: 'NotoSerifDevanagari',
                 fontSize: 180,
                 fontWeight: FontWeight.w700,
-                color: AnnvaColors.primary.withValues(alpha: 0.04),
+                color: AnnvaColors.primary.withOpacity(0.04),
               ),
             ),
           ),
@@ -62,7 +62,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                   const AnnvaLogo(fontSize: 28),
                   const Spacer(flex: 2),
 
-                  Text(
+                  const Text(
                     'Welcome to Annva',
                     style: TextStyle(
                       fontFamily: 'InstrumentSerif',
@@ -73,7 +73,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                     ),
                   ),
                   const SizedBox(height: AnnvaSpacing.sm),
-                  Text(
+                  const Text(
                     "India's food rescue network",
                     style: TextStyle(
                       fontFamily: 'WorkSans',
@@ -96,7 +96,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                     ),
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           '+91',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -117,7 +117,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
                             maxLength: 10,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'WorkSans',
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -154,7 +154,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Send OTP',
                             style: TextStyle(
                               fontFamily: 'WorkSans',
@@ -172,7 +172,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                   const Spacer(flex: 3),
 
                   // Bottom text
-                  Center(
+                   const Center(
                     child: Text(
                       'By continuing you agree to our terms',
                       style: TextStyle(

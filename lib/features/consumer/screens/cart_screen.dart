@@ -55,7 +55,7 @@ class CartScreen extends ConsumerWidget {
             Text(
               'Browse the live cascade to rescue food near you',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.muted,
               ),
@@ -74,7 +74,7 @@ class CartScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(AnnvaRadius.full),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Browse listings →',
                 style: TextStyle(
                   fontFamily: 'WorkSans',
@@ -148,7 +148,7 @@ class CartScreen extends ConsumerWidget {
                           children: [
                             Text(
                               item.listing.name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'WorkSans',
                                 fontWeight: FontWeight.bold,
                               ),
@@ -156,7 +156,7 @@ class CartScreen extends ConsumerWidget {
                             const SizedBox(height: 4),
                             Text(
                               item.listing.sellerName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'WorkSans',
                                 color: AnnvaColors.muted,
                                 fontSize: 12,
@@ -165,7 +165,7 @@ class CartScreen extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Text(
                               '${item.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'WorkSans',
                                 color: AnnvaColors.primary,
                                 fontSize: 12,
@@ -244,7 +244,7 @@ class CartScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Total',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -254,7 +254,7 @@ class CartScreen extends ConsumerWidget {
                         ),
                         Text(
                           '₹${cartNotifier.subtotal.toStringAsFixed(0)}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'WorkSans',
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -266,7 +266,7 @@ class CartScreen extends ConsumerWidget {
                     const SizedBox(height: 16),
                     Text(
                       'You\'re saving ₹${cartNotifier.totalSavings.toStringAsFixed(0)} and rescuing ${cartNotifier.totalKg.toStringAsFixed(1).replaceAll('.0', '')}kg from waste 🌱',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         color: AnnvaColors.muted,
                         fontSize: 12,
@@ -291,7 +291,7 @@ class CartScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AnnvaRadius.full),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Proceed to Pay →',
                     style: TextStyle(
                       fontFamily: 'WorkSans',
@@ -315,7 +315,7 @@ class CartScreen extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
+          style: const TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
         ),
         Text(
           value,

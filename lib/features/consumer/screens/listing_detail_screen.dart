@@ -102,7 +102,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                    AnnvaColors.background.withValues(alpha: 0),
+                                    AnnvaColors.background.withOpacity(0),
                                     AnnvaColors.background,
                                   ],
                                 ),
@@ -118,9 +118,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.background.withValues(
-                                    alpha: 0.8,
-                                  ),
+                                  color: AnnvaColors.background.withOpacity(0.8),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -152,7 +150,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         const SizedBox(height: 4),
                         Text(
                           listing.sellerLabel,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'WorkSans',
                             color: AnnvaColors.muted,
                             fontSize: 13,
@@ -194,12 +192,12 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: AnnvaColors.cascadeUrgent
-                                          .withValues(alpha: 0.1),
+                                          .withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(
                                         AnnvaRadius.sm,
                                       ),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       'FREE PICKUP',
                                       style: TextStyle(
                                         fontFamily: 'WorkSans',
@@ -214,7 +212,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                             ),
                             Text(
                               listing.quantityLabel,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'WorkSans',
                                 color: AnnvaColors.muted,
                                 fontSize: 13,
@@ -263,7 +261,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         const SizedBox(height: AnnvaSpacing.md),
                         Text(
                           '${listing.sellerName} has ${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg of ${listing.name} available for rescue. Enough for ${listing.servings} people.',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'WorkSans',
                             color: AnnvaColors.primary,
                             height: 1.5,
@@ -293,14 +291,14 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   children: [
                                     Text(
                                       listing.sellerName,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: 'WorkSans',
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       listing.address,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontFamily: 'WorkSans',
                                         color: AnnvaColors.muted,
                                         fontSize: 12,
@@ -315,9 +313,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.border.withValues(
-                                    alpha: 0.5,
-                                  ),
+                                  color: AnnvaColors.border.withOpacity(0.5),
                                   borderRadius: BorderRadius.circular(
                                     AnnvaRadius.full,
                                   ),
@@ -412,7 +408,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                           ),
                           Text(
                             'for ${_qty.toStringAsFixed(1).replaceAll('.0', '')}kg',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'WorkSans',
                               color: AnnvaColors.muted,
                               fontSize: 12,
@@ -445,7 +441,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                             vertical: 12,
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Add to Cart →',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -513,7 +509,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             duration: 800.ms,
             curve: Curves.easeInOut,
           )
-          .tint(color: Colors.red.withValues(alpha: 0.2));
+          .tint(color: Colors.red.withOpacity(0.2));
     }
 
     return Center(child: timerText);
@@ -537,7 +533,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
+          color: AnnvaColors.cascadeFresh.withOpacity(0.1),
           borderRadius: BorderRadius.circular(AnnvaRadius.xl),
           border: Border.all(color: AnnvaColors.cascadeFresh),
         ),
@@ -554,14 +550,14 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             const SizedBox(height: 4),
             Text(
               '$mm:$ss remaining',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 12,
                 color: AnnvaColors.cascadeFresh,
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               '"Add to cart to secure this deal →"',
               style: TextStyle(
                 fontFamily: 'WorkSans',
@@ -589,7 +585,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
         ),
         child: Column(
           children: [
-            Text(
+            const Text(
               '🔒 Someone locked this price',
               style: TextStyle(
                 fontFamily: 'WorkSans',
@@ -600,7 +596,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             const SizedBox(height: 4),
             Text(
               'Available in $mm:$ss',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 12,
                 color: AnnvaColors.muted,
@@ -653,7 +649,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Lock this price for 20 minutes',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
@@ -661,7 +657,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         color: AnnvaColors.primary,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Pay ₹10 deposit now. If you order within 20 min, ₹10 applies to total. If not, ₹10 goes to our NGO fund. 🌱',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
@@ -699,7 +695,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
               ),
               child: Text(
                 'Lock at ₹${listing.currentPrice} →',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   fontWeight: FontWeight.bold,
                 ),
@@ -727,7 +723,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
       body: Center(
         child: Text(
           msg,
-          style: TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
+          style: const TextStyle(fontFamily: 'WorkSans', color: AnnvaColors.muted),
         ),
       ),
     );

@@ -24,7 +24,7 @@ class RoleSelectScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: AnnvaSpacing.xl),
-              Text(
+              const Text(
                 'I am a...',
                 style: TextStyle(
                   fontFamily: 'InstrumentSerif',
@@ -108,7 +108,7 @@ class RoleSelectScreen extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Continue',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -188,7 +188,7 @@ class _RoleCard extends StatelessWidget {
                 fontSize: 13,
                 height: 1.4,
                 color: isSelected
-                    ? AnnvaColors.primaryForeground.withValues(alpha: 0.8)
+                    ? AnnvaColors.primaryForeground.withOpacity(0.8)
                     : AnnvaColors.muted,
               ),
             ),

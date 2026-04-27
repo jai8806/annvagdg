@@ -25,7 +25,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || !snapshot.data!.exists) {
-            return const Center(child: Text("Order not found"));
+            return const Center(child: Text('Order not found'));
           }
 
           final orderData = snapshot.data!.data() as Map<String, dynamic>;
@@ -61,7 +61,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 TextButton(
                   onPressed: () => context.go('/consumer'),
-                  child: Text("Back to browsing", style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.muted)),
+                  child: Text('Back to browsing', style: AnnvaTextStyles.bodySmall.copyWith(color: AnnvaColors.muted)),
                 ),
               ],
             ),
@@ -103,9 +103,9 @@ class OrderConfirmedScreen extends ConsumerWidget {
           ],
         ),
         const SizedBox(height: 20),
-        Text("Order Confirmed!", style: AnnvaTextStyles.h1),
+        Text('Order Confirmed!', style: AnnvaTextStyles.h1),
         const SizedBox(height: 4),
-        Text("Your food rescue is secured.", style: AnnvaTextStyles.bodySmall),
+        Text('Your food rescue is secured.', style: AnnvaTextStyles.bodySmall),
       ],
     );
   }
@@ -138,8 +138,8 @@ class OrderConfirmedScreen extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("अन्न Annva", style: AnnvaTextStyles.h3.copyWith(color: AnnvaColors.background, fontSize: 18)),
-                Text("PICKUP PASS", style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.background.withValues(alpha: 0.7), fontSize: 10, letterSpacing: 2)),
+                Text('अन्नवा Annva', style: AnnvaTextStyles.h3.copyWith(color: AnnvaColors.background, fontSize: 18)),
+                Text('PICKUP PASS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.background.withOpacity(0.7), fontSize: 10, letterSpacing: 2)),
               ],
             ),
           ),
@@ -152,7 +152,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
                 const SizedBox(height: 20),
                 _buildDashedDivider(),
                 const SizedBox(height: 20),
-                Text("SHOW THIS CODE AT THE COUNTER", style: AnnvaTextStyles.label),
+                Text('SHOW THIS CODE AT THE COUNTER', style: AnnvaTextStyles.label),
                 const SizedBox(height: 12),
                 Container(
                   width: double.infinity,
@@ -170,10 +170,17 @@ class OrderConfirmedScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 QrImageView(
-                  data: "ANNVA-$pickupCode-$orderId",
+                  data: 'ANNVA-$pickupCode-$orderId',
                   version: QrVersions.auto,
                   size: 140.0,
-                  foregroundColor: AnnvaColors.primary,
+                  eyeStyle: const QrEyeStyle(
+                    eyeShape: QrEyeShape.square,
+                    color: AnnvaColors.primary,
+                  ),
+                  dataModuleStyle: const QrDataModuleStyle(
+                    dataModuleShape: QrDataModuleShape.square,
+                    color: AnnvaColors.primary,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 _buildDashedDivider(),
@@ -181,9 +188,9 @@ class OrderConfirmedScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildPassDetail("ITEMS", "$itemsCount items · ${totalKg.toStringAsFixed(1)}kg"),
-                    _buildPassDetail("PAID", "₹${totalAmount.toStringAsFixed(0)} via $method"),
-                    _buildPassDetail("WINDOW", "60 mins"), // Simplified for mock
+                    _buildPassDetail('ITEMS', '$itemsCount items · ${totalKg.toStringAsFixed(1)}kg'),
+                    _buildPassDetail('PAID', '₹${totalAmount.toStringAsFixed(0)} via $method'),
+                    _buildPassDetail('WINDOW', '60 mins'), // Simplified for mock
                   ],
                 ),
               ],
@@ -191,10 +198,10 @@ class OrderConfirmedScreen extends ConsumerWidget {
           ),
           Container(
             height: 48,
-            color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
+            color: AnnvaColors.backgroundSecondary.withOpacity(0.3),
             child: Center(
               child: Text(
-                "🌱 You're rescuing ${totalKg.toStringAsFixed(1)}kg from waste today",
+                '🌱 You\'re rescuing ${totalKg.toStringAsFixed(1)}kg from waste today',
                 style: AnnvaTextStyles.bodySmall.copyWith(fontSize: 11, color: AnnvaColors.cascadeFresh, fontWeight: FontWeight.bold),
               ),
             ),
@@ -238,7 +245,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
           child: OutlinedButton.icon(
             onPressed: () => launchUrl(Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng")),
             icon: const Icon(Icons.location_on_outlined, size: 20),
-            label: const Text("Navigate to Restaurant"),
+            label: const Text('Navigate to Restaurant'),
             style: OutlinedButton.styleFrom(
               foregroundColor: AnnvaColors.primary,
               side: const BorderSide(color: AnnvaColors.primary),
@@ -257,7 +264,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
               );
             },
             icon: const Icon(Icons.share_outlined, size: 20),
-            label: const Text("Share pickup pass"),
+            label: const Text('Share pickup pass'),
             style: OutlinedButton.styleFrom(
               foregroundColor: AnnvaColors.primary,
               side: const BorderSide(color: AnnvaColors.primary),

@@ -18,11 +18,11 @@ class OrdersScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: AnnvaColors.background,
         elevation: 0,
-        title: Text("My Rescues", style: AnnvaTextStyles.h1),
+        title: Text('My Rescues', style: AnnvaTextStyles.h1),
         centerTitle: false,
       ),
       body: userId == null
-          ? const Center(child: Text("Please login to see your rescues"))
+          ? const Center(child: Text('Please login to see your rescues'))
           : StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('orders')
@@ -59,10 +59,10 @@ class OrdersScreen extends ConsumerWidget {
           children: [
             const Icon(Icons.receipt_long_outlined, size: 64, color: AnnvaColors.border),
             const SizedBox(height: 24),
-            Text("No rescues yet.", style: AnnvaTextStyles.h2),
+            Text('No rescues yet.', style: AnnvaTextStyles.h2),
             const SizedBox(height: 8),
             Text(
-              "Browse the live cascade to make your first rescue.",
+              'Browse the live cascade to make your first rescue.',
               textAlign: TextAlign.center,
               style: AnnvaTextStyles.bodySmall,
             ),
@@ -106,7 +106,7 @@ class _OrderHistoryTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("🍱", style: TextStyle(fontSize: 24)),
+              const Text('🍱', style: TextStyle(fontSize: 24)),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -124,7 +124,7 @@ class _OrderHistoryTile extends StatelessWidget {
                         _buildStatusChip(status),
                       ],
                     ),
-                    Text("$sellerName · $address", 
+                    Text('$sellerName · $address', 
                       style: AnnvaTextStyles.bodySmall.copyWith(fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -142,9 +142,9 @@ class _OrderHistoryTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Code: $pickupCode", style: AnnvaTextStyles.mono),
+              Text('Code: $pickupCode', style: AnnvaTextStyles.mono),
               if (status == 'confirmed')
-                Text("Scan at counter →", style: AnnvaTextStyles.label.copyWith(fontSize: 9)),
+                Text('Scan at counter →', style: AnnvaTextStyles.label.copyWith(fontSize: 9)),
             ],
           ),
         ],
@@ -159,22 +159,22 @@ class _OrderHistoryTile extends StatelessWidget {
 
     switch (status) {
       case 'confirmed':
-        bgColor = AnnvaColors.ochre.withValues(alpha: 0.1);
+        bgColor = AnnvaColors.ochre.withOpacity(0.1);
         textColor = AnnvaColors.ochreDeep;
-        label = "SECURED";
+        label = 'SECURED';
         break;
       case 'picked_up':
         bgColor = AnnvaColors.cascadeFreshBg;
         textColor = AnnvaColors.cascadeFresh;
-        label = "RESCUED ✓";
+        label = 'RESCUED ✓';
         break;
       case 'expired':
-        bgColor = AnnvaColors.muted.withValues(alpha: 0.1);
+        bgColor = AnnvaColors.muted.withOpacity(0.1);
         textColor = AnnvaColors.muted;
-        label = "EXPIRED";
+        label = 'EXPIRED';
         break;
       default:
-        bgColor = AnnvaColors.border.withValues(alpha: 0.1);
+        bgColor = AnnvaColors.border.withOpacity(0.1);
         textColor = AnnvaColors.muted;
         label = status.toUpperCase();
     }

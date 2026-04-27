@@ -69,12 +69,10 @@ class NgoHomeScreen extends ConsumerWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: AnnvaColors.cascadeFresh.withValues(
-                            alpha: 0.1,
-                          ),
+                          color: AnnvaColors.cascadeFresh.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(
+                        child: const Text(
                           '✓ Verified',
                           style: TextStyle(
                             fontFamily: 'WorkSans',
@@ -148,7 +146,7 @@ class NgoHomeScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
-                      Text(
+                      const Text(
                         '3 urgent',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -271,7 +269,7 @@ class NgoHomeScreen extends ConsumerWidget {
           ),
           Text(
             subtext,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'WorkSans',
               color: AnnvaColors.muted,
               fontSize: 12,
@@ -302,7 +300,7 @@ class NgoHomeScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(AnnvaSpacing.xl),
               child: Center(
-                child: Text(
+                child: const Text(
                   'No urgent rescues incoming.',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -355,7 +353,7 @@ class NgoHomeScreen extends ConsumerWidget {
               children: [
                 Text(
                   '[URGENT]',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.cascadeUrgent,
                     fontWeight: FontWeight.bold,
@@ -366,7 +364,7 @@ class NgoHomeScreen extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     '${listing.name} · ${listing.sellerName}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
@@ -378,7 +376,7 @@ class NgoHomeScreen extends ConsumerWidget {
             const SizedBox(height: 4),
             Text(
               '${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg · ${listing.servings} servings · Volunteer: Karthik',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.muted,
                 fontSize: 13,
@@ -395,7 +393,7 @@ class NgoHomeScreen extends ConsumerWidget {
                 const SizedBox(width: 4),
                 Text(
                   '${listing.expiresAt.difference(DateTime.now()).inMinutes}m remaining',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.cascadeUrgent,
                     fontSize: 12,
@@ -412,7 +410,7 @@ class NgoHomeScreen extends ConsumerWidget {
                   onPressed: () {},
                   child: Text(
                     'Decline',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       color: AnnvaColors.muted,
                       fontWeight: FontWeight.w600,
@@ -440,7 +438,7 @@ class NgoHomeScreen extends ConsumerWidget {
                   ),
                   child: Text(
                     'Accept batch →',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.bold,
                     ),
@@ -487,7 +485,7 @@ class NgoHomeScreen extends ConsumerWidget {
               children: [
                 Text(
                   '$name · $qty',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
@@ -495,7 +493,7 @@ class NgoHomeScreen extends ConsumerWidget {
                 ),
                 Text(
                   '$date · Volunteer: $volunteer',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.muted,
                     fontSize: 12,
@@ -507,7 +505,7 @@ class NgoHomeScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
+              color: AnnvaColors.cascadeFresh.withOpacity(0.1),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(

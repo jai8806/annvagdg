@@ -63,7 +63,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                       color: AnnvaColors.ochre,
                     ),
                   ),
-                  Text(
+                  const Text(
                     '4 urgent · 1.4 km radius',
                     style: TextStyle(
                       fontFamily: 'WorkSans',
@@ -102,7 +102,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             child: Icon(
               Icons.emoji_events_outlined,
               size: 160,
-              color: AnnvaColors.creamLight.withValues(alpha: 0.05),
+              color: AnnvaColors.creamLight.withOpacity(0.05),
             ),
           ),
           // Content
@@ -111,7 +111,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'VOLUNTEER',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -129,11 +129,11 @@ class VolunteerHomeScreen extends ConsumerWidget {
                     fontSize: 40,
                   ),
                 ),
-                Text(
+                const Text(
                   'Silver tier · Bengaluru chapter',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
-                    color: AnnvaColors.creamLight.withValues(alpha: 0.7),
+                    color: AnnvaColors.creamLight,
                     fontSize: 14,
                   ),
                 ),
@@ -144,19 +144,19 @@ class VolunteerHomeScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Silver',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
-                        color: AnnvaColors.creamLight.withValues(alpha: 0.6),
+                        color: AnnvaColors.creamLight,
                         fontSize: 12,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Gold · 125 rescues',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
-                        color: AnnvaColors.creamLight.withValues(alpha: 0.6),
+                        color: AnnvaColors.creamLight,
                         fontSize: 12,
                       ),
                     ),
@@ -167,7 +167,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   height: 8,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AnnvaColors.creamLight.withValues(alpha: 0.15),
+                    color: AnnvaColors.creamLight.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: FractionallySizedBox(
@@ -182,11 +182,11 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
+                const Text(
                   '61 more rescues to Gold.',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
-                    color: AnnvaColors.creamLight.withValues(alpha: 0.7),
+                    color: AnnvaColors.creamLight,
                     fontSize: 12,
                   ),
                 ),
@@ -194,7 +194,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
 
                 // Stats Row
-                Text(
+                const Text(
                   '64 rescues · 805 kg delivered',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -239,7 +239,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: AnnvaColors.creamLight.withValues(alpha: 0.1),
+          color: AnnvaColors.creamLight.withOpacity(0.1),
           borderRadius: BorderRadius.circular(AnnvaRadius.full),
         ),
         child: Row(
@@ -282,7 +282,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(AnnvaSpacing.xl),
               child: Center(
-                child: Text(
+                child: const Text(
                   'No urgent rescues nearby right now.',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -366,7 +366,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${listing.sellerName} · ${listing.address}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         color: AnnvaColors.muted,
                         fontSize: 13,
@@ -378,10 +378,10 @@ class VolunteerHomeScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.1),
+                  color: AnnvaColors.cascadeUrgent.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Text(
+                child: const Text(
                   'URGENT',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -407,7 +407,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   const SizedBox(width: 4),
                   Text(
                     '$distanceKm km away',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
@@ -416,7 +416,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Text(
                     '${listing.qtyKg.toStringAsFixed(1).replaceAll('.0', '')}kg · ${listing.servings} servings',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       color: AnnvaColors.muted,
                       fontSize: 13,
@@ -436,7 +436,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                     color: AnnvaColors.cascadeUrgent,
                     borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Accept rescue →',
                     style: TextStyle(
                       fontFamily: 'WorkSans',
@@ -521,7 +521,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                         );
                         if (await canLaunchUrl(url)) await launchUrl(url);
                       },
-                      child: Text(
+                      child: const Text(
                         'Open in Maps →',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -637,7 +637,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'WorkSans',
                   color: AnnvaColors.muted,
                   fontSize: 12,
@@ -670,7 +670,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
         ),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'WorkSans',
             color: AnnvaColors.muted,
             fontSize: 12,

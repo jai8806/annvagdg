@@ -76,7 +76,7 @@ class ImpactScreen extends ConsumerWidget {
               'PRASAD PROTOCOL',
               style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
             ),
-            Text(
+            const Text(
               'Sacred surplus, rescued daily',
               style: TextStyle(
                 fontFamily: 'WorkSans',
@@ -159,7 +159,7 @@ class ImpactScreen extends ConsumerWidget {
             label,
             style: AnnvaTextStyles.label.copyWith(
               color: isPrimary
-                  ? AnnvaColors.creamLight.withValues(alpha: 0.7)
+                  ? AnnvaColors.creamLight.withOpacity(0.7)
                   : AnnvaColors.ochre,
             ),
           ),
@@ -177,7 +177,7 @@ class ImpactScreen extends ConsumerWidget {
             style: TextStyle(
               fontFamily: 'WorkSans',
               color: isPrimary
-                  ? AnnvaColors.creamLight.withValues(alpha: 0.6)
+                  ? AnnvaColors.creamLight.withOpacity(0.6)
                   : AnnvaColors.muted,
               fontSize: 10,
             ),
@@ -220,7 +220,7 @@ class ImpactScreen extends ConsumerWidget {
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       days[value.toInt()],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         color: AnnvaColors.muted,
                         fontSize: 10,
@@ -300,7 +300,7 @@ class ImpactScreen extends ConsumerWidget {
                 width: 100,
                 child: Text(
                   city['name'] as String,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
@@ -339,7 +339,7 @@ class ImpactScreen extends ConsumerWidget {
                 width: 50,
                 child: Text(
                   '${((city['pct'] as double) * 100).toInt()}%',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.muted,
                     fontSize: 12,
@@ -351,7 +351,7 @@ class ImpactScreen extends ConsumerWidget {
                 width: 70,
                 child: Text(
                   '${city['kg']} kg',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.primary,
                     fontSize: 12,
@@ -391,7 +391,7 @@ class ImpactScreen extends ConsumerWidget {
             ),
             child: Text(
               partner,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.muted,
                 fontSize: 12,
@@ -450,7 +450,7 @@ class ImpactScreen extends ConsumerWidget {
                     ),
                     Text(
                       tile['subtitle']!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         color: AnnvaColors.muted,
                         fontSize: 12,
@@ -502,7 +502,7 @@ class ImpactScreen extends ConsumerWidget {
             },
           ),
           const SizedBox(height: 4),
-          Text(
+          const Text(
             'Forfeited deposits repurposed for NGO logistical support. No waste, only rescue.',
             style: TextStyle(
               fontFamily: 'WorkSans',
@@ -539,7 +539,7 @@ class ImpactScreen extends ConsumerWidget {
             'Register your event. We\'ll pre-position rescue.',
             style: TextStyle(
               fontFamily: 'WorkSans',
-              color: AnnvaColors.creamLight.withValues(alpha: 0.7),
+              color: AnnvaColors.creamLight.withOpacity(0.7),
               fontSize: 14,
             ),
           ),
@@ -551,14 +551,14 @@ class ImpactScreen extends ConsumerWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AnnvaColors.creamLight.withValues(alpha: 0.2),
+              backgroundColor: AnnvaColors.creamLight.withOpacity(0.2),
               foregroundColor: AnnvaColors.creamLight,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AnnvaRadius.full),
               ),
             ),
-            child: Text(
+            child: const Text(
               'Register an event →',
               style: TextStyle(
                 fontFamily: 'WorkSans',
