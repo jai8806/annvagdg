@@ -32,6 +32,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   bool _classifierReady = false;
   ClassifyResult? _classifyResult;
   List<FoodPrediction> _suggestions = [];
+  String _debugStatus = 'Initializing...';
+  String _predictedName = '';
 
   final _nameCtrl = TextEditingController();
   final _qtyCtrl = TextEditingController();
@@ -61,10 +63,16 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     _classifier
         .init()
         .then((_) {
-          if (mounted) setState(() => _classifierReady = true);
+          if (mounted) {
+            setState(() {
+              _classifierReady = true;
+              _debugStatus = 'Model Ready';
+            });
+          }
         })
         .catchError((e) {
           debugPrint('FoodClassifier init error: $e');
+          if (mounted) setState(() => _debugStatus = 'Model Error: $e');
         });
   }
 
@@ -88,6 +96,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       _isScanning = true;
       _isScanned = false;
       _suggestions = [];
+      _debugStatus = 'Scanning...';
+      _predictedName = '';
     });
 
     try {
@@ -101,10 +111,14 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         if (result != null) {
           _classifyResult = result;
           _isScanned = true;
+          _predictedName = result.top.displayName;
           // 1. AUTO-FILL: "Print" the name into the controller
-          _nameCtrl.text = result.top.displayName;
+          _nameCtrl.text = _predictedName;
           // 2. SUGGESTIONS: Keep other top predictions for manual correction
           _suggestions = result.top3;
+          _debugStatus = 'Got: $_predictedName ${(result.top.confidence * 100).toStringAsFixed(0)}%';
+        } else {
+          _debugStatus = 'Failed to identify';
         }
       });
     } catch (e) {
@@ -112,6 +126,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       setState(() {
         _isScanning = false;
         _isScanned = false;
+        _debugStatus = 'Error: $e';
       });
       ScaffoldMessenger.of(
         context,
@@ -155,10 +170,33 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     );
   }
 
+  Widget _buildPredictionDisplay() {
+    if (!_isScanned || _predictedName.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'AI Predicted:',
+            style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+          ),
+          Text(
+            _predictedName,
+            style: AnnvaTextStyles.h1,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildForm() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // PREDICTION DISPLAY
+        _buildPredictionDisplay(),
+
         // ITEM NAME (Model result printed here)
         _buildTextField(
           'Item name',
@@ -583,6 +621,22 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildUploadBox(),
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              _debugStatus,
+                              style: const TextStyle(
+                                fontFamily: 'monospace',
+                                color: Colors.greenAccent,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: AnnvaSpacing.md),
                           _buildForm(),
                         ],
