@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
   
   # State Management — Riverpod 2 with code generation
   flutter_riverpod: ^2.6.1
@@ -53,6 +54,12 @@ dependencies:
   # Charts
   fl_chart: any
 
+  # Image processing
+  image: ^4.3.0
+
+  # ONNX Runtime for ML inference (mobile only)
+  onnxruntime: ^1.4.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,6 +75,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+      - assets/models/annva_model.onnx
+      - assets/models/labels.json
+      - assets/models/annva_model.onnx.data
   fonts:
     - family: WorkSans
       fonts:

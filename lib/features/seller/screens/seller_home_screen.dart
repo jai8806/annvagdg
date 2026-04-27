@@ -14,6 +14,7 @@ import '../../../shared/models/food_listing.dart';
 import '../../../shared/providers/listings_provider.dart';
 import '../../../shared/widgets/annva_logo.dart';
 import '../../../shared/widgets/food_listing_card.dart';
+import '../services/food_classifier_service.dart';
 
 class SellerHomeScreen extends ConsumerStatefulWidget {
   const SellerHomeScreen({super.key});
@@ -26,6 +27,12 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   bool _isScanning = false;
   bool _isScanned = false;
   XFile? _selectedImage;
+
+  // AI classifier
+  final _classifier = FoodClassifierService();
+  bool _classifierReady = false;
+  ClassifyResult? _classifyResult;
+  List<FoodPrediction> _suggestions = [];
 
   final _nameCtrl = TextEditingController();
   final _qtyCtrl = TextEditingController();
@@ -49,8 +56,12 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   @override
   void initState() {
     super.initState();
-    _priceCtrl.addListener(() {
-      setState(() {});
+    _priceCtrl.addListener(() { setState(() {}); });
+    // Initialise the ONNX classifier asynchronously
+    _classifier.init().then((_) {
+      if (mounted) setState(() => _classifierReady = true);
+    }).catchError((e) {
+      debugPrint('FoodClassifier init error: $e');
     });
   }
 
@@ -59,37 +70,213 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     _nameCtrl.dispose();
     _qtyCtrl.dispose();
     _priceCtrl.dispose();
+    _classifier.dispose();
     super.dispose();
   }
 
-  Future<void> _pickAndScanImage() async {
+  /// Opens a modal bottom sheet so the user can choose between
+  /// uploading from their gallery or taking a photo with the camera.
+  void _showImageSourceSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AnnvaColors.backgroundCard,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Handle bar
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AnnvaColors.border,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'ADD FOOD PHOTO',
+                style: AnnvaTextStyles.label.copyWith(
+                  color: AnnvaColors.muted,
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Upload from gallery
+              _sheetOption(
+                ctx: ctx,
+                icon: Icons.photo_library_outlined,
+                title: 'Upload from device',
+                subtitle: 'Choose from gallery · JPG, PNG',
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickImageFromSource(ImageSource.gallery);
+                },
+              ),
+              const SizedBox(height: 10),
+              // Take photo with camera
+              _sheetOption(
+                ctx: ctx,
+                icon: Icons.camera_alt_outlined,
+                title: 'Take a photo',
+                subtitle: 'Opens rear camera',
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickImageFromSource(ImageSource.camera);
+                },
+              ),
+              const SizedBox(height: 8),
+              // Cancel
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// A single tappable row inside the bottom sheet.
+  Widget _sheetOption({
+    required BuildContext ctx,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AnnvaRadius.lg),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: AnnvaColors.backgroundSecondary,
+          borderRadius: BorderRadius.circular(AnnvaRadius.lg),
+          border: Border.all(color: AnnvaColors.border),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AnnvaColors.primary.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(AnnvaRadius.md),
+              ),
+              child: Icon(icon, color: AnnvaColors.primary, size: 22),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontFamily: 'WorkSans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: AnnvaColors.muted,
+              size: 18,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Picks an image from [source] (gallery or camera) then runs REAL AI classification.
+  Future<void> _pickImageFromSource(ImageSource source) async {
     final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
+    final image = await picker.pickImage(
+      source: source,
+      imageQuality: 85,
+      preferredCameraDevice: CameraDevice.rear,
+    );
     if (image == null) return;
 
     setState(() {
       _selectedImage = image;
       _isScanning = true;
       _isScanned = false;
+      _classifyResult = null;
+      _suggestions = [];
+      _nameCtrl.clear();
     });
 
-    // Fake OCR delay
-    await Future.delayed(const Duration(milliseconds: 1500));
+    try {
+  final bytes = await image.readAsBytes();
+  debugPrint('>>> Image bytes: ${bytes.length}');
+  debugPrint('>>> Classifier initialized: $_classifierReady');
 
-    if (!mounted) return;
+  final result = await _classifier.classify(bytes);
 
-    setState(() {
-      _isScanning = false;
-      _isScanned = true;
-      // Auto-fill form
-      _nameCtrl.text = 'Bisi bele bath';
-      _selectedVertical = 'Restaurant';
-      _qtyCtrl.text = '8';
-      _priceCtrl.text = '2400';
-      _cookedMinutesElapsed = 60;
-      _isRefrigerated = false;
-      if (!_selectedDiets.contains('Veg')) _selectedDiets.add('Veg');
-    });
+  debugPrint('>>> Result: $result');
+  debugPrint('>>> Top label: ${result?.top.displayName}');
+  debugPrint('>>> Confidence: ${result?.top.confidence}');
+
+  if (!mounted) return;
+
+      setState(() {
+        _isScanning = false;  
+        
+        _classifyResult = result;
+
+        if (result != null) {
+          
+            _isScanned = true;
+            _nameCtrl.text = result.top.displayName;  // always fill, regardless of confidence
+            _suggestions = result.shouldAutoFill ? [] : result.top3;
+            
+          } else {
+            // Confidence < 65% — leave blank, show suggestion chips
+            _isScanned = false;
+          }
+        }
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _isScanning = false;
+        _isScanned = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not identify food: $e')),
+      );
+    }
   }
 
   Future<void> _listSurplus() async {
@@ -531,99 +718,219 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   }
 
   Widget _buildUploadBox() {
-    return GestureDetector(
-      onTap: _pickAndScanImage,
-      child: Container(
-        width: 160,
-        height: 160,
-        decoration: BoxDecoration(
-          color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
-          borderRadius: BorderRadius.circular(AnnvaRadius.xl),
-          border: Border.all(
-            color: AnnvaColors.border,
-            style: BorderStyle.solid,
-          ), // Should be dashed but solid for simplicity
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            if (_selectedImage == null)
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.add_a_photo_outlined,
-                    color: AnnvaColors.muted,
-                    size: 32,
+    // ── State: image selected (preview + scanning overlay) ──────────────────
+    if (_selectedImage != null) {
+      return GestureDetector(
+        onTap: _showImageSourceSheet,
+        child: Container(
+          width: 160,
+          height: 160,
+          decoration: BoxDecoration(
+            color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(AnnvaRadius.xl),
+            border: Border.all(color: AnnvaColors.border),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Image emoji placeholder (swap with Image.file when not scanning)
+              const Center(
+                child: Text('🍲', style: TextStyle(fontSize: 64)),
+              ),
+              // Scanning overlay
+              if (_isScanning)
+                Container(
+                  decoration: BoxDecoration(
+                    color: AnnvaColors.background.withValues(alpha: 0.85),
+                    borderRadius: BorderRadius.circular(AnnvaRadius.xl),
                   ),
-                  const SizedBox(height: 8),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(
+                          color: AnnvaColors.ochre,
+                          strokeWidth: 2.5,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Identifying food…',
+                          style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              // Success badge
+              if (_isScanned && !_isScanning)
+                Positioned(
+                  bottom: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AnnvaColors.cascadeFresh,
+                      borderRadius: BorderRadius.circular(AnnvaRadius.sm),
+                    ),
+                    child: Text(
+                      '✓ AI identified',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ).animate().fadeIn(),
+              // Re-shoot hint
+              if (!_isScanning)
+                Positioned(
+                  top: 6,
+                  right: 6,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AnnvaColors.background.withValues(alpha: 0.8),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.refresh,
+                      size: 14,
+                      color: AnnvaColors.muted,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // ── State: idle — show two explicit option buttons ───────────────────────
+    return Container(
+      width: 160,
+      decoration: BoxDecoration(
+        color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
+        borderRadius: BorderRadius.circular(AnnvaRadius.xl),
+        border: Border.all(
+          color: AnnvaColors.border,
+          style: BorderStyle.solid,
+        ),
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Label
+          Text(
+            'ADD PHOTO',
+            textAlign: TextAlign.center,
+            style: AnnvaTextStyles.label.copyWith(
+              color: AnnvaColors.muted,
+              fontSize: 9,
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Upload from gallery button
+          _uploadOptionButton(
+            icon: Icons.photo_library_outlined,
+            label: 'Upload',
+            sublabel: 'from gallery',
+            onTap: () => _pickImageFromSource(ImageSource.gallery),
+          ),
+          const SizedBox(height: 8),
+          // Divider with OR
+          Row(
+            children: [
+              Expanded(
+                child: Divider(
+                  color: AnnvaColors.border,
+                  thickness: 0.5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Text(
+                  'or',
+                  style: TextStyle(
+                    fontFamily: 'WorkSans',
+                    fontSize: 10,
+                    color: AnnvaColors.muted,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Divider(
+                  color: AnnvaColors.border,
+                  thickness: 0.5,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          // Take photo with camera button
+          _uploadOptionButton(
+            icon: Icons.camera_alt_outlined,
+            label: 'Camera',
+            sublabel: 'take a photo',
+            onTap: () => _pickImageFromSource(ImageSource.camera),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// A compact tappable card for each upload option shown in the idle state.
+  Widget _uploadOptionButton({
+    required IconData icon,
+    required String label,
+    required String sublabel,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        decoration: BoxDecoration(
+          color: AnnvaColors.backgroundCard,
+          borderRadius: BorderRadius.circular(AnnvaRadius.md),
+          border: Border.all(color: AnnvaColors.border),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: AnnvaColors.primary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Tap to upload',
-                    style: TextStyle(
+                    label,
+                    style: const TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    'JPG, PNG · max 8MB',
+                    sublabel,
                     style: TextStyle(
                       fontFamily: 'WorkSans',
                       color: AnnvaColors.muted,
-                      fontSize: 10,
+                      fontSize: 9,
                     ),
                   ),
                 ],
               ),
-            if (_selectedImage != null)
-              const Center(child: Text('🍲', style: TextStyle(fontSize: 64))),
-            if (_isScanning)
-              Container(
-                decoration: BoxDecoration(
-                  color: AnnvaColors.background.withValues(alpha: 0.8),
-                  borderRadius: BorderRadius.circular(AnnvaRadius.xl),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(color: AnnvaColors.ochre),
-                      const SizedBox(height: 8),
-                      Text(
-                        'OCR processing...',
-                        style: TextStyle(
-                          fontFamily: 'WorkSans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            if (_isScanned)
-              Positioned(
-                bottom: 8,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AnnvaColors.cascadeFresh,
-                    borderRadius: BorderRadius.circular(AnnvaRadius.sm),
-                  ),
-                  child: Text(
-                    '✓ OCR complete',
-                    style: TextStyle(
-                      fontFamily: 'WorkSans',
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ).animate().fadeIn(),
+            ),
           ],
         ),
       ),
@@ -652,7 +959,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         Row(
           children: [
             Expanded(
-              child: _buildTextField('Quantity kg', _qtyCtrl, isNumeric: true),
+              child: _buildTextField('for how many people?', _qtyCtrl, isNumeric: true),
             ),
             const SizedBox(width: 16),
             Expanded(
