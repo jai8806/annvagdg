@@ -30,6 +30,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
   // AI classifier
   final _classifier = FoodClassifierService();
+  bool _classifierReady = false;
+  ClassifyResult? _classifyResult;
   List<FoodPrediction> _suggestions = [];
 
   final _nameCtrl = TextEditingController();
@@ -57,10 +59,15 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     _priceCtrl.addListener(() {
       setState(() {});
     });
-    // Initialize the ONNX classifier
-    _classifier.init().catchError((e) {
-      debugPrint('FoodClassifier init error: $e');
-    });
+    // Initialise the ONNX classifier asynchronously
+    _classifier
+        .init()
+        .then((_) {
+          if (mounted) setState(() => _classifierReady = true);
+        })
+        .catchError((e) {
+          debugPrint('FoodClassifier init error: $e');
+        });
   }
 
   @override
@@ -72,6 +79,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     super.dispose();
   }
 
+  /// Opens a modal bottom sheet so the user can choose between
+  /// uploading from their gallery or taking a photo with the camera.
   void _showImageSourceSheet() {
     showModalBottomSheet<void>(
       context: context,
@@ -86,6 +95,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Handle bar
               Center(
                 child: Container(
                   width: 40,
@@ -99,11 +109,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               const SizedBox(height: 16),
               Text(
                 'ADD FOOD PHOTO',
-                style: AnnvaTextStyles.label.copyWith(
-                  color: AnnvaColors.muted,
-                ),
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.muted),
               ),
               const SizedBox(height: 12),
+              // Upload from gallery
               _sheetOption(
                 ctx: ctx,
                 icon: Icons.photo_library_outlined,
@@ -115,6 +124,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                 },
               ),
               const SizedBox(height: 10),
+              // Take photo with camera
               _sheetOption(
                 ctx: ctx,
                 icon: Icons.camera_alt_outlined,
@@ -126,11 +136,12 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                 },
               ),
               const SizedBox(height: 8),
+              // Cancel
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text(
+                  child: Text(
                     'Cancel',
                     style: TextStyle(
                       fontFamily: 'WorkSans',
@@ -146,6 +157,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     );
   }
 
+  /// A single tappable row inside the bottom sheet.
   Widget _sheetOption({
     required BuildContext ctx,
     required IconData icon,
@@ -198,17 +210,14 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                 ],
               ),
             ),
-            const Icon(
-              Icons.chevron_right,
-              color: AnnvaColors.muted,
-              size: 18,
-            ),
+            Icon(Icons.chevron_right, color: AnnvaColors.muted, size: 18),
           ],
         ),
       ),
     );
   }
 
+  /// Picks an image from [source] (gallery or camera) then runs REAL AI classification.
   Future<void> _pickImageFromSource(ImageSource source) async {
     final picker = ImagePicker();
     final image = await picker.pickImage(
@@ -229,23 +238,30 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
     try {
       final bytes = await image.readAsBytes();
+      debugPrint('>>> Image bytes: ${bytes.length}');
+      debugPrint('>>> Classifier initialized: $_classifierReady');
+
       final result = await _classifier.classify(bytes);
+
+      debugPrint('>>> Result: $result');
+      debugPrint('>>> Top label: ${result?.top.displayName}');
+      debugPrint('>>> Confidence: ${result?.top.confidence}');
 
       if (!mounted) return;
 
       setState(() {
         _isScanning = false;
+
         _classifyResult = result;
 
         if (result != null) {
-          // FIX: Always populate the name field with the top prediction
-          _nameCtrl.text = result.top.displayName;
-          
-          // Show "✓ AI identified" badge only if confidence is high (>= 65%)
-          _isScanned = result.shouldAutoFill;
-
-          // If confidence is low, show top-3 suggestions for manual selection
+          _isScanned = true;
+          _nameCtrl.text =
+              result.top.displayName; // always fill, regardless of confidence
           _suggestions = result.shouldAutoFill ? [] : result.top3;
+        } else {
+          // Confidence < 65% — leave blank, show suggestion chips
+          _isScanned = false;
         }
       });
     } catch (e) {
@@ -254,9 +270,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         _isScanning = false;
         _isScanned = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not identify food: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not identify food: $e')));
     }
   }
 
@@ -270,17 +286,23 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       return;
     }
 
-    final remainingMins = _isRefrigerated ? (24 * 60) : (240 - _cookedMinutesElapsed);
+    final remainingMins = _isRefrigerated
+        ? (24 * 60)
+        : (240 - _cookedMinutesElapsed);
     final expiresAt = DateTime.now().add(Duration(minutes: remainingMins));
 
     CascadeStage stage;
     if (_cookedMinutesElapsed >= 210) {
+      // 3.5h
       stage = CascadeStage.ngo;
     } else if (_cookedMinutesElapsed >= 180) {
+      // 3h
       stage = CascadeStage.lastCall;
     } else if (_cookedMinutesElapsed >= 120) {
+      // 2h
       stage = CascadeStage.hotDeal;
     } else if (_cookedMinutesElapsed >= 60) {
+      // 1h
       stage = CascadeStage.goodDeal;
     } else {
       stage = CascadeStage.fresh;
@@ -296,13 +318,14 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     final newListing = FoodListing(
       id: 'L${DateTime.now().millisecondsSinceEpoch}',
       name: _nameCtrl.text,
-      sellerId: 's1',
+      sellerId: 's1', // MTR hardcoded for demo
       sellerName: 'MTR',
       vertical: _selectedVertical,
       address: 'Lalbagh',
       diet: _selectedDiets.map((e) => e.toLowerCase()).toList(),
       qtyKg: double.tryParse(_qtyCtrl.text) ?? 0.0,
-      servings: ((double.tryParse(_qtyCtrl.text) ?? 0.0) * 4).round(),
+      servings: ((double.tryParse(_qtyCtrl.text) ?? 0.0) * 4)
+          .round(), // arbitrary calculation
       originalPrice: originalPrice,
       currentPrice: currentPrice,
       stage: stage,
@@ -314,7 +337,10 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       isActive: true,
     );
 
-    await FirebaseFirestore.instance.collection('listings').doc(newListing.id).set(newListing.toJson());
+    await FirebaseFirestore.instance
+        .collection('listings')
+        .doc(newListing.id)
+        .set(newListing.toJson());
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -331,7 +357,6 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         _selectedDiets.clear();
         _selectedImage = null;
         _isScanned = false;
-        _suggestions = [];
       });
     }
   }
@@ -360,6 +385,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       ),
       body: CustomScrollView(
         slivers: [
+          // 1. SELLER HEADER
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AnnvaSpacing.containerPadding),
@@ -387,6 +413,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               ),
             ),
           ),
+
+          // 2. STATS ROW
           SliverToBoxAdapter(
             child: SizedBox(
               height: 160,
@@ -455,6 +483,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               ),
             ),
           ),
+
+          // 3. LIST SURPLUS SECTION
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(AnnvaSpacing.containerPadding),
@@ -484,7 +514,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                           ],
                         ),
                       ),
-                      const Text(
+                      Text(
                         '✦ AI-assisted',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -521,6 +551,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     },
                   ),
                   const SizedBox(height: AnnvaSpacing.lg),
+                  const SizedBox.shrink(), // placeholder
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -533,7 +564,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                           borderRadius: BorderRadius.circular(AnnvaRadius.full),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'List this item →',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -547,21 +578,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AnnvaSpacing.containerPadding,
-                AnnvaSpacing.xl,
-                AnnvaSpacing.containerPadding,
-                AnnvaSpacing.sm,
-              ),
-              child: Text(
-                'INCOMING ORDERS',
-                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
-              ),
-            ),
-          ),
-          _buildIncomingOrders(),
+
+          // 4. LIVE LISTINGS
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
@@ -683,7 +701,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           if (actionText != null)
             Text(
               actionText,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.ochre,
                 fontSize: 13,
@@ -697,6 +715,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   }
 
   Widget _buildUploadBox() {
+    // ── State: image selected (preview + scanning overlay) ──────────────────
     if (_selectedImage != null) {
       return GestureDetector(
         onTap: _showImageSourceSheet,
@@ -711,24 +730,24 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              const Center(
-                child: Text('🍲', style: TextStyle(fontSize: 64)),
-              ),
+              // Image emoji placeholder (swap with Image.file when not scanning)
+              const Center(child: Text('🍲', style: TextStyle(fontSize: 64))),
+              // Scanning overlay
               if (_isScanning)
                 Container(
                   decoration: BoxDecoration(
                     color: AnnvaColors.background.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(AnnvaRadius.xl),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(
+                        const CircularProgressIndicator(
                           color: AnnvaColors.ochre,
                           strokeWidth: 2.5,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Identifying food…',
                           style: TextStyle(
@@ -741,6 +760,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     ),
                   ),
                 ),
+              // Success badge
               if (_isScanned && !_isScanning)
                 Positioned(
                   bottom: 8,
@@ -753,7 +773,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                       color: AnnvaColors.cascadeFresh,
                       borderRadius: BorderRadius.circular(AnnvaRadius.sm),
                     ),
-                    child: const Text(
+                    child: Text(
                       '✓ AI identified',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
@@ -764,6 +784,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                     ),
                   ),
                 ).animate().fadeIn(),
+              // Re-shoot hint
               if (!_isScanning)
                 Positioned(
                   top: 6,
@@ -787,21 +808,20 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       );
     }
 
+    // ── State: idle — show two explicit option buttons ───────────────────────
     return Container(
       width: 160,
       decoration: BoxDecoration(
         color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(AnnvaRadius.xl),
-        border: Border.all(
-          color: AnnvaColors.border,
-          style: BorderStyle.solid,
-        ),
+        border: Border.all(color: AnnvaColors.border, style: BorderStyle.solid),
       ),
       padding: const EdgeInsets.all(12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Label
           Text(
             'ADD PHOTO',
             textAlign: TextAlign.center,
@@ -811,6 +831,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
+          // Upload from gallery button
           _uploadOptionButton(
             icon: Icons.photo_library_outlined,
             label: 'Upload',
@@ -818,13 +839,11 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
             onTap: () => _pickImageFromSource(ImageSource.gallery),
           ),
           const SizedBox(height: 8),
+          // Divider with OR
           Row(
             children: [
-              const Expanded(
-                child: Divider(
-                  color: AnnvaColors.border,
-                  thickness: 0.5,
-                ),
+              Expanded(
+                child: Divider(color: AnnvaColors.border, thickness: 0.5),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -837,15 +856,13 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                   ),
                 ),
               ),
-              const Expanded(
-                child: Divider(
-                  color: AnnvaColors.border,
-                  thickness: 0.5,
-                ),
+              Expanded(
+                child: Divider(color: AnnvaColors.border, thickness: 0.5),
               ),
             ],
           ),
           const SizedBox(height: 8),
+          // Take photo with camera button
           _uploadOptionButton(
             icon: Icons.camera_alt_outlined,
             label: 'Camera',
@@ -857,6 +874,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
     );
   }
 
+  /// A compact tappable card for each upload option shown in the idle state.
   Widget _uploadOptionButton({
     required IconData icon,
     required String label,
@@ -923,38 +941,15 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
             ),
           ],
         ),
-        
-        // --- NEW: SUGGESTION CHIPS SECTION ---
-        if (_suggestions.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: _suggestions.map((p) {
-                return ActionChip(
-                  label: Text(p.displayName, style: const TextStyle(fontSize: 12)),
-                  onPressed: () {
-                    setState(() {
-                      _nameCtrl.text = p.displayName;
-                    });
-                  },
-                  avatar: const Icon(Icons.auto_awesome, size: 12, color: AnnvaColors.ochre),
-                  backgroundColor: AnnvaColors.backgroundCard,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AnnvaRadius.full),
-                    side: const BorderSide(color: AnnvaColors.border),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        
         const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
-              child: _buildTextField('for how many people?', _qtyCtrl, isNumeric: true),
+              child: _buildTextField(
+                'for how many people?',
+                _qtyCtrl,
+                isNumeric: true,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -1027,7 +1022,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
   Widget _buildRefrigerationToggle() {
     return Row(
       children: [
-        const Text(
+        Text(
           'Currently refrigerated?',
           style: TextStyle(fontFamily: 'WorkSans', fontSize: 14),
         ),
@@ -1039,8 +1034,8 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           onChanged: (val) => setState(() => _isRefrigerated = val),
         ),
         if (_isRefrigerated)
-          const Padding(
-            padding: EdgeInsets.only(left: 8),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
             child: Text(
               'Safe for 24h',
               style: TextStyle(
@@ -1057,7 +1052,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
   Widget _buildTimeRemaining() {
     if (_isRefrigerated) {
-      return const Text(
+      return Text(
         '⏱ 24h 0m remaining before NGO cascade',
         style: TextStyle(
           fontFamily: 'WorkSans',
@@ -1098,7 +1093,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
 
     return Text(
       'Annva price: ₹$listingPrice ($discountPercent% off)',
-      style: const TextStyle(
+      style: TextStyle(
         fontFamily: 'WorkSans',
         color: AnnvaColors.primary,
         fontWeight: FontWeight.bold,
@@ -1117,7 +1112,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
       keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(
+        labelStyle: TextStyle(
           fontFamily: 'WorkSans',
           color: AnnvaColors.muted,
           fontSize: 13,
@@ -1155,7 +1150,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           value: value,
           isExpanded: true,
           hint: Text(label),
-          items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+          items: items
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
           onChanged: onChanged,
         ),
       ),
@@ -1192,117 +1189,6 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         }).toList(),
       ),
     );
-  }
-
-  Widget _buildIncomingOrders() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('orders')
-          .where('sellerName', isEqualTo: 'MTR')
-          .where('status', isEqualTo: 'confirmed')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const SliverToBoxAdapter(child: SizedBox.shrink());
-        }
-
-        final orders = snapshot.data!.docs;
-
-        return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final order = orders[index].data() as Map<String, dynamic>;
-                final orderId = orders[index].id;
-                final items = order['items'] as List;
-                final foodName = items.isNotEmpty ? items.first['name'] : 'Rescue Order';
-                final qtyKg = order['totalKg'] ?? 0;
-                final code = order['pickupCode'] ?? '---';
-                final price = order['totalAmount'] ?? 0;
-
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AnnvaColors.backgroundCard,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AnnvaColors.ochre.withValues(alpha: 0.5), width: 1.5),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: AnnvaColors.ochre,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: const Text("NEW ORDER", 
-                              style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                          ),
-                          Text("₹$price", style: AnnvaTextStyles.price),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(foodName, style: AnnvaTextStyles.body.copyWith(fontWeight: FontWeight.bold)),
-                      Text("${qtyKg.toStringAsFixed(1)}kg · Consumer code: $code", style: AnnvaTextStyles.bodySmall),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 44,
-                        child: ElevatedButton(
-                          onPressed: () => _confirmPickup(orderId, qtyKg),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AnnvaColors.cascadeFresh,
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          ),
-                          child: const Text("Confirm Pickup ✓"),
-                        ).animate().shimmer(duration: 2.seconds, delay: 1.seconds),
-                      ),
-                    ],
-                  ),
-                ).animate().slideX(begin: 0.2, end: 0, duration: 400.ms);
-              },
-              childCount: orders.length,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _confirmPickup(String orderId, num totalKg) async {
-    try {
-      await FirebaseFirestore.instance.collection('orders').doc(orderId).update({
-        'status': 'picked_up',
-        'pickedUpAt': FieldValue.serverTimestamp(),
-      });
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✓ Pickup confirmed! Food rescued.'),
-            backgroundColor: AnnvaColors.cascadeFresh,
-          ),
-        );
-        
-        // Mock celebration dots burst from the button location
-        // Since we can't easily get the button location here, we'll just show a dialog or overlay
-        // or just let the snackbar handle it for now as requested.
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error confirming pickup: $e')),
-        );
-      }
-    }
   }
 
   Widget _buildLiveListings() {
@@ -1349,7 +1235,9 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           );
         }
 
-        final listings = docs.map((doc) => FoodListing.fromFirestore(doc)).toList();
+        final listings = docs
+            .map((doc) => FoodListing.fromFirestore(doc))
+            .toList();
         listings.sort((a, b) => a.expiresAt.compareTo(b.expiresAt));
 
         return SliverPadding(
