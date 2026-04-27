@@ -45,4 +45,3 @@ class OrtValue {
 
 // Export a nullable list type for the dummy
 typedef OrtValueNullableList = List<OrtValue?>?;
-}

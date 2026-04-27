@@ -76,10 +76,10 @@ class AnnvaScaffold extends ConsumerWidget {
           _NavItem(Icons.home_outlined, Icons.home, 'Home', '/consumer'),
           _NavItem(Icons.map_outlined, Icons.map, 'Map', '/consumer/map'),
           _NavItem(
-            Icons.shopping_bag_outlined,
-            Icons.shopping_bag,
-            'Cart',
-            '/consumer/cart',
+            Icons.receipt_long_outlined,
+            Icons.receipt_long,
+            'Orders',
+            '/consumer/orders',
           ),
           _NavItem(
             Icons.bar_chart_outlined,

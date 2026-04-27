@@ -10,6 +10,9 @@ import '../../features/consumer/screens/consumer_home_screen.dart';
 import '../../features/consumer/screens/listing_detail_screen.dart';
 import '../../features/consumer/screens/consumer_map_screen.dart';
 import '../../features/consumer/screens/cart_screen.dart';
+import '../../features/consumer/screens/checkout_screen.dart';
+import '../../features/consumer/screens/order_confirmed_screen.dart';
+import '../../features/consumer/screens/orders_screen.dart';
 import '../../features/seller/screens/seller_home_screen.dart';
 import '../../features/volunteer/screens/volunteer_home_screen.dart';
 import '../../features/ngo/screens/ngo_home_screen.dart';
@@ -117,6 +120,21 @@ GoRouter appRouter(AppRouterRef ref) {
               GoRoute(
                 path: 'cart',
                 builder: (context, state) => const CartScreen(),
+              ),
+              GoRoute(
+                path: 'checkout',
+                builder: (context, state) => const CheckoutScreen(),
+              ),
+              GoRoute(
+                path: 'order-confirmed/:orderId',
+                builder: (context, state) {
+                  final orderId = state.pathParameters['orderId']!;
+                  return OrderConfirmedScreen(orderId: orderId);
+                },
+              ),
+              GoRoute(
+                path: 'orders',
+                builder: (context, state) => const OrdersScreen(),
               ),
               GoRoute(
                 path: 'listing/:id',

@@ -3,6 +3,9 @@
 
 library;
 
+export 'dart:typed_data' show Uint8List;
+export 'package:image/image.dart' show decodeImage, copyResize, copyCrop, Image, Interpolation;
+
 // ── Minimal ONNX Runtime stub for web ─────────────────────────────────────
 class OrtEnv {
   static final OrtEnv instance = OrtEnv._();
@@ -45,9 +48,3 @@ class OrtValue {
   dynamic get value => null;
   void release() {}
 }
-
-// Export all types
-export 'dart:typed_data' show Uint8List;
-
-// Re-export for compatibility
-export 'package:image/image.dart' show decodeImage, copyResize, copyCrop, Image, Interpolation;

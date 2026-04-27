@@ -281,14 +281,7 @@ class CartScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Payment coming soon — Razorpay integration in next build',
-                        ),
-                      ),
-                    );
-                    // context.go('/consumer/checkout');
+                    context.push('/consumer/checkout');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AnnvaColors.primary,
