@@ -50,12 +50,12 @@ class CartScreen extends ConsumerWidget {
           children: [
             const Text('🛒', style: TextStyle(fontSize: 80)),
             const SizedBox(height: AnnvaSpacing.lg),
-            Text('Your cart is empty', style: AnnvaTextStyles.h2),
+            const Text('Your cart is empty', style: AnnvaTextStyles.h2),
             const SizedBox(height: AnnvaSpacing.sm),
-            Text(
+            const Text(
               'Browse the live cascade to rescue food near you',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.muted,
               ),
@@ -223,7 +223,7 @@ class CartScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('ORDER SUMMARY', style: AnnvaTextStyles.label),
+                    const Text('ORDER SUMMARY', style: AnnvaTextStyles.label),
                     const SizedBox(height: 16),
                     _buildSummaryRow(
                       'Subtotal',

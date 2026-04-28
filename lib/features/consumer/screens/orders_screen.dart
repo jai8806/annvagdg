@@ -11,7 +11,12 @@ class OrdersScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(authNotifierProvider).userId;
+    final authState = ref.watch(authNotifierProvider);
+    final phone = authState.phoneNumber ?? '';
+    final cleanPhone = phone.replaceAll('+91', '').replaceAll(' ', '').trim();
+    final consumerId = 'mock_$cleanPhone';
+
+    debugPrint('🔍 Querying orders for: $consumerId');
 
     return Scaffold(
       backgroundColor: AnnvaColors.background,
@@ -21,13 +26,12 @@ class OrdersScreen extends ConsumerWidget {
         title: Text('My Rescues', style: AnnvaTextStyles.h1),
         centerTitle: false,
       ),
-      body: userId == null
+      body: authState.userId == null
           ? const Center(child: Text('Please login to see your rescues'))
           : StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('orders')
-                  .where('consumerId', isEqualTo: userId)
-                  .orderBy('createdAt', descending: true)
+                  .where('consumerId', isEqualTo: consumerId)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -37,11 +41,20 @@ class OrdersScreen extends ConsumerWidget {
                   return _buildEmptyState();
                 }
 
+                final docs = snapshot.data!.docs.toList();
+                docs.sort((a, b) {
+                  final aData = a.data() as Map<String, dynamic>;
+                  final bData = b.data() as Map<String, dynamic>;
+                  final aTime = (aData['createdAt'] as Timestamp?)?.toDate() ?? DateTime.fromMillisecondsSinceEpoch(0);
+                  final bTime = (bData['createdAt'] as Timestamp?)?.toDate() ?? DateTime.fromMillisecondsSinceEpoch(0);
+                  return bTime.compareTo(aTime);
+                });
+
                 return ListView.builder(
                   padding: const EdgeInsets.all(20),
-                  itemCount: snapshot.data!.docs.length,
+                  itemCount: docs.length,
                   itemBuilder: (context, index) {
-                    final order = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                    final order = docs[index].data() as Map<String, dynamic>;
                     return _OrderHistoryTile(order: order);
                   },
                 );
@@ -59,9 +72,9 @@ class OrdersScreen extends ConsumerWidget {
           children: [
             const Icon(Icons.receipt_long_outlined, size: 64, color: AnnvaColors.border),
             const SizedBox(height: 24),
-            Text('No rescues yet.', style: AnnvaTextStyles.h2),
+            const Text('No rescues yet.', style: AnnvaTextStyles.h2),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Browse the live cascade to make your first rescue.',
               textAlign: TextAlign.center,
               style: AnnvaTextStyles.bodySmall,
@@ -159,7 +172,7 @@ class _OrderHistoryTile extends StatelessWidget {
 
     switch (status) {
       case 'confirmed':
-        bgColor = AnnvaColors.ochre.withOpacity(0.1);
+        bgColor = AnnvaColors.ochre.withValues(alpha: 0.1);
         textColor = AnnvaColors.ochreDeep;
         label = 'SECURED';
         break;
@@ -169,12 +182,12 @@ class _OrderHistoryTile extends StatelessWidget {
         label = 'RESCUED ✓';
         break;
       case 'expired':
-        bgColor = AnnvaColors.muted.withOpacity(0.1);
+        bgColor = AnnvaColors.muted.withValues(alpha: 0.1);
         textColor = AnnvaColors.muted;
         label = 'EXPIRED';
         break;
       default:
-        bgColor = AnnvaColors.border.withOpacity(0.1);
+        bgColor = AnnvaColors.border.withValues(alpha: 0.1);
         textColor = AnnvaColors.muted;
         label = status.toUpperCase();
     }

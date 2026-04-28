@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import '../../shared/models/cascade_stage.dart';
 import '../../shared/models/food_listing.dart';
 

@@ -44,6 +44,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       return;
     }
 
+    final cleanPhone = authState.phoneNumber?.replaceAll('+91', '').replaceAll(' ', '').trim() ?? '';
+    final consumerId = 'mock_$cleanPhone';
+
     // We assume all items are from the same seller for this rescue flow
     final firstItem = cartItems.first;
     final listing = firstItem.listing;
@@ -54,7 +57,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       // 2. Write order to Firestore
       await FirebaseFirestore.instance.collection('orders').doc(orderId).set({
         'orderId': orderId,
-        'consumerId': authState.userId,
+        'consumerId': consumerId,
+        'consumerPhone': cleanPhone,
         'consumerName': authState.phoneNumber ?? 'Rescue Hero',
         'items': cartItems.map((item) => {
           'listingId': item.listingId,
@@ -293,7 +297,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AnnvaColors.background.withOpacity(0.5),
+              color: AnnvaColors.background.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
@@ -306,7 +310,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     Text('Pickup window:', style: AnnvaTextStyles.bodySmall),
                     const SizedBox(width: 4),
                     UrgencyTimer(expiresAt: listing.expiresAt),
-                    Text(' remaining', style: AnnvaTextStyles.bodySmall),
+                    const Text(' remaining', style: AnnvaTextStyles.bodySmall),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -411,7 +415,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           color: isSelected ? const Color(0xFFE8F0FE) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AnnvaColors.primary : AnnvaColors.border.withOpacity(0.3),
+            color: isSelected ? AnnvaColors.primary : AnnvaColors.border.withValues(alpha: 0.3),
             width: isSelected ? 1.5 : 0.5,
           ),
         ),
@@ -511,7 +515,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
   Widget _buildLoadingOverlay() {
     return Container(
-      color: Colors.black.withOpacity(0.7),
+      color: Colors.black.withValues(alpha: 0.7),
       width: double.infinity,
       height: double.infinity,
       child: Center(

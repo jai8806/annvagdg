@@ -102,7 +102,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                    AnnvaColors.background.withOpacity(0),
+                                    AnnvaColors.background.withValues(alpha: 0),
                                     AnnvaColors.background,
                                   ],
                                 ),
@@ -118,7 +118,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.background.withOpacity(0.8),
+                                  color: AnnvaColors.background.withValues(alpha: 0.8),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -178,7 +178,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   const SizedBox(width: 8),
                                   Text(
                                     listing.formattedOriginalPrice,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'WorkSans',
                                       color: AnnvaColors.muted,
                                       decoration: TextDecoration.lineThrough,
@@ -192,7 +192,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: AnnvaColors.cascadeUrgent
-                                          .withOpacity(0.1),
+                                          .withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(
                                         AnnvaRadius.sm,
                                       ),
@@ -313,14 +313,14 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AnnvaColors.border.withOpacity(0.5),
+                                  color: AnnvaColors.border.withValues(alpha: 0.5),
                                   borderRadius: BorderRadius.circular(
                                     AnnvaRadius.full,
                                   ),
                                 ),
                                 child: Text(
                                   listing.vertical,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'WorkSans',
                                     fontSize: 11,
                                     fontWeight: FontWeight.w500,
@@ -509,7 +509,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
             duration: 800.ms,
             curve: Curves.easeInOut,
           )
-          .tint(color: Colors.red.withOpacity(0.2));
+          .tint(color: Colors.red.withValues(alpha: 0.2));
     }
 
     return Center(child: timerText);
@@ -533,14 +533,14 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AnnvaColors.cascadeFresh.withOpacity(0.1),
+          color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AnnvaRadius.xl),
           border: Border.all(color: AnnvaColors.cascadeFresh),
         ),
         child: Column(
           children: [
-            Text(
-              '🔒 Price locked at ₹${listing.lockedPrice?.round()}',
+            const Text(
+              '🔒 Price locked at ₹',
               style: TextStyle(
                 fontFamily: 'WorkSans',
                 fontWeight: FontWeight.bold,
@@ -641,15 +641,15 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
       ),
       child: Column(
         children: [
-          Row(
+          const Row(
             children: [
-              const Text('🔒', style: TextStyle(fontSize: 20)),
-              const SizedBox(width: 12),
+              Text('🔒', style: TextStyle(fontSize: 20)),
+              SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Lock this price for 20 minutes',
                       style: TextStyle(
                         fontFamily: 'WorkSans',
@@ -657,7 +657,7 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                         color: AnnvaColors.primary,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Pay ₹10 deposit now. If you order within 20 min, ₹10 applies to total. If not, ₹10 goes to our NGO fund. 🌱',
                       style: TextStyle(
                         fontFamily: 'WorkSans',

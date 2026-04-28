@@ -66,7 +66,7 @@ class _AnnvaAppState extends ConsumerState<AnnvaApp> {
                     'अन्नवा',
                     style: AnnvaTextStyles.devanagariWatermark.copyWith(
                       fontSize: 48,
-                      color: AnnvaColors.primary.withOpacity(0.4),
+                      color: AnnvaColors.primary.withValues(alpha: 0.4),
                     ),
                   ),
                 ),

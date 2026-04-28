@@ -105,10 +105,10 @@ class RoleSelectScreen extends ConsumerWidget {
                     ),
                     elevation: 0,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Continue',
                         style: TextStyle(
                           fontFamily: 'WorkSans',
@@ -116,8 +116,8 @@ class RoleSelectScreen extends ConsumerWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(width: AnnvaSpacing.sm),
-                      const Icon(Icons.arrow_forward_rounded, size: 20),
+                      SizedBox(width: AnnvaSpacing.sm),
+                      Icon(Icons.arrow_forward_rounded, size: 20),
                     ],
                   ),
                 ),
@@ -188,7 +188,7 @@ class _RoleCard extends StatelessWidget {
                 fontSize: 13,
                 height: 1.4,
                 color: isSelected
-                    ? AnnvaColors.primaryForeground.withOpacity(0.8)
+                    ? AnnvaColors.primaryForeground.withValues(alpha: 0.8)
                     : AnnvaColors.muted,
               ),
             ),

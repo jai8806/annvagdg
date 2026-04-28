@@ -349,7 +349,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AnnvaColors.primary.withOpacity(0.08),
+                color: AnnvaColors.primary.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(AnnvaRadius.md),
               ),
               child: Icon(icon, color: AnnvaColors.primary, size: 22),
@@ -378,7 +378,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: AnnvaColors.muted, size: 18),
+            const Icon(Icons.chevron_right, color: AnnvaColors.muted, size: 18),
           ],
         ),
       ),
@@ -393,7 +393,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
           width: 160,
           height: 160,
           decoration: BoxDecoration(
-            color: AnnvaColors.backgroundSecondary.withOpacity(0.3),
+            color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(AnnvaRadius.xl),
             border: Border.all(color: AnnvaColors.border),
           ),
@@ -413,7 +413,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
               if (_isScanning)
                 Container(
                   decoration: BoxDecoration(
-                    color: AnnvaColors.background.withOpacity(0.85),
+                    color: AnnvaColors.background.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(AnnvaRadius.xl),
                   ),
                   child: const Center(
@@ -471,7 +471,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         width: 160,
         height: 160,
         decoration: BoxDecoration(
-          color: AnnvaColors.backgroundSecondary.withOpacity(0.3),
+          color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(AnnvaRadius.xl),
           border: Border.all(
             color: AnnvaColors.border,
@@ -481,7 +481,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.add_a_photo_outlined,
               color: AnnvaColors.primary,
               size: 32,
@@ -685,7 +685,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
                       }
                     });
                   },
-                  selectedColor: AnnvaColors.primary.withOpacity(0.1),
+                  selectedColor: AnnvaColors.primary.withValues(alpha: 0.1),
                   backgroundColor: AnnvaColors.backgroundCard,
                   side: BorderSide(
                     color: _selectedDiets.contains(diet)
@@ -745,7 +745,7 @@ class _SellerHomeScreenState extends ConsumerState<SellerHomeScreen> {
         Switch(
           value: _isRefrigerated,
           activeThumbColor: AnnvaColors.ochre,
-          activeTrackColor: AnnvaColors.ochre.withOpacity(0.4),
+          activeTrackColor: AnnvaColors.ochre.withValues(alpha: 0.4),
           onChanged: (val) => setState(() => _isRefrigerated = val),
         ),
         if (_isRefrigerated)

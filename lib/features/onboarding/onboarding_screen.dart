@@ -96,10 +96,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Container(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
               decoration: BoxDecoration(
-                color: AnnvaColors.primaryForeground.withOpacity(0.04),
+                color: AnnvaColors.primaryForeground.withValues(alpha: 0.04),
                 border: Border(
                   top: BorderSide(
-                    color: AnnvaColors.primaryForeground.withOpacity(0.08),
+                    color: AnnvaColors.primaryForeground.withValues(alpha: 0.08),
                   ),
                 ),
               ),
@@ -116,8 +116,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: isActive ? 20 : 6,
                         height: 6,
                         decoration: BoxDecoration(
-                          color: AnnvaColors.ochre.withOpacity(
-                            isActive ? 1 : 0.3,
+                          color: AnnvaColors.ochre.withValues(
+                            alpha: isActive ? 1 : 0.3,
                           ),
                           borderRadius: BorderRadius.circular(999),
                         ),
@@ -176,15 +176,15 @@ class _ProblemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
+        padding: EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('🍲', style: TextStyle(fontSize: 72)),
-            const SizedBox(height: 16),
-            const Text(
+            Text('🍲', style: TextStyle(fontSize: 72)),
+            SizedBox(height: 16),
+            Text(
               '78 million tonnes\nwasted every year.',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -194,11 +194,11 @@ class _ProblemPage extends StatelessWidget {
                 color: AnnvaColors.primaryForeground,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Text(
               'While 194 million Indians\ngo hungry every night.',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 13,
                 height: 1.5,
@@ -228,11 +228,11 @@ class _SolutionPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: AnnvaColors.primaryForeground.withOpacity(0.1),
+                  color: AnnvaColors.primaryForeground.withValues(alpha: 0.1),
                 ),
               ),
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   _CascadeRow(
                     background: Color(0x402E7D52),
                     title: 'Bisi bele bath',
@@ -265,10 +265,10 @@ class _SolutionPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               'Powered by food safety science,\nnot arbitrary expiry labels.',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'WorkSans',
                 fontSize: 12,
                 color: AnnvaColors.creamLight,
@@ -315,7 +315,7 @@ class _CascadeRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
-              color: chipColor.withOpacity(0.2),
+              color: chipColor.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
@@ -367,10 +367,10 @@ class _RolesPage extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AnnvaColors.primaryForeground.withOpacity(0.06),
+                    color: AnnvaColors.primaryForeground.withValues(alpha: 0.06),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: AnnvaColors.primaryForeground.withOpacity(0.1),
+                      color: AnnvaColors.primaryForeground.withValues(alpha: 0.1),
                     ),
                   ),
                   child: Column(

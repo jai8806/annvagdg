@@ -87,9 +87,9 @@ class _CascadeBadgeState extends State<CascadeBadge>
       duration: const Duration(milliseconds: 400),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: stageColor.withOpacity(0.12),
+        color: stageColor.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AnnvaRadius.full),
-        border: Border.all(color: stageColor.withOpacity(0.3), width: 1),
+        border: Border.all(color: stageColor.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -142,7 +142,7 @@ class _CascadeBadgeState extends State<CascadeBadge>
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
             boxShadow: [
               BoxShadow(
-                color: color.withOpacity(0.5 * (1 - value)),
+                color: color.withValues(alpha: 0.5 * (1 - value)),
                 blurRadius: 0,
                 spreadRadius: 12 * value,
               ),
@@ -166,7 +166,7 @@ class _CascadeBadgeState extends State<CascadeBadge>
             borderRadius: BorderRadius.circular(AnnvaRadius.full),
             boxShadow: [
               BoxShadow(
-                color: color.withOpacity(0.4 * (1 - value)),
+                color: color.withValues(alpha: 0.4 * (1 - value)),
                 blurRadius: 0,
                 spreadRadius: 8 * value,
               ),

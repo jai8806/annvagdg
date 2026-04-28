@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
                 style: TextStyle(
                   fontFamily: 'NotoSerifDevanagari',
                   fontSize: 160,
-                  color: AnnvaColors.creamLight.withOpacity(0.1),
+                  color: AnnvaColors.creamLight.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -130,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen>
                   Container(
                     width: 32,
                     height: 1,
-                    color: AnnvaColors.ochre.withOpacity(0.6),
+                    color: AnnvaColors.ochre.withValues(alpha: 0.6),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -172,7 +172,7 @@ class _SplashScreenState extends State<SplashScreen>
                             width: 5,
                             height: 5,
                             decoration: BoxDecoration(
-                              color: AnnvaColors.ochre.withOpacity(opacity),
+                              color: AnnvaColors.ochre.withValues(alpha: opacity),
                               shape: BoxShape.circle,
                             ),
                           ),

@@ -69,7 +69,7 @@ class NgoHomeScreen extends ConsumerWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: AnnvaColors.cascadeFresh.withOpacity(0.1),
+                          color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: const Text(
@@ -296,11 +296,11 @@ class NgoHomeScreen extends ConsumerWidget {
 
         final docs = snapshot.data?.docs ?? [];
         if (docs.isEmpty) {
-          return SliverToBoxAdapter(
+          return const SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(AnnvaSpacing.xl),
+              padding: EdgeInsets.all(AnnvaSpacing.xl),
               child: Center(
-                child: const Text(
+                child: Text(
                   'No urgent rescues incoming.',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -351,9 +351,9 @@ class NgoHomeScreen extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Text(
+                const Text(
                   '[URGENT]',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'WorkSans',
                     color: AnnvaColors.cascadeUrgent,
                     fontWeight: FontWeight.bold,
@@ -408,9 +408,9 @@ class NgoHomeScreen extends ConsumerWidget {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     'Decline',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'WorkSans',
                       color: AnnvaColors.muted,
                       fontWeight: FontWeight.w600,
@@ -436,9 +436,9 @@ class NgoHomeScreen extends ConsumerWidget {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Accept batch →',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'WorkSans',
                       fontWeight: FontWeight.bold,
                     ),
@@ -505,10 +505,10 @@ class NgoHomeScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AnnvaColors.cascadeFresh.withOpacity(0.1),
+              color: AnnvaColors.cascadeFresh.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Text(
+            child: const Text(
               '✓ RECEIVED',
               style: TextStyle(
                 fontFamily: 'WorkSans',

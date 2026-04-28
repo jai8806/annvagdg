@@ -102,7 +102,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             child: Icon(
               Icons.emoji_events_outlined,
               size: 160,
-              color: AnnvaColors.creamLight.withOpacity(0.05),
+              color: AnnvaColors.creamLight.withValues(alpha: 0.05),
             ),
           ),
           // Content
@@ -167,7 +167,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   height: 8,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AnnvaColors.creamLight.withOpacity(0.15),
+                    color: AnnvaColors.creamLight.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: FractionallySizedBox(
@@ -239,7 +239,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: AnnvaColors.creamLight.withOpacity(0.1),
+          color: AnnvaColors.creamLight.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AnnvaRadius.full),
         ),
         child: Row(
@@ -249,7 +249,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'WorkSans',
                 color: AnnvaColors.creamLight,
                 fontSize: 12,
@@ -278,11 +278,11 @@ class VolunteerHomeScreen extends ConsumerWidget {
 
         final docs = snapshot.data?.docs ?? [];
         if (docs.isEmpty) {
-          return SliverToBoxAdapter(
+          return const SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(AnnvaSpacing.xl),
+              padding: EdgeInsets.all(AnnvaSpacing.xl),
               child: Center(
-                child: const Text(
+                child: Text(
                   'No urgent rescues nearby right now.',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -357,7 +357,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                   children: [
                     Text(
                       listing.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -378,7 +378,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AnnvaColors.cascadeUrgent.withOpacity(0.1),
+                  color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: const Text(
@@ -599,7 +599,7 @@ class VolunteerHomeScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(AnnvaRadius.full),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Confirm Rescue',
                         style: TextStyle(
                           fontFamily: 'WorkSans',

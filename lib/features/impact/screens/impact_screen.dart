@@ -45,36 +45,36 @@ class ImpactScreen extends ConsumerWidget {
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 3. WEEKLY RESCUE CHART
-            Text(
+            const Text(
               'WEEKLY RESCUES · KG',
-              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              style: AnnvaTextStyles.label,
             ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildWeeklyChart(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 4. CITY BREAKDOWN
-            Text(
+            const Text(
               'RESCUES BY CITY',
-              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              style: AnnvaTextStyles.label,
             ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildCityBreakdown(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 5. PARTNER LOGOS
-            Text(
+            const Text(
               'RESCUE PARTNERS',
-              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              style: AnnvaTextStyles.label,
             ),
             const SizedBox(height: AnnvaSpacing.md),
             _buildPartners(),
             const SizedBox(height: AnnvaSpacing.xxl),
 
             // 6. PRASAD PROTOCOL
-            Text(
+            const Text(
               'PRASAD PROTOCOL',
-              style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              style: AnnvaTextStyles.label,
             ),
             const Text(
               'Sacred surplus, rescued daily',
@@ -159,7 +159,7 @@ class ImpactScreen extends ConsumerWidget {
             label,
             style: AnnvaTextStyles.label.copyWith(
               color: isPrimary
-                  ? AnnvaColors.creamLight.withOpacity(0.7)
+                  ? AnnvaColors.creamLight.withValues(alpha: 0.7)
                   : AnnvaColors.ochre,
             ),
           ),
@@ -177,7 +177,7 @@ class ImpactScreen extends ConsumerWidget {
             style: TextStyle(
               fontFamily: 'WorkSans',
               color: isPrimary
-                  ? AnnvaColors.creamLight.withOpacity(0.6)
+                  ? AnnvaColors.creamLight.withValues(alpha: 0.6)
                   : AnnvaColors.muted,
               fontSize: 10,
             ),
@@ -207,7 +207,7 @@ class ImpactScreen extends ConsumerWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
-                  final days = [
+                  const days = [
                     'Mon',
                     'Tue',
                     'Wed',
@@ -442,7 +442,7 @@ class ImpactScreen extends ConsumerWidget {
                   children: [
                     Text(
                       tile['title']!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'WorkSans',
                         fontWeight: FontWeight.bold,
                         color: AnnvaColors.primary,
@@ -479,9 +479,9 @@ class ImpactScreen extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text(
+              const Text(
                 'NGO RESCUE FUND',
-                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+                style: AnnvaTextStyles.label,
               ),
               const Spacer(),
               const Icon(Icons.favorite, color: Colors.red, size: 16),
@@ -539,7 +539,7 @@ class ImpactScreen extends ConsumerWidget {
             'Register your event. We\'ll pre-position rescue.',
             style: TextStyle(
               fontFamily: 'WorkSans',
-              color: AnnvaColors.creamLight.withOpacity(0.7),
+              color: AnnvaColors.creamLight.withValues(alpha: 0.7),
               fontSize: 14,
             ),
           ),
@@ -551,7 +551,7 @@ class ImpactScreen extends ConsumerWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AnnvaColors.creamLight.withOpacity(0.2),
+              backgroundColor: AnnvaColors.creamLight.withValues(alpha: 0.2),
               foregroundColor: AnnvaColors.creamLight,
               elevation: 0,
               shape: RoundedRectangleBorder(

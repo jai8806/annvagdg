@@ -139,7 +139,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('अन्नवा Annva', style: AnnvaTextStyles.h3.copyWith(color: AnnvaColors.background, fontSize: 18)),
-                Text('PICKUP PASS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.background.withOpacity(0.7), fontSize: 10, letterSpacing: 2)),
+                Text('PICKUP PASS', style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.background.withValues(alpha: 0.7), fontSize: 10, letterSpacing: 2)),
               ],
             ),
           ),
@@ -198,7 +198,7 @@ class OrderConfirmedScreen extends ConsumerWidget {
           ),
           Container(
             height: 48,
-            color: AnnvaColors.backgroundSecondary.withOpacity(0.3),
+            color: AnnvaColors.backgroundSecondary.withValues(alpha: 0.3),
             child: Center(
               child: Text(
                 '🌱 You\'re rescuing ${totalKg.toStringAsFixed(1)}kg from waste today',

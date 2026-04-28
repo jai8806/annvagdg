@@ -124,4 +124,8 @@ class AuthNotifier extends _$AuthNotifier {
       userId: state.userId,
     );
   }
+
+  void incrementRescues(double kg) {
+    // mock for MVP
+  }
 }

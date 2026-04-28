@@ -12,7 +12,7 @@ class AnnvaTextStyles {
   AnnvaTextStyles._();
 
   // ─── DISPLAY — hero numbers, big impact stats ───
-  static TextStyle display = const TextStyle(
+  static const TextStyle display = TextStyle(
     fontFamily: 'InstrumentSerif',
     fontSize: 56,
     fontWeight: FontWeight.w400,
@@ -21,7 +21,7 @@ class AnnvaTextStyles {
   );
 
   // ─── H1 — screen titles ───
-  static TextStyle h1 = const TextStyle(
+  static const TextStyle h1 = TextStyle(
     fontFamily: 'InstrumentSerif',
     fontSize: 32,
     fontWeight: FontWeight.w400,
@@ -30,7 +30,7 @@ class AnnvaTextStyles {
   );
 
   // ─── H2 — section headings ───
-  static TextStyle h2 = const TextStyle(
+  static const TextStyle h2 = TextStyle(
     fontFamily: 'InstrumentSerif',
     fontSize: 24,
     fontWeight: FontWeight.w400,
@@ -38,7 +38,7 @@ class AnnvaTextStyles {
   );
 
   // ─── H3 — card titles ───
-  static TextStyle h3 = const TextStyle(
+  static const TextStyle h3 = TextStyle(
     fontFamily: 'InstrumentSerif',
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -46,7 +46,7 @@ class AnnvaTextStyles {
   );
 
   // ─── BODY — standard text ───
-  static TextStyle body = const TextStyle(
+  static const TextStyle body = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 15,
     fontWeight: FontWeight.w400,
@@ -55,7 +55,7 @@ class AnnvaTextStyles {
   );
 
   // ─── BODY SMALL — secondary text, descriptions ───
-  static TextStyle bodySmall = const TextStyle(
+  static const TextStyle bodySmall = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 13,
     fontWeight: FontWeight.w400,
@@ -65,7 +65,7 @@ class AnnvaTextStyles {
 
   // ─── LABEL — uppercase tracking labels (section labels, tag headers) ───
   /// Always ochre, 10px, 1.2em letter-spacing, Work Sans 500
-  static TextStyle label = const TextStyle(
+  static const TextStyle label = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 10,
     fontWeight: FontWeight.w500,
@@ -74,7 +74,7 @@ class AnnvaTextStyles {
   );
 
   // ─── BUTTON — CTA text ───
-  static TextStyle button = const TextStyle(
+  static const TextStyle button = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 14,
     fontWeight: FontWeight.w500,
@@ -82,7 +82,7 @@ class AnnvaTextStyles {
   );
 
   // ─── PRICE — food item prices ───
-  static TextStyle price = const TextStyle(
+  static const TextStyle price = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -90,7 +90,7 @@ class AnnvaTextStyles {
   );
 
   // ─── PRICE STRIKETHROUGH — original price ───
-  static TextStyle priceOriginal = const TextStyle(
+  static const TextStyle priceOriginal = TextStyle(
     fontFamily: 'WorkSans',
     fontSize: 13,
     fontWeight: FontWeight.w400,
@@ -99,7 +99,7 @@ class AnnvaTextStyles {
   );
 
   // ─── DEVANAGARI — Sanskrit/Hindi elements ───
-  static TextStyle devanagari = const TextStyle(
+  static const TextStyle devanagari = TextStyle(
     fontFamily: 'NotoSerifDevanagari',
     fontSize: 24,
     fontWeight: FontWeight.w400,
@@ -111,11 +111,11 @@ class AnnvaTextStyles {
     fontFamily: 'NotoSerifDevanagari',
     fontSize: 120,
     fontWeight: FontWeight.w700,
-    color: AnnvaColors.primary.withOpacity(0.04),
+    color: AnnvaColors.primary.withValues(alpha: 0.04),
   );
 
   // ─── MONO / HASH — blockchain certificate hashes ───
-  static TextStyle mono = const TextStyle(
+  static const TextStyle mono = TextStyle(
     fontFamily: 'monospace',
     fontSize: 11,
     color: AnnvaColors.muted,

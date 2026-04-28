@@ -105,9 +105,9 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                 height: 36,
                 color: AnnvaColors.creamLight,
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   '487,312 kg rescued this month · 6 cities',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'WorkSans',
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
@@ -188,11 +188,11 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                     'LIVE CASCADE · ${listings.length} active near you',
                     style: AnnvaTextStyles.label,
                   ),
-                  loading: () => Text(
+                  loading: () => const Text(
                     'LIVE CASCADE · loading...',
                     style: AnnvaTextStyles.label,
                   ),
-                  error: (_, __) => Text(
+                  error: (_, __) => const Text(
                     'LIVE CASCADE · offline',
                     style: AnnvaTextStyles.label,
                   ),
@@ -208,14 +208,14 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
               sliver: listingsAsync.when(
                 data: (listings) {
                   if (listings.isEmpty) {
-                    return SliverToBoxAdapter(
+                    return const SliverToBoxAdapter(
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(AnnvaSpacing.xl),
+                          padding: EdgeInsets.all(AnnvaSpacing.xl),
                           child: Text(
                             'No active rescues near you right now.\nCheck back soon!',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'WorkSans',
                               color: AnnvaColors.muted,
                             ),
@@ -293,7 +293,7 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                                 .animate(onPlay: (c) => c.repeat())
                                 .shimmer(
                                   duration: 1200.ms,
-                                  color: AnnvaColors.backgroundCard.withOpacity(0.6),
+                                  color: AnnvaColors.backgroundCard.withValues(alpha: 0.6),
                                 ),
                       );
                     }, childCount: 4),
@@ -301,14 +301,14 @@ class _ConsumerHomeScreenState extends ConsumerState<ConsumerHomeScreen> {
                 },
                 error: (e, st) {
                   debugPrint('🔴 Firestore error: $e\n$st');
-                  return SliverToBoxAdapter(
+                  return const SliverToBoxAdapter(
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(AnnvaSpacing.xl),
+                        padding: EdgeInsets.all(AnnvaSpacing.xl),
                         child: Text(
                           'Something moved.\nPull to refresh.',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'WorkSans',
                             color: AnnvaColors.muted,
                           ),

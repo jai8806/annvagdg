@@ -75,7 +75,7 @@ class ConsumerMapScreen extends ConsumerWidget {
                             border: Border.all(color: color, width: 2.5),
                             boxShadow: [
                               BoxShadow(
-                                color: color.withOpacity(0.3),
+                                color: color.withValues(alpha: 0.3),
                                 blurRadius: 8,
                                 spreadRadius: 2,
                               ),
@@ -110,7 +110,7 @@ class ConsumerMapScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(AnnvaRadius.xl),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),

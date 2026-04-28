@@ -74,7 +74,7 @@ class FoodListingCard extends ConsumerWidget {
           color: AnnvaColors.backgroundCard,
           borderRadius: BorderRadius.circular(AnnvaRadius.lg),
           border: Border.all(
-            color: AnnvaColors.border.withOpacity(0.5),
+            color: AnnvaColors.border.withValues(alpha: 0.5),
             width: 0.5,
           ),
         ),
@@ -213,12 +213,12 @@ class FoodListingCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AnnvaColors.cascadeUrgent.withOpacity(0.1),
+                  color: AnnvaColors.cascadeUrgent.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AnnvaRadius.sm),
                 ),
-                child: Text(
+                child: const Text(
                   'FREE PICKUP',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'WorkSans',
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -326,9 +326,9 @@ class FoodListingCard extends ConsumerWidget {
               onTap: () {
                 // Navigate to detail for locking or handle here if we had detail
               },
-              child: Text(
+              child: const Text(
                 '🔒 Lock this price — ₹10',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 11,
                   fontWeight: FontWeight.w600,

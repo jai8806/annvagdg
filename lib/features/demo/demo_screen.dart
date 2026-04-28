@@ -122,7 +122,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                             }
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor: AnnvaColors.ochre.withOpacity(0.1),
+                            backgroundColor: AnnvaColors.ochre.withValues(alpha: 0.1),
                             foregroundColor: AnnvaColors.ochre,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -153,7 +153,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                         TextButton(
                           onPressed: () => context.go('/auth'),
                           style: TextButton.styleFrom(
-                            backgroundColor: AnnvaColors.primary.withOpacity(0.1),
+                            backgroundColor: AnnvaColors.primary.withValues(alpha: 0.1),
                             foregroundColor: AnnvaColors.primary,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -310,8 +310,8 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: const [
+        const Row(
+          children: [
             Expanded(
               child: _MiniStatCard(label: 'RECOVERED TODAY', value: '₹9,840'),
             ),
@@ -332,8 +332,8 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
             borderRadius: BorderRadius.circular(AnnvaRadius.lg),
             border: Border.all(color: AnnvaColors.border, width: 0.7),
           ),
-          child: Center(
-            child: const Text(
+          child: const Center(
+            child: Text(
               'Upload box mock\nTap to upload image + auto-fill details',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -405,9 +405,9 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Karthik · Silver tier · Bengaluru chapter',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'WorkSans',
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
@@ -420,7 +420,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                 child: LinearProgressIndicator(
                   minHeight: 8,
                   value: 64 / 125,
-                  backgroundColor: AnnvaColors.primaryForeground.withOpacity(0.2),
+                  backgroundColor: AnnvaColors.primaryForeground.withValues(alpha: 0.2),
                   color: AnnvaColors.ochre,
                 ),
               ),
@@ -430,7 +430,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
                 style: TextStyle(
                   fontFamily: 'WorkSans',
                   fontSize: 11,
-                  color: AnnvaColors.primaryForeground.withOpacity(0.8),
+                  color: AnnvaColors.primaryForeground.withValues(alpha: 0.8),
                 ),
               ),
             ],
@@ -453,8 +453,8 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Expanded(
                   child: _MiniStatCard(label: 'MEALS', value: '14,280 meals'),
                 ),
@@ -544,7 +544,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
         const SizedBox(width: 4),
         Text(
           subtitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'WorkSans',
             fontSize: 11,
             fontWeight: FontWeight.w400,
@@ -579,7 +579,7 @@ class _DemoScreenState extends ConsumerState<DemoScreen> {
             child: TextButton(
               onPressed: () {},
               style: TextButton.styleFrom(
-                backgroundColor: AnnvaColors.ochre.withOpacity(0.12),
+                backgroundColor: AnnvaColors.ochre.withValues(alpha: 0.12),
                 foregroundColor: AnnvaColors.ochreDeep,
               ),
               child: const Text('Accept rescue →'),

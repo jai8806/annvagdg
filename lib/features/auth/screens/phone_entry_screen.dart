@@ -45,7 +45,7 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                 fontFamily: 'NotoSerifDevanagari',
                 fontSize: 180,
                 fontWeight: FontWeight.w700,
-                color: AnnvaColors.primary.withOpacity(0.04),
+                color: AnnvaColors.primary.withValues(alpha: 0.04),
               ),
             ),
           ),
@@ -151,10 +151,10 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                         ),
                         elevation: 0,
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Send OTP',
                             style: TextStyle(
                               fontFamily: 'WorkSans',
@@ -162,8 +162,8 @@ class _PhoneEntryScreenState extends ConsumerState<PhoneEntryScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(width: AnnvaSpacing.sm),
-                          const Icon(Icons.arrow_forward_rounded, size: 20),
+                          SizedBox(width: AnnvaSpacing.sm),
+                          Icon(Icons.arrow_forward_rounded, size: 20),
                         ],
                       ),
                     ),

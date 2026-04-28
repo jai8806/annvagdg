@@ -54,12 +54,12 @@ class ProfileScreen extends ConsumerWidget {
             const SizedBox(height: AnnvaSpacing.lg),
 
             // Avatar
-            Center(
+                  Center(
               child: Container(
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: roleColor.withOpacity(0.1),
+                  color: roleColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   border: Border.all(color: roleColor, width: 2),
                 ),
@@ -87,7 +87,7 @@ class ProfileScreen extends ConsumerWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: roleColor.withOpacity(0.1),
+                  color: roleColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   border: Border.all(color: roleColor),
                 ),
@@ -129,7 +129,7 @@ class ProfileScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Switch role →',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
@@ -151,14 +151,14 @@ class ProfileScreen extends ConsumerWidget {
                   if (context.mounted) context.go('/');
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AnnvaColors.cascadeUrgent.withOpacity(0.08),
+                  backgroundColor: AnnvaColors.cascadeUrgent.withValues(alpha: 0.08),
                   foregroundColor: AnnvaColors.cascadeUrgent,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AnnvaRadius.full),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Sign out',
                   style: TextStyle(
                     fontFamily: 'WorkSans',
