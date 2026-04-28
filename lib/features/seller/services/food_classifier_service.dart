@@ -11,7 +11,10 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 
 // Fixed: Removed 'hide OrtEnv' so the class is accessible
-import 'package:onnxruntime/onnxruntime.dart' as ort;
+import 'package:onnxruntime/onnxruntime.dart'
+    if (dart.library.html) 'food_classifier_service_web.dart'
+    if (dart.library.js_util) 'food_classifier_service_web.dart'
+    as ort;
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const int _inputSize = 300;

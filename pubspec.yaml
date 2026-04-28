@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
     
+  google_generative_ai: ^0.4.3
+    
   
   # State Management — Riverpod 2 with code generation
   flutter_riverpod: ^2.6.1

@@ -12,6 +12,7 @@ import '../../../shared/providers/listings_provider.dart';
 import '../../../shared/widgets/cascade_badge.dart';
 import '../providers/price_lock_provider.dart';
 import '../providers/cart_provider.dart';
+import '../../../shared/widgets/smart_rescue_card.dart';
 import 'package:annva/features/auth/providers/auth_provider.dart';
 
 class ListingDetailScreen extends ConsumerStatefulWidget {
@@ -220,6 +221,10 @@ class _ListingDetailScreenState extends ConsumerState<ListingDetailScreen> {
                             ),
                           ],
                         ),
+
+                        const SizedBox(height: AnnvaSpacing.md),
+                        SmartRescueCard(listing: listing),
+                        const SizedBox(height: AnnvaSpacing.md),
 
                         const SizedBox(height: AnnvaSpacing.xl),
 
