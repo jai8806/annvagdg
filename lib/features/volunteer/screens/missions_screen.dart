@@ -75,13 +75,20 @@ class _ActiveMissionsTab extends ConsumerWidget {
       stream: FirebaseFirestore.instance
           .collection('orders')
           .where('status', isEqualTo: 'confirmed')
-          .orderBy('createdAt', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          debugPrint('❌ MissionsStream Error: ${snapshot.error}');
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+        
+        final docs = snapshot.data?.docs ?? [];
+        debugPrint('🔍 Active Missions Found: ${docs.length}');
+        
+        if (docs.isEmpty) {
           return Center(
             child: Padding(
               padding: const EdgeInsets.all(40),
@@ -442,7 +449,6 @@ class _CompletedMissionsTab extends ConsumerWidget {
       stream: FirebaseFirestore.instance
           .collection('certificates')
           .where('volunteerId', isEqualTo: userId)
-          .orderBy('completedAt', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

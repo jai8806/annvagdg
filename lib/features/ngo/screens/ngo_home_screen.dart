@@ -10,6 +10,7 @@ import '../../../core/theme/annva_spacing.dart';
 import '../../../core/theme/annva_text_styles.dart';
 import '../../../shared/models/food_listing.dart';
 import '../../../shared/widgets/annva_logo.dart';
+import '../../../shared/widgets/certification_widgets.dart';
 
 class NgoHomeScreen extends ConsumerWidget {
   const NgoHomeScreen({super.key});
@@ -112,6 +113,20 @@ class NgoHomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: AnnvaSpacing.sm),
                   _buildStatCard('VOLUNTEERS', '23 active', 'across Bengaluru'),
+                ],
+              ),
+            ),
+          ),
+
+          // 2.1 IMPACT STRIP
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AnnvaSpacing.containerPadding, vertical: AnnvaSpacing.lg),
+              child: ImpactSummaryStrip(
+                metrics: [
+                  ImpactMetric('Food Rescued', '3,842 kg', Icons.eco, AnnvaColors.cascadeFresh),
+                  ImpactMetric('Families Fed', '1,200', Icons.people, Colors.blue),
+                  ImpactMetric('Impact Score', '9.8/10', Icons.star, AnnvaColors.ochre),
                 ],
               ),
             ),
@@ -234,6 +249,38 @@ class NgoHomeScreen extends ConsumerWidget {
                 horizontal: AnnvaSpacing.containerPadding,
               ),
               child: _buildMap(),
+            ),
+          ),
+
+          // 6. CERTIFICATES & COMPLIANCE
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(AnnvaSpacing.containerPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  Text(
+                    'CERTIFICATES & COMPLIANCE',
+                    style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+                  ),
+                  const SizedBox(height: 16),
+                  const CredentialItem(
+                    title: 'FSSAI Verified NGO',
+                    date: 'Valid till Dec 2026',
+                    description: 'Compliant with food safety and standards for redistribution.',
+                    icon: Icons.verified_user,
+                    color: Colors.green,
+                  ),
+                  const CredentialItem(
+                    title: '80G Tax Exemption',
+                    date: 'Active',
+                    description: 'Eligible for donor tax benefits under Section 80G.',
+                    icon: Icons.account_balance,
+                    color: AnnvaColors.primary,
+                  ),
+                ],
+              ),
             ),
           ),
 

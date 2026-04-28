@@ -9,6 +9,7 @@ import '../../../core/theme/annva_spacing.dart';
 import '../../../core/theme/annva_text_styles.dart';
 import '../../../shared/models/food_listing.dart';
 import '../../../shared/widgets/annva_logo.dart';
+import '../../../shared/widgets/certification_widgets.dart';
 
 class VolunteerHomeScreen extends ConsumerWidget {
   const VolunteerHomeScreen({super.key});
@@ -78,6 +79,11 @@ class VolunteerHomeScreen extends ConsumerWidget {
 
           // 3. AVAILABLE RESCUES Stream
           _buildRescuesStream(),
+
+          // 4. CERTIFICATES & BADGES section
+          SliverToBoxAdapter(
+            child: _buildCertificatesSection(context),
+          ),
 
           const SliverToBoxAdapter(child: SizedBox(height: AnnvaSpacing.xxl)),
         ],
@@ -677,6 +683,92 @@ class VolunteerHomeScreen extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildCertificatesSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AnnvaSpacing.containerPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'MY CERTIFICATES & BADGES',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
+              Text(
+                'View all →',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AnnvaColors.backgroundCard,
+              borderRadius: BorderRadius.circular(AnnvaRadius.xl),
+              border: Border.all(color: AnnvaColors.border),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    BadgeItem(
+                      title: 'Community Hero',
+                      sub: '10 Rescues',
+                      icon: Icons.emoji_events,
+                      color: AnnvaColors.ochre,
+                    ),
+                    BadgeItem(
+                      title: 'Silver Volunteer',
+                      sub: '25 Service Hours',
+                      icon: Icons.verified,
+                      color: Colors.blueGrey,
+                    ),
+                    BadgeItem(
+                      title: 'Hunger Fighter',
+                      sub: '100+ Meals Delivered',
+                      icon: Icons.favorite,
+                      color: Colors.redAccent,
+                    ),
+                    BadgeItem(
+                      title: 'Gold Tier Rescuer',
+                      sub: '50+ Rescues',
+                      icon: Icons.workspace_premium,
+                      color: Colors.amber,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Divider(color: AnnvaColors.border),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.download, size: 16, color: AnnvaColors.primary),
+                    SizedBox(width: 8),
+                    Text(
+                      'Download Certificate',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: AnnvaColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

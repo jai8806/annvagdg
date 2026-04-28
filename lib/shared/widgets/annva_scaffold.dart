@@ -28,7 +28,7 @@ class AnnvaScaffold extends ConsumerWidget {
             Icons.add_circle_outline,
             Icons.add_circle,
             'List Item',
-            '/seller',
+            '/seller/list',
           ),
           _NavItem(
             Icons.bar_chart_outlined,

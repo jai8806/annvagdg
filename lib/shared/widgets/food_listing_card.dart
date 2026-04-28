@@ -7,6 +7,7 @@ import '../models/cascade_stage.dart';
 import '../models/food_listing.dart';
 import 'cascade_badge.dart';
 import 'urgency_timer.dart';
+import 'trust_badge.dart';
 
 /// The most important component in the Annva app.
 ///
@@ -133,6 +134,10 @@ class FoodListingCard extends ConsumerWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      const SizedBox(height: AnnvaSpacing.xs),
+
+                      // Trust Badge
+                      const TrustBadge(type: TrustBadgeType.certified),
                       const SizedBox(height: AnnvaSpacing.sm),
 
                       // Row 4: Price + quantity

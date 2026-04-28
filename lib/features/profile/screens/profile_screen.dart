@@ -8,6 +8,7 @@ import '../../../core/theme/annva_spacing.dart';
 import '../../../core/theme/annva_text_styles.dart';
 import '../../../features/auth/providers/auth_provider.dart';
 import '../../../shared/widgets/annva_logo.dart';
+import '../../../shared/widgets/certification_widgets.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -46,16 +47,15 @@ class ProfileScreen extends ConsumerWidget {
           child: const AnnvaLogo(fontSize: 24),
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(AnnvaSpacing.containerPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: AnnvaSpacing.lg),
+        children: [
+          const SizedBox(height: AnnvaSpacing.lg),
 
-            // Avatar
-                  Center(
-              child: Container(
+          // Header Info
+          Row(
+            children: [
+              Container(
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
@@ -72,104 +72,199 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: AnnvaSpacing.md),
-
-            // Phone
-            Center(child: Text(phone, style: AnnvaTextStyles.h2)),
-            const SizedBox(height: 8),
-
-            // Role chip
-            Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 6,
+              const SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Karthik N', style: AnnvaTextStyles.h2),
+                    const Text(
+                      'Bengaluru, Karnataka',
+                      style: TextStyle(
+                        fontFamily: 'WorkSans',
+                        color: AnnvaColors.muted,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: roleColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        'Verified ${role.substring(0, 1).toUpperCase()}${role.substring(1)}',
+                        style: TextStyle(
+                          fontFamily: 'WorkSans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: roleColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                decoration: BoxDecoration(
-                  color: roleColor.withValues(alpha: 0.1),
+              ),
+              Column(
+                children: [
+                  Text('64', style: AnnvaTextStyles.h1.copyWith(fontSize: 32)),
+                  const Text(
+                    'Total Rescues',
+                    style: TextStyle(
+                      fontFamily: 'WorkSans',
+                      color: AnnvaColors.muted,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 32),
+
+          // Stats Grid
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            decoration: const BoxDecoration(
+              border: Border.symmetric(
+                horizontal: BorderSide(color: AnnvaColors.border, width: 0.5),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildProfileStat('25', 'Service Hours'),
+                _buildProfileStat('320', 'Meals Delivered'),
+                _buildProfileStat('18 kg', 'Food Rescued'),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 32),
+
+          // My Impact Credentials
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'MY IMPACT CREDENTIALS',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.ochre),
+              ),
+              Text(
+                'View all →',
+                style: AnnvaTextStyles.label.copyWith(color: AnnvaColors.muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const CredentialItem(
+            title: 'Gold Volunteer - Bengaluru Chapter',
+            date: 'April 2024',
+            description: 'Awarded for outstanding dedication and consistent food rescue efforts.',
+            icon: Icons.workspace_premium,
+            color: Colors.amber,
+          ),
+          const CredentialItem(
+            title: 'Community Service Certificate',
+            date: 'April 2024',
+            description: 'Completed 25 hours of service through ANNVA platform.',
+            icon: Icons.verified,
+            color: Colors.blueGrey,
+          ),
+          const CredentialItem(
+            title: 'Sustainability Champion',
+            date: 'April 2024',
+            description: 'Thank you for helping reduce food waste and carbon footprint.',
+            icon: Icons.eco,
+            color: AnnvaColors.cascadeFresh,
+          ),
+
+          const SizedBox(height: 32),
+          const Divider(color: AnnvaColors.border),
+          const SizedBox(height: AnnvaSpacing.lg),
+
+          // Actions
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: OutlinedButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.remove('auth_role');
+                ref.read(authNotifierProvider.notifier).clearRole();
+                if (context.mounted) context.push('/auth/role');
+              },
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: AnnvaColors.primary),
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AnnvaRadius.full),
-                  border: Border.all(color: roleColor),
                 ),
-                child: Text(
-                  role.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: 'WorkSans',
-                    color: roleColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    letterSpacing: 1.5,
-                  ),
+              ),
+              child: const Text(
+                'Switch role →',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  color: AnnvaColors.primary,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-
-            const SizedBox(height: AnnvaSpacing.xxl),
-            const Divider(color: AnnvaColors.border),
-            const SizedBox(height: AnnvaSpacing.lg),
-
-            // Switch role
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: OutlinedButton(
-                onPressed: () async {
-                  // Clear only the role from prefs, keep phone number
-                  final prefs = await SharedPreferences.getInstance();
-                  await prefs.remove('auth_role');
-                  // Update auth state — authenticated but no role
-                  ref.read(authNotifierProvider.notifier).clearRole();
-                  // GoRouter redirect will see: authenticated + role == null
-                  // and automatically push to /auth/role
-                  if (context.mounted) context.push('/auth/role');
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AnnvaColors.primary),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AnnvaRadius.full),
-                  ),
+          ),
+          const SizedBox(height: AnnvaSpacing.md),
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: ElevatedButton(
+              onPressed: () async {
+                await ref.read(authNotifierProvider.notifier).signOut();
+                if (context.mounted) context.go('/');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AnnvaColors.cascadeUrgent.withValues(alpha: 0.08),
+                foregroundColor: AnnvaColors.cascadeUrgent,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AnnvaRadius.full),
                 ),
-                child: const Text(
-                  'Switch role →',
-                  style: TextStyle(
-                    fontFamily: 'WorkSans',
-                    color: AnnvaColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ),
+              child: const Text(
+                'Sign out',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const SizedBox(height: AnnvaSpacing.md),
-
-            // Sign out
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton(
-                onPressed: () async {
-                  await ref.read(authNotifierProvider.notifier).signOut();
-                  if (context.mounted) context.go('/');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AnnvaColors.cascadeUrgent.withValues(alpha: 0.08),
-                  foregroundColor: AnnvaColors.cascadeUrgent,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AnnvaRadius.full),
-                  ),
-                ),
-                child: const Text(
-                  'Sign out',
-                  style: TextStyle(
-                    fontFamily: 'WorkSans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 40),
+        ],
       ),
+    );
+  }
+
+  Widget _buildProfileStat(String value, String label) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            fontFamily: 'WorkSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AnnvaColors.primary,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'WorkSans',
+            fontSize: 10,
+            color: AnnvaColors.muted,
+          ),
+        ),
+      ],
     );
   }
 }

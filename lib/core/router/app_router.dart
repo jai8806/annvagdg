@@ -13,8 +13,10 @@ import '../../features/consumer/screens/cart_screen.dart';
 import '../../features/consumer/screens/checkout_screen.dart';
 import '../../features/consumer/screens/order_confirmed_screen.dart';
 import '../../features/consumer/screens/orders_screen.dart';
-import '../../features/seller/screens/seller_home_screen.dart';
+import '../../features/seller/screens/seller_dashboard_screen.dart';
+import '../../features/seller/screens/seller_list_item_screen.dart';
 import '../../features/volunteer/screens/volunteer_home_screen.dart';
+import '../../features/volunteer/screens/missions_screen.dart';
 import '../../features/ngo/screens/ngo_home_screen.dart';
 import '../../features/impact/screens/impact_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
@@ -149,7 +151,14 @@ GoRouter appRouter(AppRouterRef ref) {
           GoRoute(
             path: '/seller',
             builder: (context, state) =>
-                const SellerHomeScreen(key: ValueKey('seller_home')),
+                const SellerDashboardScreen(key: ValueKey('seller_dashboard')),
+            routes: [
+              GoRoute(
+                path: 'list',
+                builder: (context, state) =>
+                    const SellerListItemScreen(key: ValueKey('seller_list')),
+              ),
+            ],
           ),
           // Volunteer
           GoRoute(
@@ -159,9 +168,7 @@ GoRouter appRouter(AppRouterRef ref) {
             routes: [
               GoRoute(
                 path: 'missions',
-                builder: (context, state) => const Scaffold(
-                  body: Center(child: Text('Missions Screen')),
-                ),
+                builder: (context, state) => const MissionsScreen(),
               ),
             ],
           ),
