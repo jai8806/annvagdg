@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
     
   google_generative_ai: ^0.4.3
+  flutter_dotenv: ^5.2.1
     
   
   # State Management — Riverpod 2 with code generation
@@ -83,6 +84,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+      - .env
       - assets/models/annva_model.onnx
       - assets/models/labels.json
       - assets/models/annva_model.onnx.data
