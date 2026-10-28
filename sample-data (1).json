@@ -1,0 +1,244 @@
+{
+  "note": "Sample data for demo/testing only. No real people, businesses or payments.",
+  "users": [
+    {
+      "uid": "seller_001",
+      "role": "seller",
+      "name": "Sample Bakery, Indiranagar",
+      "phone": "+91 90000 00001",
+      "location": "Indiranagar, Bengaluru"
+    },
+    {
+      "uid": "seller_002",
+      "role": "seller",
+      "name": "Sample Restaurant, Koramangala",
+      "phone": "+91 90000 00005",
+      "location": "Koramangala, Bengaluru"
+    },
+    {
+      "uid": "seller_003",
+      "role": "seller",
+      "name": "Sample Temple Kitchen, Malleshwaram",
+      "phone": "+91 90000 00006",
+      "location": "Malleshwaram, Bengaluru"
+    },
+    {
+      "uid": "consumer_001",
+      "role": "consumer",
+      "name": "Sample Consumer",
+      "phone": "+91 90000 00002",
+      "location": "Indiranagar, Bengaluru"
+    },
+    {
+      "uid": "consumer_002",
+      "role": "consumer",
+      "name": "Sample Consumer 2",
+      "phone": "+91 90000 00007",
+      "location": "Koramangala, Bengaluru"
+    },
+    {
+      "uid": "volunteer_001",
+      "role": "volunteer",
+      "name": "Sample Volunteer",
+      "phone": "+91 90000 00003",
+      "location": "Indiranagar, Bengaluru"
+    },
+    {
+      "uid": "volunteer_002",
+      "role": "volunteer",
+      "name": "Sample Volunteer 2",
+      "phone": "+91 90000 00008",
+      "location": "Koramangala, Bengaluru"
+    },
+    {
+      "uid": "ngo_001",
+      "role": "ngo",
+      "name": "Sample Food Bank NGO",
+      "phone": "+91 90000 00004",
+      "location": "Bengaluru"
+    },
+    {
+      "uid": "ngo_002",
+      "role": "ngo",
+      "name": "Sample Shelter Kitchen NGO",
+      "phone": "+91 90000 00009",
+      "location": "Bengaluru"
+    }
+  ],
+  "listings": [
+    {
+      "id": "listing_001",
+      "title": "Assorted breads and pastries (12 pcs)",
+      "sellerId": "seller_001",
+      "originalPrice": 600,
+      "cascadePrice": 180,
+      "status": "available",
+      "preparedAt": "2026-10-28T16:00:00+05:30",
+      "expiryAt": "2026-10-28T21:00:00+05:30",
+      "photo": "sample-photos/breads.jpg"
+    },
+    {
+      "id": "listing_002",
+      "title": "Veg biryani, family pack (serves 4)",
+      "sellerId": "seller_001",
+      "originalPrice": 800,
+      "cascadePrice": 240,
+      "status": "free-rescue",
+      "preparedAt": "2026-10-28T13:00:00+05:30",
+      "expiryAt": "2026-10-28T19:00:00+05:30",
+      "photo": "sample-photos/biryani.jpg"
+    },
+    {
+      "id": "listing_003",
+      "title": "Paneer butter masala + 8 rotis (serves 3)",
+      "sellerId": "seller_002",
+      "originalPrice": 700,
+      "cascadePrice": 280,
+      "status": "available",
+      "preparedAt": "2026-10-28T17:00:00+05:30",
+      "expiryAt": "2026-10-28T22:00:00+05:30",
+      "photo": "sample-photos/paneer.jpg"
+    },
+    {
+      "id": "listing_004",
+      "title": "Idli-vada combo, breakfast batch (10 plates)",
+      "sellerId": "seller_002",
+      "originalPrice": 400,
+      "cascadePrice": 120,
+      "status": "available",
+      "preparedAt": "2026-10-28T07:00:00+05:30",
+      "expiryAt": "2026-10-28T11:00:00+05:30",
+      "photo": "sample-photos/idli.jpg"
+    },
+    {
+      "id": "listing_005",
+      "title": "Temple prasadam, sweet pongal (20 portions)",
+      "sellerId": "seller_003",
+      "originalPrice": 500,
+      "cascadePrice": 0,
+      "status": "free-rescue",
+      "preparedAt": "2026-10-28T12:00:00+05:30",
+      "expiryAt": "2026-10-28T18:00:00+05:30",
+      "photo": "sample-photos/prasadam.jpg"
+    },
+    {
+      "id": "listing_006",
+      "title": "Chocolate cake slices (8 pcs)",
+      "sellerId": "seller_001",
+      "originalPrice": 480,
+      "cascadePrice": 200,
+      "status": "available",
+      "preparedAt": "2026-10-28T15:00:00+05:30",
+      "expiryAt": "2026-10-28T20:30:00+05:30",
+      "photo": "sample-photos/cake.jpg"
+    },
+    {
+      "id": "listing_007",
+      "title": "Dal makhani + jeera rice (serves 2)",
+      "sellerId": "seller_002",
+      "originalPrice": 450,
+      "cascadePrice": 180,
+      "status": "available",
+      "preparedAt": "2026-10-28T18:00:00+05:30",
+      "expiryAt": "2026-10-28T23:00:00+05:30",
+      "photo": "sample-photos/dal.jpg"
+    },
+    {
+      "id": "listing_008",
+      "title": "Samosas, evening batch (24 pcs)",
+      "sellerId": "seller_002",
+      "originalPrice": 360,
+      "cascadePrice": 90,
+      "status": "available",
+      "preparedAt": "2026-10-28T16:30:00+05:30",
+      "expiryAt": "2026-10-28T20:00:00+05:30",
+      "photo": "sample-photos/samosa.jpg"
+    },
+    {
+      "id": "listing_009",
+      "title": "Curd rice + pickle, lunch surplus (6 boxes)",
+      "sellerId": "seller_003",
+      "originalPrice": 300,
+      "cascadePrice": 100,
+      "status": "available",
+      "preparedAt": "2026-10-28T12:30:00+05:30",
+      "expiryAt": "2026-10-28T17:00:00+05:30",
+      "photo": "sample-photos/curdrice.jpg"
+    },
+    {
+      "id": "listing_010",
+      "title": "Fruit salad cups (10 cups)",
+      "sellerId": "seller_001",
+      "originalPrice": 500,
+      "cascadePrice": 220,
+      "status": "available",
+      "preparedAt": "2026-10-28T14:00:00+05:30",
+      "expiryAt": "2026-10-28T19:30:00+05:30",
+      "photo": "sample-photos/fruit.jpg"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order_001",
+      "listingId": "listing_001",
+      "consumerId": "consumer_001",
+      "status": "confirmed",
+      "priceLockDeposit": 20,
+      "paymentRef": "SAMPLE-UPI-0001"
+    },
+    {
+      "id": "order_002",
+      "listingId": "listing_003",
+      "consumerId": "consumer_002",
+      "status": "pending",
+      "priceLockDeposit": 25,
+      "paymentRef": "SAMPLE-UPI-0002"
+    },
+    {
+      "id": "order_003",
+      "listingId": "listing_006",
+      "consumerId": "consumer_001",
+      "status": "confirmed",
+      "priceLockDeposit": 15,
+      "paymentRef": "SAMPLE-UPI-0003"
+    },
+    {
+      "id": "order_004",
+      "listingId": "listing_007",
+      "consumerId": "consumer_002",
+      "status": "denied",
+      "priceLockDeposit": 0,
+      "paymentRef": null
+    }
+  ],
+  "volunteerTasks": [
+    {
+      "id": "task_001",
+      "listingId": "listing_002",
+      "volunteerId": "volunteer_001",
+      "ngoId": "ngo_001",
+      "status": "delivered",
+      "proofPhoto": "sample-photos/delivery-proof.jpg"
+    },
+    {
+      "id": "task_002",
+      "listingId": "listing_005",
+      "volunteerId": "volunteer_002",
+      "ngoId": "ngo_002",
+      "status": "accepted",
+      "proofPhoto": null
+    },
+    {
+      "id": "task_003",
+      "listingId": "listing_008",
+      "volunteerId": "volunteer_001",
+      "ngoId": "ngo_001",
+      "status": "notified",
+      "proofPhoto": null
+    }
+  ],
+  "impact": {
+    "kgRescued": 128.0,
+    "mealsDelivered": 410
+  }
+}
